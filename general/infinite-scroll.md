@@ -3,7 +3,7 @@ id: infinite-scroll
 tier: general
 triggers: []
 tools: []
-weavetab: ">=1.0.0"
+weavetab: ">=2.5.0"
 ---
 # Infinite Scroll Pattern
 

@@ -24,9 +24,12 @@
     "openclaw"
   ],
   "peerDependenciesMeta": {
-    "@weavetab/mcp": {
+    "weavetab": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "main": "./src/api.js",
   "bin": {

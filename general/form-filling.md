@@ -3,7 +3,7 @@ id: form-filling
 tier: general
 triggers: []
 tools: []
-weavetab: ">=1.0.0"
+weavetab: ">=2.5.0"
 ---
 # Form Filling Pattern
 

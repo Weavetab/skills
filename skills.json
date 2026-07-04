@@ -5,7 +5,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/captcha-evasion.md"
     },
     {
@@ -13,7 +13,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/file-upload.md"
     },
     {
@@ -21,7 +21,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/form-filling.md"
     },
     {
@@ -29,7 +29,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/guardrails.md"
     },
     {
@@ -37,7 +37,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/iframe-handling.md"
     },
     {
@@ -45,7 +45,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/infinite-scroll.md"
     },
     {
@@ -53,7 +53,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/login-flow.md"
     },
     {
@@ -61,7 +61,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/multi-tab-management.md"
     },
     {
@@ -69,7 +69,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/spa-navigation.md"
     },
     {
@@ -77,7 +77,7 @@
       "tier": "general",
       "triggers": [],
       "tools": [],
-      "weavetab": ">=1.0.0",
+      "weavetab": ">=2.5.0",
       "filePath": "general/table-scraping.md"
     }
   ]

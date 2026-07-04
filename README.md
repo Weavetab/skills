@@ -1,29 +1,50 @@
-# WeaveTab Skills
+# 🚀 Weavetab MCP Skills
 
-A repository of token-efficient, context-aware prompt injection skills for AI agents using the WeaveTab MCP.
+Welcome to the official **Weavetab MCP Skills** repository! This package provides powerful, native drop-in Agent Skills to supercharge your AI (like Antigravity, Cursor, Cline, RooCode, OpenClaw, and more) with browser automation capabilities.
 
-## Structure
-- `general/`: Tier 1 task patterns (e.g., login, forms, infinite scroll).
-- `automation/`: CI/headless flows (Coming in v1.1.0).
-- `advanced/`: Token budgeting and memory features (Coming in v1.1.0).
+🌐 **Official Website:** [weavetab.dev](https://weavetab.dev)
+📦 **Core MCP Package:** [`weavetab`](https://www.npmjs.com/package/weavetab)
 
-## Build
-To compile `skills.json`:
+## ⚠️ Prerequisites
+
+These advanced skills are designed specifically for **Weavetab MCP v2.5.0+**.
+Make sure you have installed the core Weavetab MCP server first:
+
 ```bash
-npm install
-npm run build
+npm install -g weavetab
 ```
 
-## How to Use Specific Skills
+## 🛠️ Installation
 
-Users can install the package via npm:
+We provide a beautiful, interactive CLI installer that seamlessly injects the pure markdown skills into your specific AI agent's configuration folder without cluttering your project with `node_modules`.
+
+Run the following command anywhere:
+
 ```bash
-npm install @weavetab/skills
+npx @weavetab/skills
 ```
 
-To load a specific skill into your agent (e.g. `login-flow`), you can read the raw markdown file directly from the package directory:
-```bash
-cat node_modules/@weavetab/skills/general/login-flow.md
+The interactive menu will guide you to select your agent framework (`.agents`, `.cursor`, `.clinerules`, `.roocode`, etc.) and the categories of skills you want to install.
+
+## 📚 Skill Categories
+
+- **General (Tier 1):** Essential browser navigation, DOM interaction, guards against abuse, form filling, tab management, and more.
+- **Automation (Tier 2):** *Coming Soon*
+- **Advanced (Tier 3):** *Coming Soon*
+
+## 💻 Programmatic API
+
+If you are building your own CLI or using the core `wb setup` command, you can install skills programmatically:
+
+```javascript
+const { installSkills } = require('@weavetab/skills');
+
+await installSkills({
+  targetFramework: '.cursor', // or '.agents', '.clinerules', etc.
+  categories: ['general']
+});
 ```
 
-You can also read `skills.json` to programmatically load the skills into your agent's context based on the current URL or task triggers.
+---
+
+*Built with ❤️ by [fy2ne](https://github.com/fy2ne) for the Weavetab Community.*
