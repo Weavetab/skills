@@ -23,6 +23,8 @@
   "keywords": [
     "weavetab",
     "weavetab-mcp",
+    "weavetab-skills",
+    "weavetab-plugins",
     "mcp",
     "ai-agent",
     "cursor",
@@ -30,7 +32,10 @@
     "antigravity",
     "browser-automation",
     "agent-skills",
-    "openclaw"
+    "openclaw",
+    "plugins",
+    "skills",
+    "agentic"
   ],
   "peerDependenciesMeta": {
     "weavetab": {
