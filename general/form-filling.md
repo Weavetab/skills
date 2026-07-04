@@ -2,12 +2,15 @@
 id: form-filling
 tier: general
 triggers: ["fill form", "submit form", "form", "input", "textarea", "dropdown", "select", "checkbox"]
-tools: [browser_map, browser_fill, browser_type, browser_select, browser_click]
+tools: ["browser_map", "browser_fill", "browser_type", "browser_select", "browser_click"]
 weavetab: ">=2.5.0"
 ---
-# Form Filling Pattern
+# 📝 Dynamic Form Handling
+**Core Philosophy:** Forms are often dynamic, fragile, and aggressively validated. Handle them with care and intelligence.
 
-1. **Map the Form**: Call `browser_map({ scope: "form" })` to gather all interactive element IDs. Do not map the entire page if you only need the form.
-2. **Batch Fill**: If possible, batch your input using `browser_fill` across multiple fields to save time.
-3. **Selects**: Use `browser_select` for dropdowns, not `browser_click`.
-4. **Submit**: Click the submit button and check the response for `confirmed: true`. Wait for network idle or DOM changes using `browser_wait`.
+- **Map and Plan:** Use `browser_map({ scope: "form" })` to get the lay of the land. Plan your data entry.
+- **Adapt to the UI:** 
+  - For standard fields, `browser_fill` is fast and efficient.
+  - For tricky rich-text editors or masked inputs, fall back to `browser_type`.
+  - Use `browser_select` for dropdowns, but be prepared to use `browser_click` if it's a custom div-based dropdown.
+- **Validation Awareness:** Pay attention to the DOM! If a field turns red, stop and fix it. Don't blindly submit a form with errors. If you see a disabled submit button, figure out which required field you missed.

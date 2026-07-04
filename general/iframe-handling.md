@@ -2,11 +2,12 @@
 id: iframe-handling
 tier: general
 triggers: ["iframe", "frame", "embed", "embedded content", "cross origin"]
-tools: [browser_map, browser_find, browser_click, browser_snapshot, browser_navigate]
+tools: ["browser_map", "browser_find", "browser_click", "browser_snapshot", "browser_navigate"]
 weavetab: ">=2.5.0"
 ---
-# Iframe Handling Pattern
+# 🖼️ iFrame & Embedded Contexts
+**Core Philosophy:** iFrames are websites within websites. You must traverse them intelligently.
 
-1. **Identify Iframes**: If an element you expect (like a Stripe credit card field) isn't visible in `browser_map`, it might be inside a cross-origin iframe. Look for `[w:XX] iframe` elements in the map.
-2. **Target Iframe**: Weavetab MCP's `browser_map` automatically tries to pierce iframes, but cross-origin security may block it. If an iframe is blocked, you cannot click elements inside it using standard `id` refs.
-3. **Fallback**: Use `browser_eval` to execute JS within the context of the page if you need to manipulate iframe communication via `postMessage`, or notify the user that manual intervention is required for secure cross-origin iframes.
+- **Spot the Frame:** Payment gateways, video players, and embedded widgets live in iFrames. If you can't find an element that you *know* is on screen, it's probably in an iFrame.
+- **Navigate the Hierarchy:** Use your tools to target elements *inside* the iFrame context. 
+- **Creative Extraction:** If an iFrame is being particularly stubborn, consider extracting its `src` attribute and using `browser_navigate` to visit the embedded page directly in a new tab.

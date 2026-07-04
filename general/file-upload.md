@@ -2,11 +2,12 @@
 id: file-upload
 tier: general
 triggers: ["upload", "file upload", "attach file", "drag and drop", "input file"]
-tools: [browser_upload, browser_map, browser_click, browser_find]
+tools: ["browser_upload", "browser_map", "browser_click", "browser_find"]
 weavetab: ">=2.5.0"
 ---
-# File Upload Pattern
+# 📤 Resilient File Uploading
+**Core Philosophy:** File uploads can be triggered via hidden inputs, drag-and-drop zones, or complex JS widgets.
 
-1. **Map**: Find the file input element (`<input type="file">`) using `browser_map`. It may be hidden beneath a stylized button.
-2. **Upload**: Use `browser_upload` with the absolute path to your local file and the input's ref ID. Do NOT try to `browser_click` the upload button to open an OS dialog—that will stall the agent.
-3. **Verify**: Check for upload progress indicators or success messages via `browser_map({ delta: true })`.
+- **Find the Real Input:** Often, the visible "Upload" button is just a styled div. You need to find the actual `<input type="file">`. Use `browser_find` or `browser_map` to hunt it down.
+- **Use the Native Tool:** Once found, use `browser_upload` to attach the file directly to the input element.
+- **Creative Fallbacks:** If `browser_upload` fails because the input is deeply obscured, look for alternative ways to upload (e.g., providing a URL if the site allows it, or alerting the user that manual intervention is needed for this specific widget).

@@ -44,7 +44,7 @@ async function run() {
 
   // Step 1 — Select category
   console.log(`${B}  Available tiers:${X}`);
-  console.log(`${G}    [1] General${X}    Core browser automation patterns (10 skills)`);
+  console.log(`${G}    [1] General${X}    Core browser automation patterns (15 skills)`);
   console.log(`${DM}    [2] Automation   Coming soon${X}`);
   console.log(`${DM}    [3] Advanced     Coming soon${X}`);
   console.log('');
@@ -55,7 +55,7 @@ async function run() {
       {
         name: 'General',
         value: 'general',
-        description: '10 skills  ->  login, forms, scraping, navigation, uploads, and more'
+        description: '15 skills  ->  login, forms, scraping, navigation, uploads, and more'
       }
     ]
   });

@@ -2,11 +2,12 @@
 id: infinite-scroll
 tier: general
 triggers: ["infinite scroll", "load more", "scroll", "pagination", "lazy load"]
-tools: [browser_scroll, browser_map, browser_snapshot, browser_wait]
+tools: ["browser_scroll", "browser_map", "browser_snapshot", "browser_wait"]
 weavetab: ">=2.5.0"
 ---
-# Infinite Scroll Pattern
+# 📜 Infinite Scroll Navigation
+**Core Philosophy:** Some data is hidden behind the scrollbar. You must be proactive in revealing it.
 
-1. **Scroll**: Use `browser_scroll({ direction: "down", amount: "page" })`.
-2. **Detect Change**: Use `browser_map({ delta: true })` to check if new items appeared in the DOM.
-3. **Loop Control**: Keep track of the total items found. If `browser_map` returns no new delta after a scroll, you have reached the bottom or need to `browser_wait` for the network. Do not loop endlessly.
+- **Scroll and Observe:** Use `browser_scroll` to move down the page. Don't just scroll once—if you're looking for a specific item, loop your scroll and `browser_wait` until the network fetches the new items.
+- **Know When to Stop:** Monitor the DOM. If you scroll and the total height of the page doesn't change after a few seconds, you've likely hit the bottom.
+- **Load More Buttons:** Infinite scroll is sometimes replaced by "Load More" buttons. Be vigilant—if scrolling isn't working, look for a button to click instead.

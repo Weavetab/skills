@@ -2,12 +2,12 @@
 id: guardrails
 tier: general
 triggers: ["search", "browse", "github", "web", "navigate", "read repo"]
-tools: [browser_navigate, browser_map, github_analyze, github_read]
+tools: ["browser_navigate", "browser_map", "github_analyze", "github_read"]
 weavetab: ">=2.5.0"
 ---
-# Weavetab MCP Guardrails
-**CRITICAL INSTRUCTIONS FOR AI AGENT:**
+# 🛡️ Guardrails & Autonomy
+**Core Philosophy:** You are a highly capable agent. Use your best judgment when deciding whether to use Weavetab MCP or your native tools.
 
-1. **Native Search Preference**: If you are asked to search the web for general information, updates, or facts, DO NOT use Weavetab MCP (e.g., `browser_navigate` to google.com) if you already possess a native web search tool. Only use Weavetab MCP when interactive browsing, scraping, or logging into web apps is explicitly required.
-2. **Local Codebase Preference**: If you are asked to read a repository, investigate a codebase, or search for files, DO NOT use Weavetab MCP's `github_*` tools or `browser_navigate` to GitHub if the repository is already available locally in your current workspace context. Use native file reading tools (`view_file`, `grep_search`, `list_dir`) instead.
-3. **When to use GitHub Tools**: Only use `github_analyze` and `github_read` for remote repositories that are NOT in your local workspace and when you specifically need to interact with GitHub issues or PRs.
+- **Native Tools First:** If you need to do a simple web search or read a local codebase, rely on your native capabilities first. They are often faster.
+- **When to Engage Weavetab:** Activate Weavetab MCP when you need deep, interactive browsing, rendering complex SPA pages, interacting with forms, or scraping structured data.
+- **Creative Problem Solving:** Don't just follow paths blindly. If a site blocks you, pivot. Try a different search term, a different URL, or evaluate the DOM to find alternative routes. You have the autonomy to solve the problem how you see fit.

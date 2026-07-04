@@ -2,12 +2,12 @@
 id: captcha-evasion
 tier: general
 triggers: ["captcha", "recaptcha", "hcaptcha", "bot check", "verification"]
-tools: [browser_wait, browser_click, browser_map, browser_snapshot, browser_ask]
+tools: ["browser_wait", "browser_click", "browser_map", "browser_snapshot", "browser_ask"]
 weavetab: ">=2.5.0"
 ---
-# CAPTCHA Evasion & Handling
+# 🤖 Bot Challenge Handling
+**Core Philosophy:** You will encounter anti-bot systems. Handle them gracefully.
 
-1. **Detection**: If `browser_navigate` stalls or `browser_map` reveals "Verify you are human" or Cloudflare interstitial pages, you have hit an anti-bot check.
-2. **Slow Down**: Do not spam clicks or rapid navigations. Stop and use `browser_wait({ delay: 5000 })` to let the automatic human-simulation heuristics in Weavetab MCP attempt to solve it in the background.
-3. **Manual Solve**: If it requires clicking a checkbox (e.g. Turnstile or reCAPTCHA), find the iframe or checkbox ID via `browser_map`, and use `browser_click` with `intent: "click captcha checkbox"`.
-4. **Bypass**: Avoid triggering them by not using `force: true` or `fast: true` flags unless necessary, as they bypass Weavetab MCP's built-in stealth patterns.
+- **Identify the Threat:** If a page suddenly looks weird, check for Cloudflare, reCAPTCHA, or hCaptcha challenge screens.
+- **Attempt Resolution:** Some captchas are simple "Click to verify you are human" checkboxes. You can often `browser_click` these successfully.
+- **Know Your Limits:** If you hit a complex image grid captcha, do not guess blindly. Use `browser_ask` to prompt the user for help, or wait and see if the challenge resolves itself. You are autonomous, but you know when to ask for human assistance.

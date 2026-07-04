@@ -21,6 +21,104 @@
       "filePath": "general/captcha-evasion.md"
     },
     {
+      "id": "context-awareness",
+      "tier": "general",
+      "triggers": [
+        "analyze page",
+        "understand context",
+        "what is on the page",
+        "read page",
+        "visualize"
+      ],
+      "tools": [
+        "browser_snapshot",
+        "browser_map",
+        "browser_evaluate"
+      ],
+      "weavetab": ">=2.5.0",
+      "filePath": "general/context-awareness.md"
+    },
+    {
+      "id": "cookie-consent",
+      "tier": "general",
+      "triggers": [
+        "cookie banner",
+        "consent",
+        "gdpr",
+        "accept cookies",
+        "popup",
+        "overlay"
+      ],
+      "tools": [
+        "browser_find",
+        "browser_click",
+        "browser_map"
+      ],
+      "weavetab": ">=2.5.0",
+      "filePath": "general/cookie-consent.md"
+    },
+    {
+      "id": "data-extraction",
+      "tier": "general",
+      "triggers": [
+        "extract",
+        "scrape",
+        "get data",
+        "read data",
+        "fetch info",
+        "parse"
+      ],
+      "tools": [
+        "browser_scrape",
+        "browser_evaluate",
+        "browser_snapshot",
+        "browser_map"
+      ],
+      "weavetab": ">=2.5.0",
+      "filePath": "general/data-extraction.md"
+    },
+    {
+      "id": "dynamic-interaction",
+      "tier": "general",
+      "triggers": [
+        "hover",
+        "drag",
+        "complex interaction",
+        "dropdown",
+        "menu",
+        "slider"
+      ],
+      "tools": [
+        "browser_pointer",
+        "browser_map",
+        "browser_click",
+        "browser_evaluate"
+      ],
+      "weavetab": ">=2.5.0",
+      "filePath": "general/dynamic-interaction.md"
+    },
+    {
+      "id": "error-recovery",
+      "tier": "general",
+      "triggers": [
+        "error",
+        "fail",
+        "timeout",
+        "crash",
+        "not found",
+        "stuck",
+        "fix"
+      ],
+      "tools": [
+        "browser_snapshot",
+        "browser_map",
+        "browser_console",
+        "browser_wait"
+      ],
+      "weavetab": ">=2.5.0",
+      "filePath": "general/error-recovery.md"
+    },
+    {
       "id": "file-upload",
       "tier": "general",
       "triggers": [
