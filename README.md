@@ -34,7 +34,7 @@ The interactive menu will guide you to select your agent framework (`.agents`, `
 
 ## 💻 Programmatic API
 
-If you are building your own CLI or using the core `wb setup` command, you can install skills programmatically:
+If you are building your own CLI or using the core `wt setup` command, you can install skills programmatically:
 
 ```javascript
 const { installSkills } = require('@weavetab/skills');
