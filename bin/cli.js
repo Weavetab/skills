@@ -18,7 +18,7 @@ const line = `${B}${'─'.repeat(52)}${X}`;
 async function run() {
   console.log('');
   console.log(line);
-  console.log(`${B}  Weavetab MCP Skills${X}  ${DM}v1.0.1${X}`);
+  console.log(`${B}  Weavetab MCP Skills${X}  ${DM}v1.0.2${X}`);
   console.log(`${DM}  Interactive skill installer for AI agents${X}`);
   console.log(line);
   console.log('');
