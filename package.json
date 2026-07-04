@@ -1,8 +1,17 @@
 {
   "name": "@weavetab/skills",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Supercharge your AI Agents with Weavetab MCP Skills. Native drop-in skills for Antigravity, Cursor, Cline, and more.",
   "author": "fy2ne",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "general",
+    "automation",
+    "advanced",
+    "src",
+    "skills.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Weavetab/skills.git"

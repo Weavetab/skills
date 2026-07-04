@@ -1,0 +1,6 @@
+.github/
+scripts/
+rewrite-skills.js
+.gitignore
+.agents/
+.cursor/

@@ -1,40 +1,44 @@
-# 🚀 Weavetab MCP Skills
+# Weavetab MCP Skills
 
-Welcome to the official **Weavetab MCP Skills** repository! This package provides powerful, native drop-in Agent Skills to supercharge your AI (like Antigravity, Cursor, Cline, RooCode, OpenClaw, and more) with browser automation capabilities.
+[![npm version](https://img.shields.io/npm/v/@weavetab/skills.svg)](https://www.npmjs.com/package/@weavetab/skills)
+[![GitHub stars](https://img.shields.io/github/stars/Weavetab/skills.svg?style=social)](https://github.com/Weavetab/skills)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-🌐 **Official Website:** [weavetab.dev](https://weavetab.dev)
-📦 **Core MCP Package:** [`weavetab`](https://www.npmjs.com/package/weavetab)
+Welcome to the official Weavetab MCP Skills repository. This package provides native drop-in Agent Skills designed to enhance AI assistants (such as Antigravity, Cursor, Cline, RooCode, OpenClaw, and others) with advanced browser automation and intelligent web interaction capabilities.
 
-## ⚠️ Prerequisites
+- **Official Website:** [weavetab.dev](https://weavetab.dev)
+- **Core MCP Package:** [`weavetab`](https://www.npmjs.com/package/weavetab)
 
-These advanced skills are designed specifically for **Weavetab MCP v2.5.0+**.
-Make sure you have installed the core Weavetab MCP server first:
+## Prerequisites
+
+These advanced skills require **Weavetab MCP v2.5.0 or higher**.
+Please ensure you have installed the core Weavetab MCP server prior to using these skills:
 
 ```bash
 npm install -g weavetab
 ```
 
-## 🛠️ Installation
+## Installation and Usage
 
-We provide a beautiful, interactive CLI installer that seamlessly injects the pure markdown skills into your specific AI agent's configuration folder without cluttering your project with `node_modules`.
+For standard users, we provide an interactive CLI installer that seamlessly injects the markdown skills directly into your specific AI agent's configuration folder. This prevents cluttering your project directory with unnecessary dependencies.
 
-Run the following command anywhere:
+Run the following command in your terminal from the root of your project:
 
 ```bash
 npx @weavetab/skills
 ```
 
-The interactive menu will guide you to select your agent framework (`.agents`, `.cursor`, `.clinerules`, `.roocode`, etc.) and the categories of skills you want to install.
+The interactive menu will guide you to select your agent framework (`.agents`, `.cursor`, `.clinerules`, `.roocode`, etc.) and the categories of skills you wish to install.
 
-## 📚 Skill Categories
+## Skill Categories
 
-- **General (Tier 1):** Essential browser navigation, DOM interaction, guards against abuse, form filling, tab management, and more.
+- **General (Tier 1):** Essential browser navigation, DOM interaction, guards against abuse, form filling, tab management, intelligent data extraction, and more.
 - **Automation (Tier 2):** *Coming Soon*
 - **Advanced (Tier 3):** *Coming Soon*
 
-## 💻 Programmatic API
+## Programmatic API
 
-If you are building your own CLI or using the core `wt setup` command, you can install skills programmatically:
+If you are building your own CLI or integrating with the core `wt setup` command, you can install skills programmatically:
 
 ```javascript
 const { installSkills } = require('@weavetab/skills');
@@ -45,6 +49,12 @@ await installSkills({
 });
 ```
 
+## Contributing
+
+We welcome community contributions! If you have built a robust browser automation skill that handles complex scenarios, we encourage you to add it to this repository.
+
+Please review our [Contributing Guidelines](CONTRIBUTING.md) for detailed instructions on how to propose new skills, format your pull requests, and adhere to our core philosophies for agent autonomy.
+
 ---
 
-*Built with ❤️ by [fy2ne](https://github.com/fy2ne) for the Weavetab Community.*
+*Built for the Weavetab Community.*
