@@ -5,11 +5,11 @@
   "author": "fy2ne",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Weavetab/Skills.git"
+    "url": "https://github.com/Weavetab/skills.git"
   },
-  "homepage": "https://github.com/Weavetab/Skills#readme",
+  "homepage": "https://github.com/Weavetab/skills#readme",
   "bugs": {
-    "url": "https://github.com/Weavetab/Skills/issues"
+    "url": "https://github.com/Weavetab/skills/issues"
   },
   "keywords": [
     "weavetab",
