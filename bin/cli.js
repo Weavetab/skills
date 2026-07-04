@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { select, checkbox, confirm } = require('@inquirer/prompts');
+const { select, confirm } = require('@inquirer/prompts');
 const { installSkills } = require('../src/api.js');
 
 // Blue theme colors via ANSI
@@ -42,31 +42,25 @@ async function run() {
 
   console.log('');
 
-  // Step 1 — Select categories
-  const categories = await checkbox({
-    message: 'Select skill categories to install',
-    instructions: `${DM}  Space to select, Enter to confirm${X}`,
+  // Step 1 — Select category
+  console.log(`${B}  Available tiers:${X}`);
+  console.log(`${G}    [1] General${X}    Core browser automation patterns (10 skills)`);
+  console.log(`${DM}    [2] Automation   Coming soon${X}`);
+  console.log(`${DM}    [3] Advanced     Coming soon${X}`);
+  console.log('');
+
+  const categoryChoice = await select({
+    message: 'Select a skill tier to install',
     choices: [
       {
         name: 'General',
         value: 'general',
-        checked: true,
-        description: 'Core browser automation patterns (10 skills)'
-      },
-      {
-        name: 'Automation  [coming soon]',
-        value: 'automation',
-        disabled: true
-      },
-      {
-        name: 'Advanced    [coming soon]',
-        value: 'advanced',
-        disabled: true
+        description: '10 skills  ->  login, forms, scraping, navigation, uploads, and more'
       }
-    ],
-    required: true
+    ]
   });
 
+  const categories = [categoryChoice];
   console.log('');
 
   // Step 2 — Select agent framework
