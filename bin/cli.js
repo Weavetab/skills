@@ -21,42 +21,42 @@ async function run() {
     message: 'Which AI Agent format are you using?',
     choices: [
       {
-        name: '🤖 .agents (Antigravity, Copilot, OpenCode)',
+        name: '.agents (Antigravity, Copilot, OpenCode)',
         value: '.agents',
         description: 'Installs to .agents/skills/weavetab/'
       },
       {
-        name: '💻 .cursor (Cursor IDE)',
+        name: '.cursor (Cursor IDE)',
         value: '.cursor',
         description: 'Installs as .mdc files in .cursor/rules/'
       },
       {
-        name: '🧠 .clinerules (Cline AI)',
+        name: '.clinerules (Cline AI)',
         value: '.clinerules',
         description: 'Appends all skills to a .clinerules file'
       },
       {
-        name: '🐾 .openclaw (OpenClaw AI)',
+        name: '.openclaw (OpenClaw AI)',
         value: '.openclaw',
         description: 'Installs to .openclaw/skills/'
       },
       {
-        name: '🚀 .roocode (RooCode)',
+        name: '.roocode (RooCode)',
         value: '.roocode',
         description: 'Installs to .roocode/rules/'
       },
       {
-        name: '🌬️ .windsurf (Windsurf IDE)',
+        name: '.windsurf (Windsurf IDE)',
         value: '.windsurf',
         description: 'Installs to .windsurf/rules/'
       },
       {
-        name: '🛠️  Aider (.aider.conf.yml)',
+        name: 'Aider (.aider.conf.yml)',
         value: '.aider',
         description: 'Appends instructions for Aider'
       },
       {
-        name: '📁 Generic Folder (Other Agents)',
+        name: 'Generic Folder (Other Agents)',
         value: 'generic',
         description: 'Installs to weavetab-skills/ folder'
       }
