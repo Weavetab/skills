@@ -3,80 +3,207 @@
     {
       "id": "captcha-evasion",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "captcha",
+        "recaptcha",
+        "hcaptcha",
+        "bot check",
+        "verification"
+      ],
+      "tools": [
+        "browser_wait",
+        "browser_click",
+        "browser_map",
+        "browser_snapshot",
+        "browser_ask"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/captcha-evasion.md"
     },
     {
       "id": "file-upload",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "upload",
+        "file upload",
+        "attach file",
+        "drag and drop",
+        "input file"
+      ],
+      "tools": [
+        "browser_upload",
+        "browser_map",
+        "browser_click",
+        "browser_find"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/file-upload.md"
     },
     {
       "id": "form-filling",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "fill form",
+        "submit form",
+        "form",
+        "input",
+        "textarea",
+        "dropdown",
+        "select",
+        "checkbox"
+      ],
+      "tools": [
+        "browser_map",
+        "browser_fill",
+        "browser_type",
+        "browser_select",
+        "browser_click"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/form-filling.md"
     },
     {
       "id": "guardrails",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "search",
+        "browse",
+        "github",
+        "web",
+        "navigate",
+        "read repo"
+      ],
+      "tools": [
+        "browser_navigate",
+        "browser_map",
+        "github_analyze",
+        "github_read"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/guardrails.md"
     },
     {
       "id": "iframe-handling",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "iframe",
+        "frame",
+        "embed",
+        "embedded content",
+        "cross origin"
+      ],
+      "tools": [
+        "browser_map",
+        "browser_find",
+        "browser_click",
+        "browser_snapshot",
+        "browser_navigate"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/iframe-handling.md"
     },
     {
       "id": "infinite-scroll",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "infinite scroll",
+        "load more",
+        "scroll",
+        "pagination",
+        "lazy load"
+      ],
+      "tools": [
+        "browser_scroll",
+        "browser_map",
+        "browser_snapshot",
+        "browser_wait"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/infinite-scroll.md"
     },
     {
       "id": "login-flow",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "login",
+        "sign in",
+        "authenticate",
+        "credentials",
+        "log in",
+        "username",
+        "password"
+      ],
+      "tools": [
+        "browser_navigate",
+        "browser_map",
+        "browser_fill",
+        "browser_type",
+        "browser_click"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/login-flow.md"
     },
     {
       "id": "multi-tab-management",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "new tab",
+        "open tab",
+        "switch tab",
+        "multiple tabs",
+        "popup",
+        "window"
+      ],
+      "tools": [
+        "browser_tabs",
+        "browser_navigate",
+        "browser_click",
+        "browser_map"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/multi-tab-management.md"
     },
     {
       "id": "spa-navigation",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "spa",
+        "single page",
+        "react",
+        "vue",
+        "angular",
+        "navigate",
+        "route",
+        "dynamic page"
+      ],
+      "tools": [
+        "browser_navigate",
+        "browser_wait",
+        "browser_map",
+        "browser_snapshot",
+        "browser_click"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/spa-navigation.md"
     },
     {
       "id": "table-scraping",
       "tier": "general",
-      "triggers": [],
-      "tools": [],
+      "triggers": [
+        "scrape table",
+        "extract table",
+        "table data",
+        "csv",
+        "rows",
+        "columns",
+        "spreadsheet"
+      ],
+      "tools": [
+        "browser_scrape",
+        "browser_map",
+        "browser_snapshot",
+        "browser_navigate"
+      ],
       "weavetab": ">=2.5.0",
       "filePath": "general/table-scraping.md"
     }

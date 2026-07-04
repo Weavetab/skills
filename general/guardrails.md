@@ -1,8 +1,8 @@
 ---
 id: guardrails
 tier: general
-triggers: []
-tools: []
+triggers: ["search", "browse", "github", "web", "navigate", "read repo"]
+tools: [browser_navigate, browser_map, github_analyze, github_read]
 weavetab: ">=2.5.0"
 ---
 # Weavetab MCP Guardrails

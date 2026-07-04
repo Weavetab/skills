@@ -1,8 +1,8 @@
 ---
 id: infinite-scroll
 tier: general
-triggers: []
-tools: []
+triggers: ["infinite scroll", "load more", "scroll", "pagination", "lazy load"]
+tools: [browser_scroll, browser_map, browser_snapshot, browser_wait]
 weavetab: ">=2.5.0"
 ---
 # Infinite Scroll Pattern

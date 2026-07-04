@@ -1,8 +1,8 @@
 ---
 id: file-upload
 tier: general
-triggers: []
-tools: []
+triggers: ["upload", "file upload", "attach file", "drag and drop", "input file"]
+tools: [browser_upload, browser_map, browser_click, browser_find]
 weavetab: ">=2.5.0"
 ---
 # File Upload Pattern

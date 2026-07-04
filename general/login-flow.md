@@ -1,8 +1,8 @@
 ---
 id: login-flow
 tier: general
-triggers: []
-tools: []
+triggers: ["login", "sign in", "authenticate", "credentials", "log in", "username", "password"]
+tools: [browser_navigate, browser_map, browser_fill, browser_type, browser_click]
 weavetab: ">=2.5.0"
 ---
 # Login Flow Pattern

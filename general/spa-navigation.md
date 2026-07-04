@@ -1,8 +1,8 @@
 ---
 id: spa-navigation
 tier: general
-triggers: []
-tools: []
+triggers: ["spa", "single page", "react", "vue", "angular", "navigate", "route", "dynamic page"]
+tools: [browser_navigate, browser_wait, browser_map, browser_snapshot, browser_click]
 weavetab: ">=2.5.0"
 ---
 # SPA Navigation Pattern

@@ -1,8 +1,8 @@
 ---
 id: table-scraping
 tier: general
-triggers: []
-tools: []
+triggers: ["scrape table", "extract table", "table data", "csv", "rows", "columns", "spreadsheet"]
+tools: [browser_scrape, browser_map, browser_snapshot, browser_navigate]
 weavetab: ">=2.5.0"
 ---
 # Table Scraping Pattern

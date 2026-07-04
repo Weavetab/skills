@@ -1,8 +1,8 @@
 ---
 id: multi-tab-management
 tier: general
-triggers: []
-tools: []
+triggers: ["new tab", "open tab", "switch tab", "multiple tabs", "popup", "window"]
+tools: [browser_tabs, browser_navigate, browser_click, browser_map]
 weavetab: ">=2.5.0"
 ---
 # Multi-Tab Management Pattern

@@ -1,8 +1,8 @@
 ---
 id: iframe-handling
 tier: general
-triggers: []
-tools: []
+triggers: ["iframe", "frame", "embed", "embedded content", "cross origin"]
+tools: [browser_map, browser_find, browser_click, browser_snapshot, browser_navigate]
 weavetab: ">=2.5.0"
 ---
 # Iframe Handling Pattern

@@ -1,8 +1,8 @@
 ---
 id: captcha-evasion
 tier: general
-triggers: []
-tools: []
+triggers: ["captcha", "recaptcha", "hcaptcha", "bot check", "verification"]
+tools: [browser_wait, browser_click, browser_map, browser_snapshot, browser_ask]
 weavetab: ">=2.5.0"
 ---
 # CAPTCHA Evasion & Handling

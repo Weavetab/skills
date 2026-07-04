@@ -1,8 +1,8 @@
 ---
 id: form-filling
 tier: general
-triggers: []
-tools: []
+triggers: ["fill form", "submit form", "form", "input", "textarea", "dropdown", "select", "checkbox"]
+tools: [browser_map, browser_fill, browser_type, browser_select, browser_click]
 weavetab: ">=2.5.0"
 ---
 # Form Filling Pattern
