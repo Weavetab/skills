@@ -28,9 +28,6 @@
       "optional": true
     }
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "main": "./src/api.js",
   "bin": {
     "weavetab-skills": "./bin/cli.js"

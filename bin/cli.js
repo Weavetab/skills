@@ -3,83 +3,134 @@
 const { select, checkbox, confirm } = require('@inquirer/prompts');
 const { installSkills } = require('../src/api.js');
 
+// Blue theme colors via ANSI
+const B  = '\x1b[34m';   // blue
+const CB = '\x1b[96m';   // bright cyan
+const W  = '\x1b[97m';   // bright white
+const DM = '\x1b[2m';    // dim
+const Y  = '\x1b[33m';   // yellow
+const G  = '\x1b[32m';   // green
+const R  = '\x1b[31m';   // red
+const X  = '\x1b[0m';    // reset
+
+const line = `${B}${'─'.repeat(52)}${X}`;
+
 async function run() {
-  console.log("\n==================================================");
-  console.log("🚀 Welcome to the Weavetab MCP Skills Installer!");
-  console.log("==================================================\n");
+  console.log('');
+  console.log(line);
+  console.log(`${B}  Weavetab MCP Skills${X}  ${DM}v1.0.0${X}`);
+  console.log(`${DM}  Interactive skill installer for AI agents${X}`);
+  console.log(line);
+  console.log('');
+  console.log(`${Y}  ! IMPORTANT${X}  These skills require Weavetab MCP v2.5.0+`);
+  console.log(`${DM}  Install the MCP first: npm install -g weavetab${X}`);
+  console.log(`${DM}  Website: https://weavetab.dev${X}`);
+  console.log('');
 
-  console.log("\x1b[33m⚠️  IMPORTANT:\x1b[0m These skills only work if your AI agent has the Weavetab MCP server installed.");
-  console.log("Make sure you have set up Weavetab MCP before using these skills.\n");
+  const proceed = await confirm({
+    message: 'Does your agent have Weavetab MCP v2.5.0+ installed?',
+    default: true
+  });
 
-  const proceed = await confirm({ message: "Does your agent have Weavetab MCP installed?", default: true });
   if (!proceed) {
-    console.log("\nPlease install Weavetab MCP first, then run this installer again. Goodbye!\n");
+    console.log('');
+    console.log(`${DM}  Run: npm install -g weavetab${X}`);
+    console.log(`${DM}  Then run this installer again.${X}`);
+    console.log('');
     process.exit(0);
   }
 
-  const targetFramework = await select({
-    message: 'Which AI Agent format are you using?',
-    choices: [
-      {
-        name: '.agents (Antigravity, Copilot, OpenCode)',
-        value: '.agents',
-        description: 'Installs to .agents/skills/weavetab/'
-      },
-      {
-        name: '.cursor (Cursor IDE)',
-        value: '.cursor',
-        description: 'Installs as .mdc files in .cursor/rules/'
-      },
-      {
-        name: '.clinerules (Cline AI)',
-        value: '.clinerules',
-        description: 'Appends all skills to a .clinerules file'
-      },
-      {
-        name: '.openclaw (OpenClaw AI)',
-        value: '.openclaw',
-        description: 'Installs to .openclaw/skills/'
-      },
-      {
-        name: '.roocode (RooCode)',
-        value: '.roocode',
-        description: 'Installs to .roocode/rules/'
-      },
-      {
-        name: '.windsurf (Windsurf IDE)',
-        value: '.windsurf',
-        description: 'Installs to .windsurf/rules/'
-      },
-      {
-        name: 'Aider (.aider.conf.yml)',
-        value: '.aider',
-        description: 'Appends instructions for Aider'
-      },
-      {
-        name: 'Generic Folder (Other Agents)',
-        value: 'generic',
-        description: 'Installs to weavetab-skills/ folder'
-      }
-    ]
-  });
+  console.log('');
 
+  // Step 1 — Select categories
   const categories = await checkbox({
-    message: 'Which categories of skills do you want to install?',
+    message: 'Select skill categories to install',
+    instructions: `${DM}  Space to select, Enter to confirm${X}`,
     choices: [
-      { name: 'General (Tier 1)', value: 'general', checked: true },
-      { name: 'Automation (Tier 2 - Coming Soon)', value: 'automation', disabled: true },
-      { name: 'Advanced (Tier 3 - Coming Soon)', value: 'advanced', disabled: true }
+      {
+        name: 'General',
+        value: 'general',
+        checked: true,
+        description: 'Core browser automation patterns (10 skills)'
+      },
+      {
+        name: 'Automation  [coming soon]',
+        value: 'automation',
+        disabled: true
+      },
+      {
+        name: 'Advanced    [coming soon]',
+        value: 'advanced',
+        disabled: true
+      }
     ],
     required: true
   });
 
+  console.log('');
+
+  // Step 2 — Select agent framework
+  const targetFramework = await select({
+    message: 'Select your AI agent format',
+    choices: [
+      {
+        name: '.agents',
+        value: '.agents',
+        description: 'Antigravity, Copilot, OpenCode  ->  .agents/skills/weavetab/'
+      },
+      {
+        name: '.cursor',
+        value: '.cursor',
+        description: 'Cursor IDE  ->  .cursor/rules/'
+      },
+      {
+        name: '.clinerules',
+        value: '.clinerules',
+        description: 'Cline AI  ->  .clinerules'
+      },
+      {
+        name: '.openclaw',
+        value: '.openclaw',
+        description: 'OpenClaw AI  ->  .openclaw/skills/'
+      },
+      {
+        name: '.roocode',
+        value: '.roocode',
+        description: 'RooCode  ->  .roocode/rules/'
+      },
+      {
+        name: '.windsurf',
+        value: '.windsurf',
+        description: 'Windsurf IDE  ->  .windsurf/rules/'
+      },
+      {
+        name: 'aider',
+        value: '.aider',
+        description: 'Aider  ->  .aider.conf.yml'
+      },
+      {
+        name: 'generic',
+        value: 'generic',
+        description: 'Other agents  ->  weavetab-skills/'
+      }
+    ]
+  });
+
+  console.log('');
+  console.log(`${DM}  Installing skills...${X}`);
+
   try {
-    console.log('\nInstalling skills...');
     const result = await installSkills({ targetFramework, categories });
-    console.log(`\n\x1b[32m✔ ${result}\x1b[0m\n`);
-    console.log('✨ Your AI agent is now supercharged for Weavetab MCP! ✨\n');
+    console.log('');
+    console.log(line);
+    console.log(`${G}  Done!${X}  ${result}`);
+    console.log(`${B}  Your agent is ready for Weavetab MCP.${X}`);
+    console.log(line);
+    console.log('');
   } catch (e) {
-    console.error(`\n\x1b[31m✖ Error:\x1b[0m ${e.message}\n`);
+    console.log('');
+    console.error(`${R}  Error:${X}  ${e.message}`);
+    console.log('');
     process.exit(1);
   }
 }
