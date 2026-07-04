@@ -1,0 +1,42 @@
+{
+  "name": "@weavetab/skills",
+  "version": "1.0.0",
+  "description": "Supercharge your AI Agents with Weavetab MCP Skills. Native drop-in skills for Antigravity, Cursor, Cline, and more.",
+  "author": "fy2ne",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Weavetab/Skills.git"
+  },
+  "homepage": "https://github.com/Weavetab/Skills#readme",
+  "bugs": {
+    "url": "https://github.com/Weavetab/Skills/issues"
+  },
+  "keywords": [
+    "weavetab",
+    "weavetab-mcp",
+    "mcp",
+    "ai-agent",
+    "cursor",
+    "cline",
+    "antigravity",
+    "browser-automation",
+    "agent-skills",
+    "openclaw"
+  ],
+  "peerDependenciesMeta": {
+    "@weavetab/mcp": {
+      "optional": true
+    }
+  },
+  "main": "./src/api.js",
+  "bin": {
+    "weavetab-skills": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.3.1",
+    "yaml": "^2.3.4"
+  }
+}

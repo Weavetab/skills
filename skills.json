@@ -1,0 +1,84 @@
+{
+  "skills": [
+    {
+      "id": "captcha-evasion",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/captcha-evasion.md"
+    },
+    {
+      "id": "file-upload",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/file-upload.md"
+    },
+    {
+      "id": "form-filling",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/form-filling.md"
+    },
+    {
+      "id": "guardrails",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/guardrails.md"
+    },
+    {
+      "id": "iframe-handling",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/iframe-handling.md"
+    },
+    {
+      "id": "infinite-scroll",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/infinite-scroll.md"
+    },
+    {
+      "id": "login-flow",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/login-flow.md"
+    },
+    {
+      "id": "multi-tab-management",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/multi-tab-management.md"
+    },
+    {
+      "id": "spa-navigation",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/spa-navigation.md"
+    },
+    {
+      "id": "table-scraping",
+      "tier": "general",
+      "triggers": [],
+      "tools": [],
+      "weavetab": ">=1.0.0",
+      "filePath": "general/table-scraping.md"
+    }
+  ]
+}
