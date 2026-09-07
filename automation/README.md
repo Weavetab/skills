@@ -1,2 +1,0 @@
-# Automation Skills
-Coming soon.

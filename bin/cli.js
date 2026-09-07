@@ -1,124 +1,148 @@
 #!/usr/bin/env node
 
 const { select, confirm } = require('@inquirer/prompts');
-const { installSkills } = require('../src/api.js');
+const { installSkills, ALL_DOMAINS } = require('../src/api.js');
 
-// Blue theme colors via ANSI
-const B  = '\x1b[34m';   // blue
-const CB = '\x1b[96m';   // bright cyan
-const W  = '\x1b[97m';   // bright white
-const DM = '\x1b[2m';    // dim
-const Y  = '\x1b[33m';   // yellow
-const G  = '\x1b[32m';   // green
-const R  = '\x1b[31m';   // red
-const X  = '\x1b[0m';    // reset
+// High-contrast modern ANSI styling
+const B  = '\x1b[38;2;99;102;241m'; // indigo primary
+const CB = '\x1b[38;2;147;197;253m'; // sky cyan
+const W  = '\x1b[97m'; // bright white
+const DM = '\x1b[2m';  // dim
+const Y  = '\x1b[33m'; // yellow
+const G  = '\x1b[32m'; // green
+const R  = '\x1b[31m'; // red
+const X  = '\x1b[0m';  // reset
 
-const line = `${B}${'─'.repeat(52)}${X}`;
+const line = `${B}${'━'.repeat(58)}${X}`;
 
 async function run() {
   console.log('');
   console.log(line);
-  console.log(`${B}  Weavetab MCP Skills${X}  ${DM}v1.0.3${X}`);
-  console.log(`${DM}  Interactive skill installer for AI agents${X}`);
+  console.log(`${B}  Weavetab MCP Skills Engine${X}  ${CB}v2.5.0-beta.3${X}`);
+  console.log(`${DM}  Enterprise Domain-Driven Agent Intelligence${X}`);
   console.log(line);
   console.log('');
-  console.log(`${Y}  ! IMPORTANT${X}  These skills require Weavetab MCP v2.5.0+`);
-  console.log(`${DM}  Install the MCP first: npm install -g weavetab${X}`);
-  console.log(`${DM}  Website: https://weavetab.dev${X}`);
+  console.log(`${CB}  ✦ 48 Official MCP Tools Mapped${X}`);
+  console.log(`${CB}  ✦ Universal Step-0 ROUTER.md Decision Matrix${X}`);
+  console.log(`${CB}  ✦ Multi-Agent Adapters (Antigravity, Cursor, Cline, Windsurf)${X}`);
   console.log('');
 
   const proceed = await confirm({
-    message: 'Does your agent have Weavetab MCP v2.5.0+ installed?',
+    message: 'Does your workspace have @weavetab/mcp installed or configured?',
     default: true
   });
 
   if (!proceed) {
     console.log('');
-    console.log(`${DM}  Run: npm install -g weavetab${X}`);
-    console.log(`${DM}  Then run this installer again.${X}`);
+    console.log(`${DM}  Run: npm install -g @weavetab/mcp${X}`);
+    console.log(`${DM}  Documentation: https://weavetab.pages.dev${X}`);
     console.log('');
     process.exit(0);
   }
 
   console.log('');
 
-  // Step 1 — Select category
-  console.log(`${B}  Available tiers:${X}`);
-  console.log(`${G}    [1] General${X}    Core browser automation patterns (15 skills)`);
-  console.log(`${DM}    [2] Automation   Coming soon${X}`);
-  console.log(`${DM}    [3] Advanced     Coming soon${X}`);
-  console.log('');
-
-  const categoryChoice = await select({
-    message: 'Select a skill tier to install',
+  // Step 1 — Select Domain Scope
+  const scopeChoice = await select({
+    message: 'Select Domain Scope to Install',
     choices: [
       {
-        name: 'General',
-        value: 'general',
-        description: '15 skills  ->  login, forms, scraping, navigation, uploads, and more'
+        name: 'Full Enterprise Suite (All 9 Domains — Recommended)',
+        value: 'all',
+        description: 'Complete suite: browser, desktop, memory, resilience, security, plugins, perf, docs, dev'
+      },
+      {
+        name: 'Web & Chromium Core (browser, memory, security)',
+        value: 'web_core',
+        description: 'Targeted for web scrapers, login automation, and interactive DOM tasks'
+      },
+      {
+        name: 'Desktop & Native Electron Automation (desktop, security)',
+        value: 'desktop',
+        description: 'Targeted for Slack, Discord, VS Code, and Electron application agents'
+      },
+      {
+        name: 'Resilience, Time-Travel & Memory (resilience, memory)',
+        value: 'resilience',
+        description: 'Checkpoints, state rollbacks, stale ref auto-healing, and macro compilation'
+      },
+      {
+        name: 'Forensics, Network & Documents (network-and-perf, documents, developer)',
+        value: 'forensics',
+        description: 'TLS waterfalls, API mocking, Office ingestion, and GitHub API forensics'
       }
     ]
   });
 
-  const categories = [categoryChoice];
+  let selectedDomains = ALL_DOMAINS;
+  if (scopeChoice === 'web_core') {
+    selectedDomains = ['browser', 'memory', 'security'];
+  } else if (scopeChoice === 'desktop') {
+    selectedDomains = ['desktop', 'security'];
+  } else if (scopeChoice === 'resilience') {
+    selectedDomains = ['resilience', 'memory'];
+  } else if (scopeChoice === 'forensics') {
+    selectedDomains = ['network-and-perf', 'documents', 'developer'];
+  }
+
   console.log('');
 
-  // Step 2 — Select agent framework
+  // Step 2 — Select AI Agent Ecosystem
   const targetFramework = await select({
-    message: 'Select your AI agent format',
+    message: 'Select Target AI Agent Framework',
     choices: [
       {
-        name: '.agents',
-        value: '.agents',
-        description: 'Antigravity, Copilot, OpenCode  ->  .agents/skills/weavetab/'
+        name: 'Antigravity (.agent/skills/<domain>/SKILL.md)',
+        value: '.agent',
+        description: 'Native Antigravity standard with YAML frontmatter discovery'
       },
       {
-        name: '.cursor',
+        name: 'Cursor IDE (.cursor/rules/weavetab-<domain>.mdc)',
         value: '.cursor',
-        description: 'Cursor IDE  ->  .cursor/rules/'
+        description: 'Cursor rules with MDC frontmatter and glob matching'
       },
       {
-        name: '.clinerules',
+        name: 'Cline (.clinerules)',
         value: '.clinerules',
-        description: 'Cline AI  ->  .clinerules'
+        description: 'Consolidated markdown file with domain dividers'
       },
       {
-        name: '.openclaw',
-        value: '.openclaw',
-        description: 'OpenClaw AI  ->  .openclaw/skills/'
-      },
-      {
-        name: '.roocode',
-        value: '.roocode',
-        description: 'RooCode  ->  .roocode/rules/'
-      },
-      {
-        name: '.windsurf',
+        name: 'Windsurf IDE (.windsurf/rules/)',
         value: '.windsurf',
-        description: 'Windsurf IDE  ->  .windsurf/rules/'
+        description: 'Cascade / Windsurf project rules directory'
       },
       {
-        name: 'aider',
-        value: '.aider',
-        description: 'Aider  ->  .aider.conf.yml'
+        name: 'OpenClaw (.openclaw/skills/)',
+        value: '.openclaw',
+        description: 'OpenClaw autonomous agent skill packages'
       },
       {
-        name: 'generic',
+        name: 'RooCode (.roocode/rules/)',
+        value: '.roocode',
+        description: 'RooCode extension rules directory'
+      },
+      {
+        name: 'Raw Markdown (weavetab-skills/)',
         value: 'generic',
-        description: 'Other agents  ->  weavetab-skills/'
+        description: 'Portable markdown directory for any LLM prompt'
       }
     ]
   });
 
   console.log('');
-  console.log(`${DM}  Installing skills...${X}`);
+  console.log(`${DM}  Installing ${selectedDomains.length} domain bundles...${X}`);
 
   try {
-    const result = await installSkills({ targetFramework, categories });
+    const result = await installSkills({
+      targetFramework,
+      domains: selectedDomains,
+      includeRouter: true
+    });
+
     console.log('');
     console.log(line);
-    console.log(`${G}  Done!${X}  ${result}`);
-    console.log(`${B}  Your agent is ready for Weavetab MCP.${X}`);
+    console.log(`${G}  ✔ Success!${X}  ${result}`);
+    console.log(`${CB}  Step-0 ROUTER.md matrix ready for your AI agent.${X}`);
     console.log(line);
     console.log('');
   } catch (e) {

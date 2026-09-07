@@ -1,2 +1,0 @@
-# Advanced Skills
-Coming soon.

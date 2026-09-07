@@ -1,0 +1,62 @@
+---
+id: loop-breaker
+domain: resilience
+triggers:
+  - "loop detected"
+  - "stuck in loop"
+  - "reset loop counter"
+  - "captcha detected"
+  - "hcaptcha"
+  - "recaptcha"
+tools:
+  - "browser_reset_loop_counter"
+  - "browser_captcha"
+weavetab: ">=2.5.0-beta.3"
+---
+
+# Loop Breaker & CAPTCHA Escalation Protocol
+
+Agents can get trapped in repetitive click loops when a button does not advance the state (e.g. failing silent validation, unhandled reCAPTCHA challenges, or modals swallowing events). Weavetab actively monitors repetitive patterns and provides circuit breakers.
+
+---
+
+## 1. Loop Detection & Strike Reset (`browser_reset_loop_counter`)
+
+Weavetab tracks the sequence of identical or near-identical tool invocations. If an agent calls `browser_click` on the same selector or ref 3+ times without URL or major DOM mutations, the server raises a `POTENTIAL_LOOP_DETECTED` warning.
+
+### How to Break the Loop:
+1. **Analyze Why the Action Failed**: Check `browser_console` for JavaScript errors or use `browser_map` to see if a validation banner popped up.
+2. **Reset the Circuit Breaker**: Once you have diagnosed the issue and adjusted your plan, call `browser_reset_loop_counter` to reset the strike counter:
+
+```json
+{}
+```
+
+---
+
+## 2. CAPTCHA Handling Protocol (`browser_captcha`)
+
+When an automated flow is blocked by Cloudflare Turnstile, Google reCAPTCHA, or hCaptcha, do NOT repeatedly click random coordinates.
+
+Invoke `browser_captcha` to analyze and manage the challenge:
+
+```json
+{
+  "action": "detect"
+}
+```
+
+### Response Example:
+```json
+{
+  "detected": true,
+  "type": "turnstile",
+  "provider": "cloudflare",
+  "interactive": true,
+  "ref": "w:99"
+}
+```
+
+### Action Strategy:
+1. If the challenge is interactive and requires human intervention (e.g. image classification), inform the user cleanly or request human bypass.
+2. If the challenge is a simple checkbox Turnstile widget, pass `"action": "solve"` or click the detected widget ref with `browser_click`.

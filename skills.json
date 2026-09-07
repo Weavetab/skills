@@ -1,309 +1,406 @@
 {
+  "version": "2.5.0-beta.3",
+  "domains": [
+    "browser",
+    "desktop",
+    "memory",
+    "resilience",
+    "security",
+    "plugins",
+    "network-and-perf",
+    "documents",
+    "developer"
+  ],
+  "officialToolsCount": 48,
+  "skillsCount": 21,
   "skills": [
     {
-      "id": "captcha-evasion",
-      "tier": "general",
+      "id": "dom-strategy",
+      "domain": "browser",
       "triggers": [
-        "captcha",
-        "recaptcha",
-        "hcaptcha",
-        "bot check",
-        "verification"
-      ],
-      "tools": [
-        "browser_wait",
-        "browser_click",
-        "browser_map",
-        "browser_snapshot",
-        "browser_ask"
-      ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/captcha-evasion.md"
-    },
-    {
-      "id": "context-awareness",
-      "tier": "general",
-      "triggers": [
-        "analyze page",
-        "understand context",
-        "what is on the page",
         "read page",
-        "visualize"
+        "inspect dom",
+        "find element",
+        "parse webpage",
+        "locate button",
+        "extract text"
       ],
       "tools": [
-        "browser_snapshot",
         "browser_map",
-        "browser_evaluate"
-      ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/context-awareness.md"
-    },
-    {
-      "id": "cookie-consent",
-      "tier": "general",
-      "triggers": [
-        "cookie banner",
-        "consent",
-        "gdpr",
-        "accept cookies",
-        "popup",
-        "overlay"
-      ],
-      "tools": [
         "browser_find",
-        "browser_click",
-        "browser_map"
-      ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/cookie-consent.md"
-    },
-    {
-      "id": "data-extraction",
-      "tier": "general",
-      "triggers": [
-        "extract",
-        "scrape",
-        "get data",
-        "read data",
-        "fetch info",
-        "parse"
-      ],
-      "tools": [
         "browser_scrape",
-        "browser_evaluate",
-        "browser_snapshot",
-        "browser_map"
+        "browser_snapshot"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/data-extraction.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "browser/dom-strategy.md"
     },
     {
-      "id": "dynamic-interaction",
-      "tier": "general",
-      "triggers": [
-        "hover",
-        "drag",
-        "complex interaction",
-        "dropdown",
-        "menu",
-        "slider"
-      ],
-      "tools": [
-        "browser_pointer",
-        "browser_map",
-        "browser_click",
-        "browser_evaluate"
-      ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/dynamic-interaction.md"
-    },
-    {
-      "id": "error-recovery",
-      "tier": "general",
-      "triggers": [
-        "error",
-        "fail",
-        "timeout",
-        "crash",
-        "not found",
-        "stuck",
-        "fix"
-      ],
-      "tools": [
-        "browser_snapshot",
-        "browser_map",
-        "browser_console",
-        "browser_wait"
-      ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/error-recovery.md"
-    },
-    {
-      "id": "file-upload",
-      "tier": "general",
-      "triggers": [
-        "upload",
-        "file upload",
-        "attach file",
-        "drag and drop",
-        "input file"
-      ],
-      "tools": [
-        "browser_upload",
-        "browser_map",
-        "browser_click",
-        "browser_find"
-      ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/file-upload.md"
-    },
-    {
-      "id": "form-filling",
-      "tier": "general",
+      "id": "form-automation",
+      "domain": "browser",
       "triggers": [
         "fill form",
         "submit form",
-        "form",
-        "input",
-        "textarea",
-        "dropdown",
-        "select",
+        "select dropdown",
+        "multi field input",
+        "radio button",
         "checkbox"
       ],
       "tools": [
-        "browser_map",
         "browser_fill",
+        "browser_select"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "browser/form-automation.md"
+    },
+    {
+      "id": "interaction-pipeline",
+      "domain": "browser",
+      "triggers": [
+        "click element",
+        "type text",
+        "press key",
+        "drag and drop",
+        "hover",
+        "upload file"
+      ],
+      "tools": [
+        "browser_click",
         "browser_type",
-        "browser_select",
-        "browser_click"
+        "browser_key",
+        "browser_pointer",
+        "browser_upload",
+        "browser_scroll",
+        "browser_dialog",
+        "browser_burst",
+        "browser_highlight",
+        "browser_clipboard"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/form-filling.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "browser/interaction-pipeline.md"
     },
     {
-      "id": "guardrails",
-      "tier": "general",
+      "id": "tab-and-window",
+      "domain": "browser",
       "triggers": [
-        "search",
-        "browse",
-        "github",
-        "web",
-        "navigate",
-        "read repo"
+        "switch tab",
+        "open tab",
+        "close tab",
+        "list tabs",
+        "tab crash recovery",
+        "heal tabs",
+        "desktop app tabs"
       ],
       "tools": [
-        "browser_navigate",
-        "browser_map",
-        "github_analyze",
-        "github_read"
+        "browser_tabs"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/guardrails.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "browser/tab-and-window.md"
     },
     {
-      "id": "iframe-handling",
-      "tier": "general",
+      "id": "desktop-targeting",
+      "domain": "desktop",
       "triggers": [
-        "iframe",
-        "frame",
-        "embed",
-        "embedded content",
-        "cross origin"
+        "automate desktop app",
+        "send message in slack",
+        "edit in vscode",
+        "switch to discord",
+        "desktop app routing"
       ],
       "tools": [
         "browser_map",
+        "browser_click",
+        "browser_type",
+        "browser_fill",
+        "browser_detect",
+        "browser_tabs",
+        "browser_navigate"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "desktop/desktop-targeting.md"
+    },
+    {
+      "id": "electron-discovery",
+      "domain": "desktop",
+      "triggers": [
+        "discover electron apps",
+        "detect desktop apps",
+        "connect to slack",
+        "connect to discord",
+        "connect to vscode",
+        "electron automation"
+      ],
+      "tools": [
+        "browser_detect"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "desktop/electron-discovery.md"
+    },
+    {
+      "id": "selector-memory-system",
+      "domain": "memory",
+      "triggers": [
+        "adaptive selector",
+        "selector memory",
+        "cached selector",
+        "selector decay",
+        "cross session learning"
+      ],
+      "tools": [
         "browser_find",
         "browser_click",
-        "browser_snapshot",
-        "browser_navigate"
+        "browser_fill"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/iframe-handling.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "memory/selector-memory-system.md"
     },
     {
-      "id": "infinite-scroll",
-      "tier": "general",
+      "id": "session-trail",
+      "domain": "memory",
       "triggers": [
-        "infinite scroll",
-        "load more",
-        "scroll",
-        "pagination",
-        "lazy load"
+        "compile macro",
+        "export automation",
+        "replay actions",
+        "session trail",
+        "record workflow"
       ],
       "tools": [
-        "browser_scroll",
-        "browser_map",
-        "browser_snapshot",
-        "browser_wait"
+        "browser_macro_compile",
+        "browser_recording",
+        "browser_automation",
+        "browser_thoughts"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/infinite-scroll.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "memory/session-trail.md"
     },
     {
-      "id": "login-flow",
-      "tier": "general",
+      "id": "loop-breaker",
+      "domain": "resilience",
       "triggers": [
-        "login",
-        "sign in",
-        "authenticate",
-        "credentials",
-        "log in",
-        "username",
-        "password"
+        "loop detected",
+        "stuck in loop",
+        "reset loop counter",
+        "captcha detected",
+        "hcaptcha",
+        "recaptcha"
       ],
       "tools": [
-        "browser_navigate",
+        "browser_reset_loop_counter",
+        "browser_captcha"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "resilience/loop-breaker.md"
+    },
+    {
+      "id": "session-time-travel",
+      "domain": "resilience",
+      "triggers": [
+        "time travel",
+        "browser checkpoint",
+        "rollback session",
+        "save state",
+        "restore cookies"
+      ],
+      "tools": [
+        "browser_checkpoint",
+        "browser_cookies",
+        "browser_storage"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "resilience/session-time-travel.md"
+    },
+    {
+      "id": "stale-ref-recovery",
+      "domain": "resilience",
+      "triggers": [
+        "stale element reference",
+        "detached from dom",
+        "spa re-render",
+        "react hydration",
+        "element not found"
+      ],
+      "tools": [
+        "browser_find",
         "browser_map",
-        "browser_fill",
-        "browser_type",
         "browser_click"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/login-flow.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "resilience/stale-ref-recovery.md"
     },
     {
-      "id": "multi-tab-management",
-      "tier": "general",
+      "id": "rbac-and-policies",
+      "domain": "security",
       "triggers": [
-        "new tab",
-        "open tab",
-        "switch tab",
-        "multiple tabs",
-        "popup",
-        "window"
+        "rbac",
+        "security policy",
+        "role boundaries",
+        "viewer agent",
+        "permission denied"
       ],
       "tools": [
-        "browser_tabs",
-        "browser_navigate",
-        "browser_click",
+        "browser_inspect",
+        "browser_scrape",
         "browser_map"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/multi-tab-management.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "security/rbac-and-policies.md"
     },
     {
-      "id": "spa-navigation",
-      "tier": "general",
+      "id": "secret-containment-protocol",
+      "domain": "security",
       "triggers": [
-        "spa",
-        "single page",
-        "react",
-        "vue",
-        "angular",
-        "navigate",
-        "route",
-        "dynamic page"
+        "enter password",
+        "input credentials",
+        "api key entry",
+        "sensitive token",
+        "secret containment"
       ],
       "tools": [
-        "browser_navigate",
-        "browser_wait",
-        "browser_map",
-        "browser_snapshot",
-        "browser_click"
+        "browser_type_secret"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/spa-navigation.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "security/secret-containment-protocol.md"
     },
     {
-      "id": "table-scraping",
-      "tier": "general",
+      "id": "hooks-and-overrides",
+      "domain": "plugins",
       "triggers": [
-        "scrape table",
-        "extract table",
-        "table data",
-        "csv",
-        "rows",
-        "columns",
-        "spreadsheet"
+        "plugin hooks",
+        "before tool call",
+        "after tool call",
+        "telemetry interception",
+        "sdk hooks"
       ],
       "tools": [
-        "browser_scrape",
-        "browser_map",
-        "browser_snapshot",
-        "browser_navigate"
+        "list_plugins"
       ],
-      "weavetab": ">=2.5.0",
-      "filePath": "general/table-scraping.md"
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "plugins/hooks-and-overrides.md"
+    },
+    {
+      "id": "plugin-runtime",
+      "domain": "plugins",
+      "triggers": [
+        "list plugins",
+        "load plugin",
+        "install plugin",
+        "weavetab plugin",
+        "extend mcp"
+      ],
+      "tools": [
+        "list_plugins",
+        "load_plugin"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "plugins/plugin-runtime.md"
+    },
+    {
+      "id": "device-and-environment",
+      "domain": "network-and-perf",
+      "triggers": [
+        "emulate device",
+        "mobile view",
+        "throttle network",
+        "geolocation override",
+        "user agent",
+        "responsive testing"
+      ],
+      "tools": [
+        "browser_emulate"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "network-and-perf/device-and-environment.md"
+    },
+    {
+      "id": "network-intercept-and-mock",
+      "domain": "network-and-perf",
+      "triggers": [
+        "mock api",
+        "intercept network",
+        "stub request",
+        "inspect tls",
+        "ssl certificate",
+        "network waterfall"
+      ],
+      "tools": [
+        "browser_network_intercept"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "network-and-perf/network-intercept-and-mock.md"
+    },
+    {
+      "id": "performance-and-vitals",
+      "domain": "network-and-perf",
+      "triggers": [
+        "measure performance",
+        "core web vitals",
+        "lcp",
+        "cls",
+        "fcp",
+        "wait condition",
+        "page slow"
+      ],
+      "tools": [
+        "browser_performance",
+        "browser_wait"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "network-and-perf/performance-and-vitals.md"
+    },
+    {
+      "id": "canvas-and-visual-capture",
+      "domain": "documents",
+      "triggers": [
+        "take screenshot",
+        "capture viewport",
+        "export pdf",
+        "canvas inspection",
+        "extract design tokens"
+      ],
+      "tools": [
+        "browser_screenshot",
+        "browser_viewport",
+        "browser_canvas",
+        "browser_pdf",
+        "browser_extract_design"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "documents/canvas-and-visual-capture.md"
+    },
+    {
+      "id": "office-document-ingestion",
+      "domain": "documents",
+      "triggers": [
+        "read excel",
+        "read docx",
+        "parse csv",
+        "spreadsheet",
+        "word document",
+        "parse table"
+      ],
+      "tools": [
+        "browser_office"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "documents/office-document-ingestion.md"
+    },
+    {
+      "id": "github-forensics",
+      "domain": "developer",
+      "triggers": [
+        "analyze github",
+        "read repository",
+        "check pull request",
+        "github issues",
+        "inspect repo"
+      ],
+      "tools": [
+        "github_analyze",
+        "github_read",
+        "github_issues",
+        "github_get_pr"
+      ],
+      "weavetab": ">=2.5.0-beta.3",
+      "filePath": "developer/github-forensics.md"
     }
   ]
 }
