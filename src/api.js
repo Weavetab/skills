@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const packageRoot = path.join(__dirname, '..');
+const pkg = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+const WEAVETAB_VERSION = pkg.version;
 const skillsJsonPath = path.join(packageRoot, 'skills.json');
 const routerPath = path.join(packageRoot, 'ROUTER.md');
 const distBundledDir = path.join(packageRoot, 'dist', 'bundled');
@@ -160,7 +162,7 @@ async function installSkills({
   // 3. Cline (.clinerules single file)
   else if (targetFramework === '.clinerules') {
     const clineFile = path.join(projectRoot, '.clinerules');
-    let combined = "\n\n# ====================================================\n# Weavetab MCP Skills (v2.5.0-beta.3)\n# ====================================================\n\n";
+    let combined = `\n\n# ====================================================\n# Weavetab MCP Skills (v${WEAVETAB_VERSION})\n# ====================================================\n\n`;
     if (includeRouter) {
       combined += routerContent + "\n\n";
     }
@@ -227,6 +229,7 @@ async function installSkills({
 }
 
 module.exports = {
+  WEAVETAB_VERSION,
   installSkills,
   getSkills,
   getSkill,

@@ -12,7 +12,7 @@ tools:
   - "github_read"
   - "github_issues"
   - "github_get_pr"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # GitHub Forensics & Repository Architecture Inspection

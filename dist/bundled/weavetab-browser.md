@@ -1,17 +1,17 @@
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## dom-strategy
 
 # DOM Strategy & Token Conservation Engine
 
-When parsing modern web applications, naive DOM dumps can consume 50,000+ tokens and cause agent degradation. Weavetab provides a high-efficiency 3-tier reading architecture.
+When parsing modern web applications, naive DOM dumps can consume 50,000+ tokens and cause agent degradation. Weavetab provides a high-efficiency 4-tier reading architecture.
 
 ---
 
-## 1. The 3-Tier Reading Filter
+## 1. The 4-Tier Reading Filter
 
 Always select the narrowest tool that satisfies your immediate objective:
 
@@ -33,6 +33,12 @@ Always select the narrowest tool that satisfies your immediate objective:
         ▼                 ▼              ▼                ▼
   `browser_find`   `browser_map`   `browser_scrape`  `browser_map`
                    (lite: true)                      (lite: true)
+                                                          │
+                                     [Sparse / Canvas / WebGL / <5 elements?]
+                                                          │
+                                                          ▼
+                                                    `browser_map`
+                                                  (visual: "auto")
 ```
 
 ### Tier 1: Targeted Keyword Jump (`browser_find`)
@@ -67,16 +73,30 @@ Use `browser_scrape` when your objective is reading articles, blog posts, docume
 - Converts HTML to clean, semantically structured Markdown.
 - Automatically handles readability filtering and removes advertising/cookie banners.
 
+### Tier 4: Set-of-Marks Visual Grounding (`browser_map` with `visual: "auto"`)
+Use when target pages are canvas-heavy, WebGL, Figma, Google Sheets, or when standard `browser_map` returns < 5 interactive elements.
+- Injects temporary numbered badges `[1]…[N]` over interactive elements & canvas regions.
+- Captures an annotated screenshot + returns a structured mark list.
+- **Zero Page Pollution**: Strips badges immediately after capture.
+- **Action**: Pass `"mark": N` to `browser_click` to click the exact element without re-scanning the DOM.
+
+```json
+{
+  "visual": "auto"
+}
+```
+
 ---
 
-## 2. Volatile Ref ID Navigation (`w:NN`)
+## 2. Volatile Ref ID & Visual Mark Navigation
 
-Weavetab maps interactive elements to ephemeral handles in the format `w:NN` (e.g. `w:12`, `w:45`).
+Weavetab maps elements to ephemeral handles (`w:NN`) and visual marks (`[1]…[N]`):
 
 ### Operational Rules:
-1. **Never Construct Speculative CSS Selectors**: If a button has ref `w:14`, pass `"ref": "w:14"` directly to downstream action tools (`browser_click`, `browser_fill`, `browser_type`).
-2. **Lifespan of Ref IDs**: Ref IDs are invalidated whenever the page navigates (`browser_navigate`), reloads, or undergoes heavy SPA re-renders. 
-3. **Recovery on Invalidation**: If a tool returns `STALE_ELEMENT_REFERENCE`, do NOT guess a CSS path. Execute a targeted `browser_find` or `browser_map(lite: true)` to refresh active handles.
+1. **Never Construct Speculative CSS Selectors**: If an element has ref `w:14`, pass `"ref": "w:14"` to `browser_click`, `browser_fill`, `browser_type`.
+2. **Visual Mark Targeting**: On canvas or unlabelled elements from `visual: "auto"`, pass `"mark": N` directly to `browser_click({ mark: N })`.
+3. **Lifespan of Handles**: Ref IDs and marks invalidate on page navigation (`browser_navigate`) or heavy SPA re-renders. 
+4. **Recovery on Invalidation**: If an action fails with `ELEMENT_NOT_FOUND` or `MARK_NOT_FOUND`, re-run `browser_map({ visual: "auto" })` to refresh active handles.
 
 
 ## form-automation
@@ -315,17 +335,25 @@ Execute multiple sequential micro-actions in a single CDP roundtrip to defeat ra
 
 ---
 
-## 9. Visual Element Highlighting (`browser_highlight`)
+## 9. Visual Element Highlighting & Consideration (`browser_highlight`)
 
-Highlight target nodes in the live browser overlay for user transparency and debugging:
+Draw visual consideration, target lock, danger/success, or shimmer overlays without mutating the DOM. Supports multi-element candidate evaluation:
 
 ```json
 {
-  "ref": "w:22",
-  "color": "rgba(0, 150, 255, 0.4)",
-  "durationMs": 1500
+  "refs": ["w:12", "w:15", "w:23"],
+  "style": "consideration",
+  "label": "Evaluating form options",
+  "duration": 2000
 }
 ```
+
+### Presentation Styles:
+- `"consideration"`: Soft pulsing cyan/blue outline (`#38bdf8`) with ambient glow — ideal when weighing multiple interactive candidates.
+- `"target"`: High-contrast amber lock-on ring (`#f59e0b`) before executing high-impact clicks.
+- `"danger"`: Red warning border (`#ef4444`) for destructive buttons (Delete, Reset, Purge).
+- `"success"`: Emerald glow (`#10b981`) confirming completed actions.
+- `"shimmer"`: Rapid purple accent wave (default for quick inspection).
 
 ---
 

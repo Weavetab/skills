@@ -10,7 +10,7 @@ triggers:
   - "responsive testing"
 tools:
   - "browser_emulate"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Device Emulation & Environment Simulation

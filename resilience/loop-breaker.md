@@ -11,7 +11,7 @@ triggers:
 tools:
   - "browser_reset_loop_counter"
   - "browser_captcha"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Loop Breaker & CAPTCHA Escalation Protocol

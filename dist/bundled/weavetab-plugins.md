@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: PLUGINS
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## hooks-and-overrides

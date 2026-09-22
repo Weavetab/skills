@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { select, confirm } = require('@inquirer/prompts');
-const { installSkills, ALL_DOMAINS } = require('../src/api.js');
+const { installSkills, ALL_DOMAINS, WEAVETAB_VERSION } = require('../src/api.js');
 
 // High-contrast modern ANSI styling
 const B  = '\x1b[38;2;99;102;241m'; // indigo primary
@@ -18,11 +18,11 @@ const line = `${B}${'━'.repeat(58)}${X}`;
 async function run() {
   console.log('');
   console.log(line);
-  console.log(`${B}  Weavetab MCP Skills Engine${X}  ${CB}v2.5.0-beta.3${X}`);
+  console.log(`${B}  Weavetab MCP Skills Engine${X}  ${CB}v${WEAVETAB_VERSION}${X}`);
   console.log(`${DM}  Enterprise Domain-Driven Agent Intelligence${X}`);
   console.log(line);
   console.log('');
-  console.log(`${CB}  ✦ 48 Official MCP Tools Mapped${X}`);
+  console.log(`${CB}  ✦ 50 Official MCP Tools Mapped${X}`);
   console.log(`${CB}  ✦ Universal Step-0 ROUTER.md Decision Matrix${X}`);
   console.log(`${CB}  ✦ Multi-Agent Adapters (Antigravity, Cursor, Cline, Windsurf)${X}`);
   console.log('');

@@ -10,7 +10,7 @@ triggers:
 tools:
   - "list_plugins"
   - "load_plugin"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Plugin Runtime: Dynamic Extension Loading

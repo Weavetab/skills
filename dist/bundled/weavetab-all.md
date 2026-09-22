@@ -1,4 +1,4 @@
-# Weavetab Complete Enterprise Agent Suite (v2.5.0-beta.3)
+# Weavetab Complete Enterprise Agent Suite (v2.5.0-beta.4)
 
 
 
@@ -8,18 +8,18 @@
 
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## dom-strategy
 
 # DOM Strategy & Token Conservation Engine
 
-When parsing modern web applications, naive DOM dumps can consume 50,000+ tokens and cause agent degradation. Weavetab provides a high-efficiency 3-tier reading architecture.
+When parsing modern web applications, naive DOM dumps can consume 50,000+ tokens and cause agent degradation. Weavetab provides a high-efficiency 4-tier reading architecture.
 
 ---
 
-## 1. The 3-Tier Reading Filter
+## 1. The 4-Tier Reading Filter
 
 Always select the narrowest tool that satisfies your immediate objective:
 
@@ -41,6 +41,12 @@ Always select the narrowest tool that satisfies your immediate objective:
         ▼                 ▼              ▼                ▼
   `browser_find`   `browser_map`   `browser_scrape`  `browser_map`
                    (lite: true)                      (lite: true)
+                                                          │
+                                     [Sparse / Canvas / WebGL / <5 elements?]
+                                                          │
+                                                          ▼
+                                                    `browser_map`
+                                                  (visual: "auto")
 ```
 
 ### Tier 1: Targeted Keyword Jump (`browser_find`)
@@ -75,16 +81,30 @@ Use `browser_scrape` when your objective is reading articles, blog posts, docume
 - Converts HTML to clean, semantically structured Markdown.
 - Automatically handles readability filtering and removes advertising/cookie banners.
 
+### Tier 4: Set-of-Marks Visual Grounding (`browser_map` with `visual: "auto"`)
+Use when target pages are canvas-heavy, WebGL, Figma, Google Sheets, or when standard `browser_map` returns < 5 interactive elements.
+- Injects temporary numbered badges `[1]…[N]` over interactive elements & canvas regions.
+- Captures an annotated screenshot + returns a structured mark list.
+- **Zero Page Pollution**: Strips badges immediately after capture.
+- **Action**: Pass `"mark": N` to `browser_click` to click the exact element without re-scanning the DOM.
+
+```json
+{
+  "visual": "auto"
+}
+```
+
 ---
 
-## 2. Volatile Ref ID Navigation (`w:NN`)
+## 2. Volatile Ref ID & Visual Mark Navigation
 
-Weavetab maps interactive elements to ephemeral handles in the format `w:NN` (e.g. `w:12`, `w:45`).
+Weavetab maps elements to ephemeral handles (`w:NN`) and visual marks (`[1]…[N]`):
 
 ### Operational Rules:
-1. **Never Construct Speculative CSS Selectors**: If a button has ref `w:14`, pass `"ref": "w:14"` directly to downstream action tools (`browser_click`, `browser_fill`, `browser_type`).
-2. **Lifespan of Ref IDs**: Ref IDs are invalidated whenever the page navigates (`browser_navigate`), reloads, or undergoes heavy SPA re-renders. 
-3. **Recovery on Invalidation**: If a tool returns `STALE_ELEMENT_REFERENCE`, do NOT guess a CSS path. Execute a targeted `browser_find` or `browser_map(lite: true)` to refresh active handles.
+1. **Never Construct Speculative CSS Selectors**: If an element has ref `w:14`, pass `"ref": "w:14"` to `browser_click`, `browser_fill`, `browser_type`.
+2. **Visual Mark Targeting**: On canvas or unlabelled elements from `visual: "auto"`, pass `"mark": N` directly to `browser_click({ mark: N })`.
+3. **Lifespan of Handles**: Ref IDs and marks invalidate on page navigation (`browser_navigate`) or heavy SPA re-renders. 
+4. **Recovery on Invalidation**: If an action fails with `ELEMENT_NOT_FOUND` or `MARK_NOT_FOUND`, re-run `browser_map({ visual: "auto" })` to refresh active handles.
 
 
 ## form-automation
@@ -323,17 +343,25 @@ Execute multiple sequential micro-actions in a single CDP roundtrip to defeat ra
 
 ---
 
-## 9. Visual Element Highlighting (`browser_highlight`)
+## 9. Visual Element Highlighting & Consideration (`browser_highlight`)
 
-Highlight target nodes in the live browser overlay for user transparency and debugging:
+Draw visual consideration, target lock, danger/success, or shimmer overlays without mutating the DOM. Supports multi-element candidate evaluation:
 
 ```json
 {
-  "ref": "w:22",
-  "color": "rgba(0, 150, 255, 0.4)",
-  "durationMs": 1500
+  "refs": ["w:12", "w:15", "w:23"],
+  "style": "consideration",
+  "label": "Evaluating form options",
+  "duration": 2000
 }
 ```
+
+### Presentation Styles:
+- `"consideration"`: Soft pulsing cyan/blue outline (`#38bdf8`) with ambient glow — ideal when weighing multiple interactive candidates.
+- `"target"`: High-contrast amber lock-on ring (`#f59e0b`) before executing high-impact clicks.
+- `"danger"`: Red warning border (`#ef4444`) for destructive buttons (Delete, Reset, Purge).
+- `"success"`: Emerald glow (`#10b981`) confirming completed actions.
+- `"shimmer"`: Rapid purple accent wave (default for quick inspection).
 
 ---
 
@@ -479,7 +507,7 @@ The auto-heal routine re-establishes CDP protocol sessions, reconnects event lis
 
 # Weavetab Domain Profile: DESKTOP
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## desktop-targeting
@@ -661,40 +689,117 @@ Once launched with `--remote-debugging-port`, `browser_detect` immediately refle
 
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## selector-memory-system
 
-# Adaptive Selector Memory & Telemetry Engine
+# Two-Tier Memory System
 
-Repeatedly performing 50-node DOM traversals to find standard buttons ("Login", "Checkout", "Next") wastes agent turns and increases token consumption. Weavetab features an internal adaptive selector memory system that learns stable locator paths per web origin.
-
----
-
-## 1. How the Memory Heuristic Operates
-
-Every time an element is located and successfully interacted with, Weavetab calculates a confidence score based on:
-1. **Attribute Stability**: Prefers `data-testid`, `id`, `aria-label`, and deterministic semantic roles over dynamic Tailwind/CSS-module class strings.
-2. **Success Count**: Selectors that successfully trigger navigation or state changes gain reinforcement (+1).
-3. **Origin Isolation**: Learned selectors are strictly namespaced to the origin (`https://example.com`) to prevent cross-site contamination.
+Weavetab operates a two-tier persistent memory system. Understanding both layers prevents wasted DOM traversals and makes agents dramatically faster across sessions.
 
 ---
 
-## 2. Strike Degradation & Negative Reinforcement
+## Tier 1 — Selector Confidence Cache (`~/.weavetab-system/memory/`)
 
-Websites update frequently. If a previously learned selector fails:
-- **Strike 1**: Marked as degraded. Weavetab falls back to secondary candidates (e.g. fuzzy label match).
-- **Strike 2**: Deprecated. Immediate fall-back to full DOM tree inspection via `browser_find` or `browser_map`.
+Per-domain JSON files (one per hostname) track individual element selectors and their interaction history.
+
+Every time an element is located and interacted with, Weavetab calculates a confidence score based on:
+1. **Attribute Stability**: Prefers `data-testid`, `id`, `aria-label`, and semantic roles over dynamic Tailwind/CSS-module class strings.
+2. **Success Count**: Selectors that successfully trigger navigation or state changes gain reinforcement.
+3. **Origin Isolation**: Learned selectors are strictly namespaced to the origin to prevent cross-site contamination.
+
+### Strike Degradation
+- **Strike 1**: Marked as degraded — falls back to secondary candidates or fuzzy label match.
+- **Strike 2**: Deprecated — immediate fallback to full DOM inspection via `browser_find` or `browser_map`.
 - **Strike 3**: Purged from memory cache to prevent stale lookups.
 
+### Agent Discipline for Tier 1
+1. **Rely on Native Tool Resolution**: When you pass a `ref`, Weavetab queries both the active volatile registry and the Tier 1 memory cache automatically.
+2. **Don't Hardcode Fragile Selectors**: Never pass brittle absolute CSS paths like `div:nth-child(3) > ul > li:nth-child(2) > button`.
+3. **Trust Heuristic Recovery**: If a button moves slightly on the page, the underlying engine re-anchors before reporting failure.
+
 ---
 
-## 3. Agent Operating Discipline
+## Tier 2 — Site Profiles & Workflow Patterns (`~/.weavetab-system/memory/sites/`)
 
-1. **Rely on Native Tool Resolution**: When you pass a `ref`, Weavetab queries both the active volatile registry and the memory cache.
-2. **Don't Hardcode Fragile Selectors in Prompts**: Avoid passing brittle absolute CSS paths like `div:nth-child(3) > ul > li:nth-child(2) > button`.
-3. **Trust Heuristic Recovery**: If a button moves slightly on the page, the underlying engine uses the memory profile to re-anchor before reporting failure.
+One JSON file per origin stores named multi-step workflow patterns, site quirks, and reliability scores. This is the **Intelligent Memory** layer — agents learn entire flows, not just individual selectors.
+
+### Checking a Site Profile at Session Start
+Always call `browser_memory_profile` when starting an automation session on a site you may have visited before:
+
+```json
+{ "origin": "https://github.com" }
+```
+
+Response tells you:
+- `known_patterns`: named flows with reliability scores and step counts
+- `quirks`: known cookie banners, rate limits, modal popups to handle automatically
+- `framework`: detected frontend stack
+- `_hint`: compact hint string summarizing everything
+
+### Fast-Path Decision Rule
+| Reliability | Action |
+|---|---|
+| **≥ 0.8** | Use pattern steps directly via `browser_burst` — skip exploratory navigation |
+| **0.5 – 0.79** | Attempt pattern but verify success indicator before moving on |
+| **< 0.5 or strikes ≥ 3** | Ignore pattern, re-explore from scratch, then teach via `browser_pattern_learn` |
+
+### Teaching a New Pattern After Completing a Workflow
+After successfully completing a multi-step flow:
+
+```json
+{
+  "origin": "https://github.com",
+  "action": "learn",
+  "name": "login_flow",
+  "steps": [
+    { "tool": "browser_click", "target": ".btn-login" },
+    { "tool": "browser_fill", "target": "#login_field", "value": "{{username}}" },
+    { "tool": "browser_fill", "target": "#password", "value": "{{password}}" },
+    { "tool": "browser_click", "target": "[type=submit]" }
+  ],
+  "success_indicator": "a[aria-label='Homepage']"
+}
+```
+
+### Recording Execution Outcomes (Reliability Upkeep)
+After replaying a pattern, always report the outcome:
+
+```json
+{
+  "origin": "https://github.com",
+  "action": "record_execution",
+  "name": "login_flow",
+  "success": true,
+  "duration_ms": 3200
+}
+```
+
+### Recording Site Quirks
+When you discover a cookie banner or rate limit:
+
+```json
+{
+  "origin": "https://github.com",
+  "action": "record_quirk",
+  "quirk_key": "cookie_banner",
+  "quirk_data": { "selector": "#cookie-consent", "action": "click .accept-all", "appears": "first_visit" }
+}
+```
+
+On future visits, the quirk is present in the profile so you can dismiss banners before starting your main workflow — zero wasted agent turns.
+
+---
+
+## File Locations (Never Write to ~/.weavetab/)
+
+| Tier | Path | Owner |
+|---|---|---|
+| Tier 1 selectors | `~/.weavetab-system/memory/<hostname>.json` | Engine (auto) |
+| Tier 2 site profiles | `~/.weavetab-system/memory/sites/<origin>.json` | Engine via `browser_pattern_learn` |
+| Knowledge hints | `~/.weavetab-system/knowledge/<hostname>.md` | Engine (auto, 20-token notes) |
+| User config | `~/.weavetab/config.json` | Human — never written by agents |
 
 
 ## session-trail
@@ -773,7 +878,7 @@ Log agent rationale and internal reasoning directly to the Weavetab HUD and tele
 
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## loop-breaker
@@ -991,7 +1096,7 @@ If an action returns `ERROR: STALE_ELEMENT_REFERENCE` because all 4 recovery tie
 
 # Weavetab Domain Profile: SECURITY
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## rbac-and-policies
@@ -1084,7 +1189,7 @@ When `browser_type_secret` is invoked:
 
 # Weavetab Domain Profile: PLUGINS
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## hooks-and-overrides
@@ -1168,7 +1273,7 @@ Load a verified plugin package into the active runtime session:
 
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## device-and-environment
@@ -1397,7 +1502,7 @@ Always synchronize with deterministic browser conditions:
 
 # Weavetab Domain Profile: DOCUMENTS
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## canvas-and-visual-capture
@@ -1445,10 +1550,26 @@ Render the current page into a print-ready PDF document with print CSS styles ap
 
 ---
 
-## 3. HTML5 Canvas Pixel Inspection (`browser_canvas`)
+## 3. HTML5 Canvas Pixel Inspection & Visual Grounding (`browser_canvas` & `browser_map`)
 
-When a chart or graphic is rendered via `<canvas>`, standard DOM reading tools cannot see the contents. `browser_canvas` extracts the raw image data or inspects 2D/WebGL drawing context commands:
+When a chart or graphic is rendered via `<canvas>`, standard DOM reading tools cannot see individual buttons or nodes. You have two strategies:
 
+### A. Set-of-Marks Visual Grounding (Recommended for Canvas UIs & WebGL)
+Run `browser_map({ visual: "auto" })`. It detects canvas elements and high-contrast regions, attaches numbered badges `[1]…[N]`, and returns an annotated image:
+```json
+{
+  "visual": "auto"
+}
+```
+Then interact directly by mark number without guessing pixel coordinates:
+```json
+{
+  "mark": 3
+}
+```
+
+### B. Direct Canvas Pixel Export (`browser_canvas`)
+To extract the raw image data or draw programmatic gesture paths:
 ```json
 {
   "ref": "w:19",
@@ -1529,7 +1650,7 @@ Extract semantic paragraphs, document headings, tables, and lists:
 
 # Weavetab Domain Profile: DEVELOPER
 
-Generated for @weavetab/skills v2.5.0-beta.3
+Generated for @weavetab/skills v2.5.0-beta.4
 
 
 ## github-forensics

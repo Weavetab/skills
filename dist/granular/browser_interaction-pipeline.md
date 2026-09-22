@@ -19,7 +19,7 @@ tools:
   - "browser_burst"
   - "browser_highlight"
   - "browser_clipboard"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Interaction Pipeline: Physical & Synthetic Input Engine
@@ -181,17 +181,25 @@ Execute multiple sequential micro-actions in a single CDP roundtrip to defeat ra
 
 ---
 
-## 9. Visual Element Highlighting (`browser_highlight`)
+## 9. Visual Element Highlighting & Consideration (`browser_highlight`)
 
-Highlight target nodes in the live browser overlay for user transparency and debugging:
+Draw visual consideration, target lock, danger/success, or shimmer overlays without mutating the DOM. Supports multi-element candidate evaluation:
 
 ```json
 {
-  "ref": "w:22",
-  "color": "rgba(0, 150, 255, 0.4)",
-  "durationMs": 1500
+  "refs": ["w:12", "w:15", "w:23"],
+  "style": "consideration",
+  "label": "Evaluating form options",
+  "duration": 2000
 }
 ```
+
+### Presentation Styles:
+- `"consideration"`: Soft pulsing cyan/blue outline (`#38bdf8`) with ambient glow — ideal when weighing multiple interactive candidates.
+- `"target"`: High-contrast amber lock-on ring (`#f59e0b`) before executing high-impact clicks.
+- `"danger"`: Red warning border (`#ef4444`) for destructive buttons (Delete, Reset, Purge).
+- `"success"`: Emerald glow (`#10b981`) confirming completed actions.
+- `"shimmer"`: Rapid purple accent wave (default for quick inspection).
 
 ---
 

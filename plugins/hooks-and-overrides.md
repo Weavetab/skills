@@ -9,7 +9,7 @@ triggers:
   - "sdk hooks"
 tools:
   - "list_plugins"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Plugin Hooks & Lifecycle Overrides

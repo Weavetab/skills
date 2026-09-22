@@ -13,7 +13,9 @@ tools:
   - "browser_canvas"
   - "browser_pdf"
   - "browser_extract_design"
-weavetab: ">=2.5.0-beta.3"
+  - "browser_map"
+  - "browser_click"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Visual Capture, Canvas Forensics & Design Extraction
@@ -59,10 +61,26 @@ Render the current page into a print-ready PDF document with print CSS styles ap
 
 ---
 
-## 3. HTML5 Canvas Pixel Inspection (`browser_canvas`)
+## 3. HTML5 Canvas Pixel Inspection & Visual Grounding (`browser_canvas` & `browser_map`)
 
-When a chart or graphic is rendered via `<canvas>`, standard DOM reading tools cannot see the contents. `browser_canvas` extracts the raw image data or inspects 2D/WebGL drawing context commands:
+When a chart or graphic is rendered via `<canvas>`, standard DOM reading tools cannot see individual buttons or nodes. You have two strategies:
 
+### A. Set-of-Marks Visual Grounding (Recommended for Canvas UIs & WebGL)
+Run `browser_map({ visual: "auto" })`. It detects canvas elements and high-contrast regions, attaches numbered badges `[1]…[N]`, and returns an annotated image:
+```json
+{
+  "visual": "auto"
+}
+```
+Then interact directly by mark number without guessing pixel coordinates:
+```json
+{
+  "mark": 3
+}
+```
+
+### B. Direct Canvas Pixel Export (`browser_canvas`)
+To extract the raw image data or draw programmatic gesture paths:
 ```json
 {
   "ref": "w:19",

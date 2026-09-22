@@ -17,6 +17,7 @@ When executing browser or desktop automation via `@weavetab/mcp`, **do not read 
 | **Discover running Electron apps (Slack, Discord, VS Code)** | [`desktop/electron-discovery.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/desktop/electron-discovery.md) | `browser_detect` |
 | **Control native desktop applications with MCP tools** | [`desktop/desktop-targeting.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/desktop/desktop-targeting.md) | Any tool passing `app: "<name>"` |
 | **Bypass DOM walks using learned & cached selectors** | [`memory/selector-memory-system.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/selector-memory-system.md) | Telemetry & selector history |
+| **Recall multi-step site workflows, quirks & fast-path replay** | [`memory/site-learning.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/site-learning.md) | `browser_memory_profile`, `browser_pattern_learn` |
 | **Compile manual action history into reusable macros** | [`memory/session-trail.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/session-trail.md) | `browser_macro_compile` |
 | **Handle React/Next/Vue detached elements & re-renders** | [`resilience/stale-ref-recovery.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/resilience/stale-ref-recovery.md) | 4-tier auto-recovery heuristic |
 | **Save/restore checkpoints & rollback failed workflows** | [`resilience/session-time-travel.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/resilience/session-time-travel.md) | `browser_checkpoint` |
@@ -29,7 +30,7 @@ When executing browser or desktop automation via `@weavetab/mcp`, **do not read 
 | **Measure Core Web Vitals (LCP, CLS) & wait conditions** | [`network-and-perf/performance-and-vitals.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/network-and-perf/performance-and-vitals.md) | `browser_performance`, `browser_wait` |
 | **Emulate mobile devices, CPU throttle, mock location** | [`network-and-perf/device-and-environment.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/network-and-perf/device-and-environment.md) | `browser_emulate` |
 | **Ingest Word (.docx), Excel (.xlsx), CSV files** | [`documents/office-document-ingestion.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/documents/office-document-ingestion.md) | `browser_office` |
-| **Capture screenshots, PDF exports, canvas pixels** | [`documents/canvas-and-visual-capture.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/documents/canvas-and-visual-capture.md) | `browser_screenshot`, `browser_canvas`, `browser_pdf` |
+| **Capture screenshots, PDF exports, canvas pixels & visual marks** | [`documents/canvas-and-visual-capture.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/documents/canvas-and-visual-capture.md) | `browser_screenshot`, `browser_canvas`, `browser_pdf`, `browser_map` |
 | **Sub-ms local Git repo parsing & PR/issue triage** | [`developer/github-forensics.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/developer/github-forensics.md) | `github_analyze`, `github_read`, `github_get_pr`, `github_issues` |
 
 ---

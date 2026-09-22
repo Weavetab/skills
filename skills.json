@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0-beta.3",
+  "version": "2.5.0-beta.4",
   "domains": [
     "browser",
     "desktop",
@@ -11,7 +11,7 @@
     "documents",
     "developer"
   ],
-  "officialToolsCount": 48,
+  "officialToolsCount": 50,
   "skillsCount": 21,
   "skills": [
     {
@@ -31,7 +31,7 @@
         "browser_scrape",
         "browser_snapshot"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "browser/dom-strategy.md"
     },
     {
@@ -49,7 +49,7 @@
         "browser_fill",
         "browser_select"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "browser/form-automation.md"
     },
     {
@@ -75,7 +75,7 @@
         "browser_highlight",
         "browser_clipboard"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "browser/interaction-pipeline.md"
     },
     {
@@ -93,7 +93,7 @@
       "tools": [
         "browser_tabs"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "browser/tab-and-window.md"
     },
     {
@@ -115,7 +115,7 @@
         "browser_tabs",
         "browser_navigate"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "desktop/desktop-targeting.md"
     },
     {
@@ -132,7 +132,7 @@
       "tools": [
         "browser_detect"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "desktop/electron-discovery.md"
     },
     {
@@ -143,14 +143,19 @@
         "selector memory",
         "cached selector",
         "selector decay",
-        "cross session learning"
+        "cross session learning",
+        "site profile",
+        "known workflow",
+        "fast path"
       ],
       "tools": [
         "browser_find",
         "browser_click",
-        "browser_fill"
+        "browser_fill",
+        "browser_memory_profile",
+        "browser_pattern_learn"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "memory/selector-memory-system.md"
     },
     {
@@ -169,7 +174,7 @@
         "browser_automation",
         "browser_thoughts"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "memory/session-trail.md"
     },
     {
@@ -187,7 +192,7 @@
         "browser_reset_loop_counter",
         "browser_captcha"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "resilience/loop-breaker.md"
     },
     {
@@ -205,7 +210,7 @@
         "browser_cookies",
         "browser_storage"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "resilience/session-time-travel.md"
     },
     {
@@ -223,7 +228,7 @@
         "browser_map",
         "browser_click"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "resilience/stale-ref-recovery.md"
     },
     {
@@ -241,7 +246,7 @@
         "browser_scrape",
         "browser_map"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "security/rbac-and-policies.md"
     },
     {
@@ -257,7 +262,7 @@
       "tools": [
         "browser_type_secret"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "security/secret-containment-protocol.md"
     },
     {
@@ -273,7 +278,7 @@
       "tools": [
         "list_plugins"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "plugins/hooks-and-overrides.md"
     },
     {
@@ -290,7 +295,7 @@
         "list_plugins",
         "load_plugin"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "plugins/plugin-runtime.md"
     },
     {
@@ -307,7 +312,7 @@
       "tools": [
         "browser_emulate"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "network-and-perf/device-and-environment.md"
     },
     {
@@ -324,7 +329,7 @@
       "tools": [
         "browser_network_intercept"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "network-and-perf/network-intercept-and-mock.md"
     },
     {
@@ -343,7 +348,7 @@
         "browser_performance",
         "browser_wait"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "network-and-perf/performance-and-vitals.md"
     },
     {
@@ -361,9 +366,11 @@
         "browser_viewport",
         "browser_canvas",
         "browser_pdf",
-        "browser_extract_design"
+        "browser_extract_design",
+        "browser_map",
+        "browser_click"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "documents/canvas-and-visual-capture.md"
     },
     {
@@ -380,7 +387,7 @@
       "tools": [
         "browser_office"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "documents/office-document-ingestion.md"
     },
     {
@@ -399,7 +406,7 @@
         "github_issues",
         "github_get_pr"
       ],
-      "weavetab": ">=2.5.0-beta.3",
+      "weavetab": ">=2.5.0-beta.4",
       "filePath": "developer/github-forensics.md"
     }
   ]

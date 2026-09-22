@@ -1,6 +1,6 @@
 {
   "name": "@weavetab/skills",
-  "version": "2.5.0-beta.3",
+  "version": "2.5.0-beta.4",
   "description": "Supercharge your AI Agents with Weavetab MCP Skills. Domain-driven agent intelligence for Antigravity, Cursor, Cline, Windsurf, and more.",
   "author": {
     "name": "fy2ne",
@@ -51,7 +51,7 @@
     "agentic"
   ],
   "peerDependencies": {
-    "@weavetab/mcp": "2.5.0-beta.3"
+    "@weavetab/mcp": "2.5.0-beta.4"
   },
   "peerDependenciesMeta": {
     "@weavetab/mcp": {

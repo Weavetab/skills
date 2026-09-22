@@ -15,7 +15,8 @@ const OFFICIAL_TOOLS = new Set([
   "browser_reset_loop_counter", "browser_detect", "browser_performance",
   "browser_macro_compile", "github_analyze", "github_read", "github_issues",
   "github_get_pr", "browser_office", "browser_emulate", "list_plugins",
-  "load_plugin", "browser_checkpoint"
+  "load_plugin", "browser_checkpoint", "browser_memory_profile",
+  "browser_pattern_learn"
 ]);
 
 const BANNED_TOOLS = new Set([
@@ -35,6 +36,8 @@ const DOMAINS = [
 ];
 
 const packageRoot = path.join(__dirname, '..');
+const pkg = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+const WEAVETAB_VERSION = pkg.version;
 const distGranularDir = path.join(packageRoot, 'dist', 'granular');
 const distBundledDir = path.join(packageRoot, 'dist', 'bundled');
 
@@ -43,7 +46,7 @@ fs.mkdirSync(distBundledDir, { recursive: true });
 
 const skills = [];
 const domainBundles = {};
-let allSkillsCombined = "# Weavetab Complete Enterprise Agent Suite (v2.5.0-beta.3)\n\n";
+let allSkillsCombined = `# Weavetab Complete Enterprise Agent Suite (v${WEAVETAB_VERSION})\n\n`;
 
 function parseMarkdown(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
@@ -61,7 +64,7 @@ function parseMarkdown(filePath) {
         throw new Error(`File ${relativePath} references banned legacy tool: '${tool}'`);
       }
       if (!OFFICIAL_TOOLS.has(tool)) {
-        throw new Error(`File ${relativePath} references unknown tool: '${tool}'. Must be one of the 48 official tools.`);
+        throw new Error(`File ${relativePath} references unknown tool: '${tool}'. Must be one of the ${OFFICIAL_TOOLS.size} official tools.`);
       }
     }
   }
@@ -74,7 +77,7 @@ function parseMarkdown(filePath) {
   };
 }
 
-console.log("Building @weavetab/skills v2.5.0-beta.3...");
+console.log(`Building @weavetab/skills v${WEAVETAB_VERSION}...`);
 
 for (const domain of DOMAINS) {
   const domainDir = path.join(packageRoot, domain);
@@ -93,7 +96,7 @@ for (const domain of DOMAINS) {
           domain: parsed.domain || domain,
           triggers: parsed.triggers || [],
           tools: parsed.tools || [],
-          weavetab: parsed.weavetab || ">=2.5.0-beta.3",
+          weavetab: parsed.weavetab || `>=${WEAVETAB_VERSION}`,
           filePath: parsed.filePath
         });
 
@@ -112,7 +115,7 @@ for (const domain of DOMAINS) {
   // Create bundled domain profile
   const bundleContent = [
     `# Weavetab Domain Profile: ${domain.toUpperCase()}`,
-    `Generated for @weavetab/skills v2.5.0-beta.3\n`,
+    `Generated for @weavetab/skills v${WEAVETAB_VERSION}\n`,
     ...domainBundles[domain].map(item => `## ${item.id}\n\n${item.body}\n`)
   ].join('\n\n');
 
@@ -127,7 +130,7 @@ fs.writeFileSync(path.join(distBundledDir, 'weavetab-all.md'), allSkillsCombined
 fs.writeFileSync(
   path.join(packageRoot, 'skills.json'),
   JSON.stringify({
-    version: "2.5.0-beta.3",
+    version: WEAVETAB_VERSION,
     domains: DOMAINS,
     officialToolsCount: OFFICIAL_TOOLS.size,
     skillsCount: skills.length,
@@ -136,7 +139,7 @@ fs.writeFileSync(
 );
 
 console.log(`Successfully compiled:`);
-console.log(`  - 48 Official MCP Tools Verified`);
+console.log(`  - ${OFFICIAL_TOOLS.size} Official MCP Tools Verified`);
 console.log(`  - ${skills.length} Individual Skills Parsed`);
 console.log(`  - 9 Domain Bundles in dist/bundled/`);
 console.log(`  - Granular Dist in dist/granular/`);

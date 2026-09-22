@@ -18,7 +18,8 @@ const OFFICIAL_TOOLS = new Set([
   "browser_reset_loop_counter", "browser_detect", "browser_performance",
   "browser_macro_compile", "github_analyze", "github_read", "github_issues",
   "github_get_pr", "browser_office", "browser_emulate", "list_plugins",
-  "load_plugin", "browser_checkpoint"
+  "load_plugin", "browser_checkpoint", "browser_memory_profile",
+  "browser_pattern_learn"
 ]);
 
 const BANNED_TOOLS = [

@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/Weavetab/skills.svg?style=social)](https://github.com/Weavetab/skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Enterprise domain-driven agent intelligence for `@weavetab/mcp` (v2.5.0-beta.3). Drop-in operational guides, failure recovery heuristics, and protocol rules for **Antigravity**, **Cursor**, **Cline**, **Windsurf**, and **OpenClaw**.
+Enterprise domain-driven agent intelligence for `@weavetab/mcp` (v2.5.0-beta.4). Drop-in operational guides, failure recovery heuristics, and protocol rules for **Antigravity**, **Cursor**, **Cline**, **Windsurf**, and **OpenClaw**.
 
 - **Website:** [weavetab.pages.dev](https://weavetab.pages.dev)
 - **Core MCP Server:** [`@weavetab/mcp`](https://www.npmjs.com/package/@weavetab/mcp)

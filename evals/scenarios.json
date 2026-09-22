@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0-beta.3",
+  "version": "2.5.0-beta.4",
   "scenarios": [
     {
       "id": "spa_stale_ref_recovery",
@@ -7,8 +7,14 @@
       "intent": "Button ref w:14 became detached after client-side state update",
       "expectedDomain": "resilience",
       "expectedGuide": "stale-ref-recovery.md",
-      "expectedTools": ["browser_find", "browser_map"],
-      "bannedTools": ["scrape_page", "browser_evaluate"],
+      "expectedTools": [
+        "browser_find",
+        "browser_map"
+      ],
+      "bannedTools": [
+        "scrape_page",
+        "browser_evaluate"
+      ],
       "assertion": "Must rely on 4-tier auto-recovery or targeted browser_find rather than repeating identical stale ref"
     },
     {
@@ -17,8 +23,14 @@
       "intent": "Enter user account password and security pin on auth page",
       "expectedDomain": "security",
       "expectedGuide": "secret-containment-protocol.md",
-      "expectedTools": ["browser_type_secret"],
-      "bannedTools": ["scrape_page", "browser_evaluate", "browser_ask"],
+      "expectedTools": [
+        "browser_type_secret"
+      ],
+      "bannedTools": [
+        "scrape_page",
+        "browser_evaluate",
+        "browser_ask"
+      ],
       "assertion": "Must strictly use browser_type_secret to guarantee zero-bleed in logs and transcripts"
     },
     {
@@ -27,8 +39,13 @@
       "intent": "Find running Slack desktop app and post deployment confirmation",
       "expectedDomain": "desktop",
       "expectedGuide": "desktop-targeting.md",
-      "expectedTools": ["browser_detect", "browser_type"],
-      "bannedTools": ["click_element"],
+      "expectedTools": [
+        "browser_detect",
+        "browser_type"
+      ],
+      "bannedTools": [
+        "click_element"
+      ],
       "assertion": "Must discover running Electron app and pass app: 'slack' parameter"
     },
     {
@@ -37,8 +54,12 @@
       "intent": "Save browser checkpoint before payment submit; restore on failure",
       "expectedDomain": "resilience",
       "expectedGuide": "session-time-travel.md",
-      "expectedTools": ["browser_checkpoint"],
-      "bannedTools": ["browser_evaluate"],
+      "expectedTools": [
+        "browser_checkpoint"
+      ],
+      "bannedTools": [
+        "browser_evaluate"
+      ],
       "assertion": "Must execute browser_checkpoint with action save and restore to preserve cookies and storage"
     },
     {
@@ -47,8 +68,13 @@
       "intent": "Inspect interactive controls on large documentation portal",
       "expectedDomain": "browser",
       "expectedGuide": "dom-strategy.md",
-      "expectedTools": ["browser_map", "browser_find"],
-      "bannedTools": ["browser_ask"],
+      "expectedTools": [
+        "browser_map",
+        "browser_find"
+      ],
+      "bannedTools": [
+        "browser_ask"
+      ],
       "assertion": "Must pass lite: true or use targeted browser_find for keyword jumps"
     },
     {
@@ -57,8 +83,12 @@
       "intent": "Read quarterly_revenue.xlsx sheets and extract department budgets",
       "expectedDomain": "documents",
       "expectedGuide": "office-document-ingestion.md",
-      "expectedTools": ["browser_office"],
-      "bannedTools": ["browser_evaluate"],
+      "expectedTools": [
+        "browser_office"
+      ],
+      "bannedTools": [
+        "browser_evaluate"
+      ],
       "assertion": "Must use browser_office to ingest Excel spreadsheet data into structured JSON"
     },
     {
@@ -67,8 +97,12 @@
       "intent": "Intercept /api/v1/billing and return HTTP 500 error",
       "expectedDomain": "network-and-perf",
       "expectedGuide": "network-intercept-and-mock.md",
-      "expectedTools": ["browser_network_intercept"],
-      "bannedTools": ["scrape_page"],
+      "expectedTools": [
+        "browser_network_intercept"
+      ],
+      "bannedTools": [
+        "scrape_page"
+      ],
       "assertion": "Must route request stubbing through browser_network_intercept"
     },
     {
@@ -77,8 +111,12 @@
       "intent": "Compile recent search and export actions into parameterized macro",
       "expectedDomain": "memory",
       "expectedGuide": "session-trail.md",
-      "expectedTools": ["browser_macro_compile"],
-      "bannedTools": ["browser_evaluate"],
+      "expectedTools": [
+        "browser_macro_compile"
+      ],
+      "bannedTools": [
+        "browser_evaluate"
+      ],
       "assertion": "Must compile trail using browser_macro_compile with parameterizeInputs: true"
     },
     {
@@ -87,8 +125,12 @@
       "intent": "Fill first name, last name, email, and agree to terms checkbox",
       "expectedDomain": "browser",
       "expectedGuide": "form-automation.md",
-      "expectedTools": ["browser_fill"],
-      "bannedTools": ["fill_field"],
+      "expectedTools": [
+        "browser_fill"
+      ],
+      "bannedTools": [
+        "fill_field"
+      ],
       "assertion": "Must pass array of fields to browser_fill rather than executing individual typing turns"
     },
     {
@@ -97,8 +139,12 @@
       "intent": "Move Kanban card element from coordinates (200,300) to (600,300)",
       "expectedDomain": "browser",
       "expectedGuide": "interaction-pipeline.md",
-      "expectedTools": ["browser_pointer"],
-      "bannedTools": ["click_element"],
+      "expectedTools": [
+        "browser_pointer"
+      ],
+      "bannedTools": [
+        "click_element"
+      ],
       "assertion": "Must dispatch down, move, and up actions via browser_pointer"
     },
     {
@@ -107,8 +153,12 @@
       "intent": "Enumerate active page targets, switch focus to popup, and close on finish",
       "expectedDomain": "browser",
       "expectedGuide": "tab-and-window.md",
-      "expectedTools": ["browser_tabs"],
-      "bannedTools": ["browser_evaluate"],
+      "expectedTools": [
+        "browser_tabs"
+      ],
+      "bannedTools": [
+        "browser_evaluate"
+      ],
       "assertion": "Must use browser_tabs actions (list, switch, close)"
     },
     {
@@ -117,8 +167,13 @@
       "intent": "Measure Core Web Vitals and verify page render performance",
       "expectedDomain": "network-and-perf",
       "expectedGuide": "performance-and-vitals.md",
-      "expectedTools": ["browser_performance", "browser_wait"],
-      "bannedTools": ["browser_evaluate"],
+      "expectedTools": [
+        "browser_performance",
+        "browser_wait"
+      ],
+      "bannedTools": [
+        "browser_evaluate"
+      ],
       "assertion": "Must query browser_performance for vitals metrics"
     },
     {
@@ -127,8 +182,12 @@
       "intent": "Audit mobile layout on iPhone 15 with slow network profile",
       "expectedDomain": "network-and-perf",
       "expectedGuide": "device-and-environment.md",
-      "expectedTools": ["browser_emulate"],
-      "bannedTools": ["scrape_page"],
+      "expectedTools": [
+        "browser_emulate"
+      ],
+      "bannedTools": [
+        "scrape_page"
+      ],
       "assertion": "Must configure viewport and network throttling via browser_emulate"
     },
     {
@@ -137,8 +196,13 @@
       "intent": "Check active plugins and dynamically load @weavetab/plugin-ocr",
       "expectedDomain": "plugins",
       "expectedGuide": "plugin-runtime.md",
-      "expectedTools": ["list_plugins", "load_plugin"],
-      "bannedTools": ["browser_ask"],
+      "expectedTools": [
+        "list_plugins",
+        "load_plugin"
+      ],
+      "bannedTools": [
+        "browser_ask"
+      ],
       "assertion": "Must query list_plugins and load verified plugin with load_plugin"
     },
     {
@@ -147,8 +211,14 @@
       "intent": "Examine PR diff and review comments without loading web browser UI",
       "expectedDomain": "developer",
       "expectedGuide": "github-forensics.md",
-      "expectedTools": ["github_get_pr", "github_analyze"],
-      "bannedTools": ["browser_navigate", "browser_map"],
+      "expectedTools": [
+        "github_get_pr",
+        "github_analyze"
+      ],
+      "bannedTools": [
+        "browser_navigate",
+        "browser_map"
+      ],
       "assertion": "Must use native github_get_pr and github_analyze tools to save browser turns"
     },
     {
@@ -157,8 +227,12 @@
       "intent": "Diagnose silent validation error and reset server loop strike counter",
       "expectedDomain": "resilience",
       "expectedGuide": "loop-breaker.md",
-      "expectedTools": ["browser_reset_loop_counter"],
-      "bannedTools": ["browser_ask"],
+      "expectedTools": [
+        "browser_reset_loop_counter"
+      ],
+      "bannedTools": [
+        "browser_ask"
+      ],
       "assertion": "Must call browser_reset_loop_counter after diagnosing issue"
     }
   ]

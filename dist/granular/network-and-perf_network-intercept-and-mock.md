@@ -10,7 +10,7 @@ triggers:
   - "network waterfall"
 tools:
   - "browser_network_intercept"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Network Interception, Mocking & TLS Forensics

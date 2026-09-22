@@ -12,7 +12,7 @@ triggers:
 tools:
   - "browser_performance"
   - "browser_wait"
-weavetab: ">=2.5.0-beta.3"
+weavetab: ">=2.5.0-beta.4"
 ---
 
 # Performance Forensics & Core Web Vitals
