@@ -14,7 +14,6 @@ tools:
   - "browser_find"
   - "browser_click"
   - "browser_fill"
-  - "browser_memory_profile"
   - "browser_pattern_learn"
 weavetab: ">=2.5.0-beta.4"
 ---
@@ -51,7 +50,7 @@ Every time an element is located and interacted with, Weavetab calculates a conf
 One JSON file per origin stores named multi-step workflow patterns, site quirks, and reliability scores. This is the **Intelligent Memory** layer — agents learn entire flows, not just individual selectors.
 
 ### Checking a Site Profile at Session Start
-Always call `browser_memory_profile` when starting an automation session on a site you may have visited before:
+Always call `browser_pattern_learn` with `action: "get"` when starting an automation session on a site you may have visited before:
 
 ```json
 { "origin": "https://github.com" }

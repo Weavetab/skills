@@ -13,6 +13,7 @@ tools:
   - "browser_find"
   - "browser_scrape"
   - "browser_snapshot"
+  - "browser_eval"
 weavetab: ">=2.5.0-beta.4"
 ---
 
@@ -94,6 +95,14 @@ Use when target pages are canvas-heavy, WebGL, Figma, Google Sheets, or when sta
 ```json
 {
   "visual": "auto"
+}
+```
+
+### Tier 5: Runtime State & JavaScript Evaluation (`browser_eval`)
+When DOM nodes are occluded or you need direct access to in-memory window state (e.g. Redux store, localStorage keys, or complex canvas dimensions), use `browser_eval` as an escape hatch:
+```json
+{
+  "expression": "window.__INITIAL_STATE__ || document.title"
 }
 ```
 

@@ -11,17 +11,21 @@ Agents can get trapped in repetitive click loops when a button does not advance 
 
 ---
 
-## 1. Loop Detection & Strike Reset (`browser_reset_loop_counter`)
+## 1. Loop Detection & Strike Reset (`browser_map`)
 
-Weavetab tracks the sequence of identical or near-identical tool invocations. If an agent calls `browser_click` on the same selector or ref 3+ times without URL or major DOM mutations, the server raises a `POTENTIAL_LOOP_DETECTED` warning.
+Weavetab tracks the sequence of identical or near-identical tool invocations. If an agent calls `browser_click` or `browser_type` on the same selector or ref repeatedly without URL or major DOM mutations, the server raises a `STUCK_LOOP_WARNING`.
 
 ### How to Break the Loop:
-1. **Analyze Why the Action Failed**: Check `browser_console` for JavaScript errors or use `browser_map` to see if a validation banner popped up.
-2. **Reset the Circuit Breaker**: Once you have diagnosed the issue and adjusted your plan, call `browser_reset_loop_counter` to reset the strike counter:
-
-```json
-{}
-```
+1. **Analyze Why the Action Failed**: Check `browser_console` for JavaScript errors:
+   ```json
+   { "action": "read" }
+   ```
+   Or use `browser_map` to see if a validation banner or unhandled modal appeared.
+2. **Reset the Circuit Breaker**:
+   - Re-map with `force: true` to bypass the map skip guard, refresh the DOM view, and automatically clear loop strikes:
+     ```json
+     { "force": true }
+     ```
 
 ---
 

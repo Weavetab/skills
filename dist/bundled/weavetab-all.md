@@ -94,6 +94,14 @@ Use when target pages are canvas-heavy, WebGL, Figma, Google Sheets, or when sta
 }
 ```
 
+### Tier 5: Runtime State & JavaScript Evaluation (`browser_eval`)
+When DOM nodes are occluded or you need direct access to in-memory window state (e.g. Redux store, localStorage keys, or complex canvas dimensions), use `browser_eval` as an escape hatch:
+```json
+{
+  "expression": "window.__INITIAL_STATE__ || document.title"
+}
+```
+
 ---
 
 ## 2. Volatile Ref ID & Visual Mark Navigation
@@ -329,17 +337,17 @@ Handle native JavaScript `alert`, `confirm`, `prompt`, or `beforeunload` dialogs
 
 ## 8. High-Speed Action Batches (`browser_burst`)
 
-Execute multiple sequential micro-actions in a single CDP roundtrip to defeat race conditions:
+Execute multiple sequential micro-actions in a single CDP roundtrip without waiting for intermediate LLM turns:
 
 ```json
 {
-  "actions": [
-    { "tool": "browser_click", "args": { "ref": "w:10" } },
-    { "tool": "browser_wait", "args": { "timeout": 50 } },
-    { "tool": "browser_click", "args": { "ref": "w:15" } }
+  "steps": [
+    { "tool": "browser_fill", "ref": "w:10", "value": "search query" },
+    { "tool": "click_and_wait", "ref": "w:15" }
   ]
 }
 ```
+*(Accepts both `steps` and `actions`, with arguments either nested under `args` or specified flat on the step object).*
 
 ---
 
@@ -726,7 +734,7 @@ Every time an element is located and interacted with, Weavetab calculates a conf
 One JSON file per origin stores named multi-step workflow patterns, site quirks, and reliability scores. This is the **Intelligent Memory** layer — agents learn entire flows, not just individual selectors.
 
 ### Checking a Site Profile at Session Start
-Always call `browser_memory_profile` when starting an automation session on a site you may have visited before:
+Always call `browser_pattern_learn` with `action: "get"` when starting an automation session on a site you may have visited before:
 
 ```json
 { "origin": "https://github.com" }
@@ -808,30 +816,41 @@ On future visits, the quirk is present in the profile so you can dismiss banners
 
 When an agent executes an exploratory workflow (e.g. logging into a dashboard, navigating to analytics, setting date filters, and downloading a CSV), re-running that flow autonomously in the future should not require 15 reasoning steps.
 
-`browser_macro_compile` converts recent session actions into a high-performance, deterministic execution script.
+`browser_burst` with `compile_from_history: true` automatically converts recent successful session actions into a high-performance, deterministic execution script.
 
 ---
 
-## 1. Compiling Recent Actions (`browser_macro_compile`)
+## 1. Compiling and Replaying Recent Actions (`browser_burst`)
 
-Extract and optimize the trail of actions taken in the active session:
+Replay recent successful actions directly in a single turn:
 
 ```json
 {
-  "name": "daily_metric_export",
-  "stripRedundant": true,
-  "parameterizeInputs": true
+  "compile_from_history": true
+}
+```
+
+Or pass `dry_run: true` to inspect the compiled macro steps before running them:
+
+```json
+{
+  "compile_from_history": true,
+  "dry_run": true,
+  "history_limit": 15
 }
 ```
 
 ### Response Example:
 ```json
 {
-  "macroId": "macro_8f7b2c",
-  "name": "daily_metric_export",
-  "stepsCount": 5,
-  "parameters": ["startDate", "endDate"],
-  "code": "// Auto-generated Weavetab Deterministic Pipeline\nawait session.navigate('https://analytics.example.com');\nawait session.click('[data-testid=\"export-btn\"]');\n..."
+  "success": true,
+  "steps_completed": 0,
+  "compiled_steps": [
+    { "tool": "browser_go", "args": { "url": "https://analytics.example.com" } },
+    { "tool": "browser_fill", "args": { "ref": "w:12", "value": "metrics" } },
+    { "tool": "click_and_wait", "args": { "ref": "w:15" } }
+  ],
+  "message": "compiled 3 macro steps from history"
 }
 ```
 
@@ -872,6 +891,171 @@ Log agent rationale and internal reasoning directly to the Weavetab HUD and tele
 ```
 
 
+## site-learning
+
+# Site Learning — Autonomous Workflow Memory
+
+Weavetab's Site Learning engine accumulates cross-session knowledge about websites and multi-step automation flows. Each site gets one profile file at ~/.weavetab-system/memory/sites/<origin>.json — never duplicated, always merged on write.
+
+---
+
+## 1. Session Start Protocol
+
+On every session visiting a known or potentially-known site, run:
+
+`json
+{ "tool": "browser_pattern_learn", "action": "get", "origin": "https://github.com" }
+`
+
+Parse the response:
+- known: false → site is new, proceed exploratorily, teach after completion
+- known_patterns → list of named workflows with reliability scores
+- quirks → auto-handle any listed quirks (cookie banners, rate limits) before main task
+- ramework → adjust interaction strategy accordingly (React, Vue, etc.)
+
+---
+
+## 2. Fast-Path vs. Exploratory Decision
+
+Use the _hint field or individual eliability values to decide your strategy:
+
+| Reliability | Strikes | Strategy |
+|---|---|---|
+| ≥ 0.8, strikes = 0 | ✓ | **Fast path**: replay steps via rowser_burst directly |
+| 0.5–0.79 | 0–1 | **Cautious path**: replay steps, verify success_indicator after each critical step |
+| < 0.5 | any | **Re-explore**: navigate manually, collect correct steps, then teach |
+| any | ≥ 3 | **Re-learn**: ignore cached pattern, re-explore, then call rowser_pattern_learn with updated steps |
+
+---
+
+## 3. Quirk Auto-Handling
+
+If a profile has known quirks, resolve them immediately after navigation before executing your main task:
+
+`
+Profile quirks: { cookie_banner: { selector: "#cookie-consent", action: "click .accept-all", appears: "first_visit" } }
+`
+
+Execute the action before doing anything else. Never spend reasoning turns on a known dismissible popup.
+
+---
+
+## 4. Teaching a Workflow Pattern
+
+After successfully completing a multi-step flow for the first time (or after re-learning):
+
+`json
+{
+  "tool": "browser_pattern_learn",
+  "origin": "https://github.com",
+  "action": "learn",
+  "name": "login_flow",
+  "steps": [
+    { "tool": "browser_navigate", "target": "https://github.com/login" },
+    { "tool": "browser_fill", "target": "#login_field", "value": "{{username}}" },
+    { "tool": "browser_fill", "target": "#password", "value": "{{password}}" },
+    { "tool": "browser_click", "target": "[type=submit]" }
+  ],
+  "success_indicator": "a[aria-label='Homepage']",
+  "entry": "/login"
+}
+`
+
+**Pattern Naming Rules**:
+- Use snake_case
+- Be descriptive: login_flow, pr_review, csv_export, checkout_flow
+- Duplicate name on same origin = **update** (merge), never creates a second pattern
+
+**Step Quality Rules**:
+- Use semantic selectors: data-testid, id, ria-label, readable text-based selectors
+- Avoid: .hash_abc123, div:nth-child(4), deep anonymous chains like div > div > div > span
+  (the engine automatically drops volatile selectors during compilation)
+- For sensitive inputs, record the step with a placeholder like {{username}} — never hardcode credentials
+
+---
+
+## 5. Reliability Upkeep After Replay
+
+Every time you replay a pattern, report the outcome:
+
+`json
+{
+  "tool": "browser_pattern_learn",
+  "origin": "https://github.com",
+  "action": "record_execution",
+  "name": "login_flow",
+  "success": true,
+  "duration_ms": 3100
+}
+`
+
+The engine uses EWMA (α=0.15) to update the reliability score:
+- Success run → reliability climbs toward 1.0 slowly
+- Failure run → reliability drops; 3 consecutive failures trigger [RE-LEARN NEEDED] flag
+
+---
+
+## 6. Recording a New Quirk
+
+When you encounter a cookie consent modal, popup, or rate limit for the first time:
+
+`json
+{
+  "tool": "browser_pattern_learn",
+  "origin": "https://example.com",
+  "action": "record_quirk",
+  "quirk_key": "cookie_banner",
+  "quirk_data": {
+    "selector": "#cookie-consent",
+    "action": "click .accept-all",
+    "appears": "first_visit"
+  }
+}
+`
+
+Supported quirk_key values: cookie_banner, ate_limit, modal_popups
+
+For rate limits:
+`json
+{
+  "quirk_key": "rate_limit",
+  "quirk_data": { "threshold": "60req/min", "recovery": "wait 30s" }
+}
+`
+
+---
+
+## 7. Anti-Patterns to Avoid
+
+- **Never create per-session pattern names** like login_2026_09_16 — one name per workflow per origin, forever updated in place.
+- **Never call rowser_pattern_learn in a loop** — one call per workflow completion. The write is idempotent (skips disk write if nothing changed).
+- **Never store credentials in steps** — use placeholders or rowser_type_secret in actual execution.
+- **Never write to ~/.weavetab/** — all memory belongs in ~/.weavetab-system/memory/sites/.
+
+---
+
+## 8. Full Session Example: GitHub PR Review
+
+`
+1. browser_pattern_learn { action: "get", origin: "https://github.com" }
+   → patterns: { pr_review: { reliability: 0.95, steps: 3 } }
+   → quirks: {} (none)
+
+2. Since reliability=0.95 (≥ 0.8): use fast path
+   browser_burst with the 3 stored steps
+
+3. After completion:
+   browser_pattern_learn {
+     action: "record_execution",
+     name: "pr_review",
+     success: true,
+     duration_ms: 2800
+   }
+`
+
+Total agent turns for a known site: **3 tool calls** vs. potentially 12+ with full exploration.
+
+
 # ====================================================
 # DOMAIN: RESILIENCE
 # ====================================================
@@ -889,17 +1073,21 @@ Agents can get trapped in repetitive click loops when a button does not advance 
 
 ---
 
-## 1. Loop Detection & Strike Reset (`browser_reset_loop_counter`)
+## 1. Loop Detection & Strike Reset (`browser_map`)
 
-Weavetab tracks the sequence of identical or near-identical tool invocations. If an agent calls `browser_click` on the same selector or ref 3+ times without URL or major DOM mutations, the server raises a `POTENTIAL_LOOP_DETECTED` warning.
+Weavetab tracks the sequence of identical or near-identical tool invocations. If an agent calls `browser_click` or `browser_type` on the same selector or ref repeatedly without URL or major DOM mutations, the server raises a `STUCK_LOOP_WARNING`.
 
 ### How to Break the Loop:
-1. **Analyze Why the Action Failed**: Check `browser_console` for JavaScript errors or use `browser_map` to see if a validation banner popped up.
-2. **Reset the Circuit Breaker**: Once you have diagnosed the issue and adjusted your plan, call `browser_reset_loop_counter` to reset the strike counter:
-
-```json
-{}
-```
+1. **Analyze Why the Action Failed**: Check `browser_console` for JavaScript errors:
+   ```json
+   { "action": "read" }
+   ```
+   Or use `browser_map` to see if a validation banner or unhandled modal appeared.
+2. **Reset the Circuit Breaker**:
+   - Re-map with `force: true` to bypass the map skip guard, refresh the DOM view, and automatically clear loop strikes:
+     ```json
+     { "force": true }
+     ```
 
 ---
 
@@ -1657,55 +1845,59 @@ Generated for @weavetab/skills v2.5.0-beta.4
 
 # GitHub Forensics & Repository Architecture Inspection
 
-Navigating GitHub repositories via web browsing burns massive token budgets loading HTML chrome, comment threads, and diff trees. Weavetab includes dedicated GitHub inspection tools that interact directly with git metadata and APIs.
+Navigating GitHub repositories via web browsing burns massive token budgets loading HTML chrome, comment threads, and diff trees. Weavetab includes a dedicated `browser_github` tool that interacts directly with git metadata and raw endpoints.
 
 ---
 
-## 1. High-Level Repository Analysis (`github_analyze`)
+## 1. High-Level Repository Analysis (action: "analyze")
 
 Quickly summarize repo structure, languages, dependency graphs, and recent commit frequency:
 
 ```json
 {
+  "action": "analyze",
   "repo": "Weavetab/MCP"
 }
 ```
 
 ---
 
-## 2. Reading Repository Source Files (`github_read`)
+## 2. Reading Repository Source Files (action: "read")
 
-Directly stream files and directories from any public or authenticated GitHub repo without cloning:
+Directly stream files and directories from any public or authenticated GitHub repo without cloning or burning API rate limits:
 
 ```json
 {
+  "action": "read",
   "repo": "Weavetab/MCP",
-  "path": "src/server.ts",
-  "ref": "main"
+  "paths": ["src/server.ts"],
+  "line_range": [1, 200]
 }
 ```
 
 ---
 
-## 3. Pull Request Forensics (`github_get_pr`)
+## 3. Pull Request Forensics (action: "pr")
 
-Retrieve PR diffs, review comments, CI checks, and mergeability status:
+Retrieve PR diffs, changed files, review comments, CI checks, and mergeability status:
 
 ```json
 {
+  "action": "pr",
   "repo": "Weavetab/MCP",
-  "prNumber": 42
+  "number": 42
 }
 ```
 
 ---
 
-## 4. Issue Triage & Search (`github_issues`)
+## 4. Issue Triage & Search (action: "issues")
 
 Query repository issue trackers with state, label, and keyword filters:
 
 ```json
 {
+  "action": "issues",
   "repo": "Weavetab/MCP",
   "state": "open",
   "labels": ["bug", "priority"]

@@ -15,11 +15,9 @@ const OFFICIAL_TOOLS = new Set([
   "browser_cookies", "browser_canvas", "browser_scrape", "browser_snapshot",
   "browser_screenshot", "browser_viewport", "browser_clipboard", "browser_inspect",
   "browser_extract_design", "browser_automation", "browser_recording",
-  "browser_reset_loop_counter", "browser_detect", "browser_performance",
-  "browser_macro_compile", "github_analyze", "github_read", "github_issues",
-  "github_get_pr", "browser_office", "browser_emulate", "list_plugins",
-  "load_plugin", "browser_checkpoint", "browser_memory_profile",
-  "browser_pattern_learn"
+  "browser_detect", "browser_performance",
+  "browser_github", "browser_office", "browser_emulate", "list_plugins",
+  "load_plugin", "browser_checkpoint", "browser_pattern_learn"
 ]);
 
 const BANNED_TOOLS = [

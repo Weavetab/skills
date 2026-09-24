@@ -86,6 +86,14 @@ Use when target pages are canvas-heavy, WebGL, Figma, Google Sheets, or when sta
 }
 ```
 
+### Tier 5: Runtime State & JavaScript Evaluation (`browser_eval`)
+When DOM nodes are occluded or you need direct access to in-memory window state (e.g. Redux store, localStorage keys, or complex canvas dimensions), use `browser_eval` as an escape hatch:
+```json
+{
+  "expression": "window.__INITIAL_STATE__ || document.title"
+}
+```
+
 ---
 
 ## 2. Volatile Ref ID & Visual Mark Navigation
@@ -321,17 +329,17 @@ Handle native JavaScript `alert`, `confirm`, `prompt`, or `beforeunload` dialogs
 
 ## 8. High-Speed Action Batches (`browser_burst`)
 
-Execute multiple sequential micro-actions in a single CDP roundtrip to defeat race conditions:
+Execute multiple sequential micro-actions in a single CDP roundtrip without waiting for intermediate LLM turns:
 
 ```json
 {
-  "actions": [
-    { "tool": "browser_click", "args": { "ref": "w:10" } },
-    { "tool": "browser_wait", "args": { "timeout": 50 } },
-    { "tool": "browser_click", "args": { "ref": "w:15" } }
+  "steps": [
+    { "tool": "browser_fill", "ref": "w:10", "value": "search query" },
+    { "tool": "click_and_wait", "ref": "w:15" }
   ]
 }
 ```
+*(Accepts both `steps` and `actions`, with arguments either nested under `args` or specified flat on the step object).*
 
 ---
 

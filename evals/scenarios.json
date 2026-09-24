@@ -112,12 +112,12 @@
       "expectedDomain": "memory",
       "expectedGuide": "session-trail.md",
       "expectedTools": [
-        "browser_macro_compile"
+        "browser_burst"
       ],
       "bannedTools": [
         "browser_evaluate"
       ],
-      "assertion": "Must compile trail using browser_macro_compile with parameterizeInputs: true"
+      "assertion": "Must compile trail using browser_burst with compile_from_history: true"
     },
     {
       "id": "form_atomic_batch_fill",
@@ -212,14 +212,13 @@
       "expectedDomain": "developer",
       "expectedGuide": "github-forensics.md",
       "expectedTools": [
-        "github_get_pr",
-        "github_analyze"
+        "browser_github"
       ],
       "bannedTools": [
         "browser_navigate",
         "browser_map"
       ],
-      "assertion": "Must use native github_get_pr and github_analyze tools to save browser turns"
+      "assertion": "Must use native browser_github tool to save browser turns"
     },
     {
       "id": "loop_breaker_reset",
@@ -228,12 +227,12 @@
       "expectedDomain": "resilience",
       "expectedGuide": "loop-breaker.md",
       "expectedTools": [
-        "browser_reset_loop_counter"
+        "browser_map"
       ],
       "bannedTools": [
         "browser_ask"
       ],
-      "assertion": "Must call browser_reset_loop_counter after diagnosing issue"
+      "assertion": "Must reset loop strikes via browser_map({ force: true }) after diagnosing issue"
     }
   ]
 }

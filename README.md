@@ -38,21 +38,21 @@ Agents classify their immediate intent in one turn and jump directly to the targ
 
 ---
 
-## 2. The 9 Operational Domains & 48-Tool Matrix
+## 2. The 9 Operational Domains & 44-Tool Matrix
 
-Every single one of the **48 official tools** in `@weavetab/mcp` is documented with verified parameters and runtime patterns:
+Every single one of the **44 official tools** in `@weavetab/mcp` is documented with verified parameters and runtime patterns:
 
 | Domain | Primary Tools | Operational Capabilities |
 | :--- | :--- | :--- |
 | **`browser/`** | `browser_map`, `browser_find`, `browser_click`, `browser_type`, `browser_fill`, `browser_key`, `browser_pointer`, `browser_upload`, `browser_tabs`, `browser_scroll`, `browser_dialog`, `browser_burst`, `browser_highlight`, `browser_clipboard` | Token-conserving DOM walks (`lite: true`), volatile `w:NN` handles, atomic multi-field inputs, OS file upload bypass. |
 | **`desktop/`** | `browser_detect`, any tool with `app` argument | Zero-terminal scanning for Slack, Discord, VS Code, Notion, Obsidian; routing actions directly to native Electron windows. |
-| **`memory/`** | `browser_macro_compile`, `browser_thoughts`, `browser_automation`, `browser_recording` | Cross-session origin selector decay, compiling manual interaction trails into deterministic macros. |
-| **`resilience/`**| `browser_checkpoint`, `browser_cookies`, `browser_storage`, `browser_reset_loop_counter`, `browser_captcha` | Time-travel state snapshots (`save`, `restore`) for instant rollbacks, 4-tier SPA stale ref healing, loop breaker. |
+| **`memory/`** | `browser_pattern_learn`, `browser_thoughts`, `browser_automation`, `browser_recording` | Cross-session origin selector decay, compiling manual interaction trails into deterministic macros via `browser_burst`. |
+| **`resilience/`**| `browser_checkpoint`, `browser_cookies`, `browser_storage`, `browser_captcha` | Time-travel state snapshots (`save`, `restore`) for instant rollbacks, 4-tier SPA stale ref healing, loop breaker (`browser_map`, `browser_wait`). |
 | **`security/`** | `browser_type_secret`, RBAC tiers | Hardware-grade zero-bleed guarantee (passwords masked in HUD, CDP logs, and conversation transcripts). |
 | **`plugins/`**  | `list_plugins`, `load_plugin` | Runtime discovery and dynamic loading of verified npm community plugins into the active MCP session. |
 | **`network-and-perf/`** | `browser_network_intercept`, `browser_performance`, `browser_wait`, `browser_emulate` | API mocking, TLS certificate chain audits, Core Web Vitals (LCP/CLS), device presets & 3G throttling. |
 | **`documents/`**| `browser_office`, `browser_pdf`, `browser_canvas`, `browser_screenshot`, `browser_viewport`, `browser_extract_design` | Ingesting Excel spreadsheets, Word `.docx`, and CSVs into structured JSON; full-page screenshots and canvas inspection. |
-| **`developer/`**| `github_analyze`, `github_read`, `github_issues`, `github_get_pr` | Sub-millisecond local repo inspection, PR diffs, and issue triage without burning browser turns. |
+| **`developer/`**| `browser_github` | Sub-millisecond local repo inspection, PR diffs, and issue triage without burning browser turns. |
 
 ---
 

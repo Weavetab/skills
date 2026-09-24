@@ -17,11 +17,11 @@ When executing browser or desktop automation via `@weavetab/mcp`, **do not read 
 | **Discover running Electron apps (Slack, Discord, VS Code)** | [`desktop/electron-discovery.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/desktop/electron-discovery.md) | `browser_detect` |
 | **Control native desktop applications with MCP tools** | [`desktop/desktop-targeting.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/desktop/desktop-targeting.md) | Any tool passing `app: "<name>"` |
 | **Bypass DOM walks using learned & cached selectors** | [`memory/selector-memory-system.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/selector-memory-system.md) | Telemetry & selector history |
-| **Recall multi-step site workflows, quirks & fast-path replay** | [`memory/site-learning.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/site-learning.md) | `browser_memory_profile`, `browser_pattern_learn` |
-| **Compile manual action history into reusable macros** | [`memory/session-trail.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/session-trail.md) | `browser_macro_compile` |
+| **Recall multi-step site workflows, quirks & fast-path replay** | [`memory/site-learning.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/site-learning.md) | `browser_pattern_learn` |
+| **Compile manual action history into reusable macros** | [`memory/session-trail.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/memory/session-trail.md) | `browser_burst` (`compile_from_history`) |
 | **Handle React/Next/Vue detached elements & re-renders** | [`resilience/stale-ref-recovery.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/resilience/stale-ref-recovery.md) | 4-tier auto-recovery heuristic |
 | **Save/restore checkpoints & rollback failed workflows** | [`resilience/session-time-travel.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/resilience/session-time-travel.md) | `browser_checkpoint` |
-| **Break infinite interaction loops or handle CAPTCHAs** | [`resilience/loop-breaker.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/resilience/loop-breaker.md) | `browser_reset_loop_counter`, `browser_captcha` |
+| **Break infinite interaction loops or handle CAPTCHAs** | [`resilience/loop-breaker.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/resilience/loop-breaker.md) | `browser_map`, `browser_captcha` |
 | **Enter passwords, API keys, or sensitive credentials** | [`security/secret-containment-protocol.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/security/secret-containment-protocol.md) | `browser_type_secret` |
 | **Enforce RBAC boundaries & sandbox viewer agents** | [`security/rbac-and-policies.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/security/rbac-and-policies.md) | RBAC security layer |
 | **Discover & dynamically load community plugins** | [`plugins/plugin-runtime.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/plugins/plugin-runtime.md) | `list_plugins`, `load_plugin` |
@@ -31,7 +31,7 @@ When executing browser or desktop automation via `@weavetab/mcp`, **do not read 
 | **Emulate mobile devices, CPU throttle, mock location** | [`network-and-perf/device-and-environment.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/network-and-perf/device-and-environment.md) | `browser_emulate` |
 | **Ingest Word (.docx), Excel (.xlsx), CSV files** | [`documents/office-document-ingestion.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/documents/office-document-ingestion.md) | `browser_office` |
 | **Capture screenshots, PDF exports, canvas pixels & visual marks** | [`documents/canvas-and-visual-capture.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/documents/canvas-and-visual-capture.md) | `browser_screenshot`, `browser_canvas`, `browser_pdf`, `browser_map` |
-| **Sub-ms local Git repo parsing & PR/issue triage** | [`developer/github-forensics.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/developer/github-forensics.md) | `github_analyze`, `github_read`, `github_get_pr`, `github_issues` |
+| **Sub-ms local Git repo parsing & PR/issue triage** | [`developer/github-forensics.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/developer/github-forensics.md) | `browser_github` |
 
 ---
 

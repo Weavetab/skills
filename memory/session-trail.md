@@ -8,7 +8,7 @@ triggers:
   - "session trail"
   - "record workflow"
 tools:
-  - "browser_macro_compile"
+  - "browser_burst"
   - "browser_recording"
   - "browser_automation"
   - "browser_thoughts"
@@ -19,30 +19,41 @@ weavetab: ">=2.5.0-beta.4"
 
 When an agent executes an exploratory workflow (e.g. logging into a dashboard, navigating to analytics, setting date filters, and downloading a CSV), re-running that flow autonomously in the future should not require 15 reasoning steps.
 
-`browser_macro_compile` converts recent session actions into a high-performance, deterministic execution script.
+`browser_burst` with `compile_from_history: true` automatically converts recent successful session actions into a high-performance, deterministic execution script.
 
 ---
 
-## 1. Compiling Recent Actions (`browser_macro_compile`)
+## 1. Compiling and Replaying Recent Actions (`browser_burst`)
 
-Extract and optimize the trail of actions taken in the active session:
+Replay recent successful actions directly in a single turn:
 
 ```json
 {
-  "name": "daily_metric_export",
-  "stripRedundant": true,
-  "parameterizeInputs": true
+  "compile_from_history": true
+}
+```
+
+Or pass `dry_run: true` to inspect the compiled macro steps before running them:
+
+```json
+{
+  "compile_from_history": true,
+  "dry_run": true,
+  "history_limit": 15
 }
 ```
 
 ### Response Example:
 ```json
 {
-  "macroId": "macro_8f7b2c",
-  "name": "daily_metric_export",
-  "stepsCount": 5,
-  "parameters": ["startDate", "endDate"],
-  "code": "// Auto-generated Weavetab Deterministic Pipeline\nawait session.navigate('https://analytics.example.com');\nawait session.click('[data-testid=\"export-btn\"]');\n..."
+  "success": true,
+  "steps_completed": 0,
+  "compiled_steps": [
+    { "tool": "browser_go", "args": { "url": "https://analytics.example.com" } },
+    { "tool": "browser_fill", "args": { "ref": "w:12", "value": "metrics" } },
+    { "tool": "click_and_wait", "args": { "ref": "w:15" } }
+  ],
+  "message": "compiled 3 macro steps from history"
 }
 ```
 

@@ -11,8 +11,8 @@
     "documents",
     "developer"
   ],
-  "officialToolsCount": 50,
-  "skillsCount": 21,
+  "officialToolsCount": 44,
+  "skillsCount": 22,
   "skills": [
     {
       "id": "dom-strategy",
@@ -29,7 +29,8 @@
         "browser_map",
         "browser_find",
         "browser_scrape",
-        "browser_snapshot"
+        "browser_snapshot",
+        "browser_eval"
       ],
       "weavetab": ">=2.5.0-beta.4",
       "filePath": "browser/dom-strategy.md"
@@ -152,7 +153,6 @@
         "browser_find",
         "browser_click",
         "browser_fill",
-        "browser_memory_profile",
         "browser_pattern_learn"
       ],
       "weavetab": ">=2.5.0-beta.4",
@@ -169,13 +169,34 @@
         "record workflow"
       ],
       "tools": [
-        "browser_macro_compile",
+        "browser_burst",
         "browser_recording",
         "browser_automation",
         "browser_thoughts"
       ],
       "weavetab": ">=2.5.0-beta.4",
       "filePath": "memory/session-trail.md"
+    },
+    {
+      "id": "site-learning",
+      "domain": "memory",
+      "triggers": [
+        "site learning",
+        "workflow pattern",
+        "learn site",
+        "remember workflow",
+        "site memory",
+        "cookie banner quirk",
+        "fast path replay",
+        "pattern reliability",
+        "pattern compiler"
+      ],
+      "tools": [
+        "browser_pattern_learn",
+        "browser_burst"
+      ],
+      "weavetab": ">=2.5.0-beta.4",
+      "filePath": "memory/site-learning.md"
     },
     {
       "id": "loop-breaker",
@@ -189,7 +210,8 @@
         "recaptcha"
       ],
       "tools": [
-        "browser_reset_loop_counter",
+        "browser_map",
+        "browser_console",
         "browser_captcha"
       ],
       "weavetab": ">=2.5.0-beta.4",
@@ -401,10 +423,7 @@
         "inspect repo"
       ],
       "tools": [
-        "github_analyze",
-        "github_read",
-        "github_issues",
-        "github_get_pr"
+        "browser_github"
       ],
       "weavetab": ">=2.5.0-beta.4",
       "filePath": "developer/github-forensics.md"
