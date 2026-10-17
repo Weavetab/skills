@@ -1,4 +1,4 @@
-# Weavetab MCP Skills (`@weavetab/skills`)
+# Weavetab Skills (`@weavetab/skills`)
 
 [![npm version](https://img.shields.io/npm/v/@weavetab/skills.svg)](https://www.npmjs.com/package/@weavetab/skills)
 [![GitHub stars](https://img.shields.io/github/stars/Weavetab/skills.svg?style=social)](https://github.com/Weavetab/skills)
