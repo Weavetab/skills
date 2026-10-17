@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0-beta.4",
+  "version": "2.5.0-beta.5",
   "scenarios": [
     {
       "id": "spa_stale_ref_recovery",
@@ -192,18 +192,19 @@
     },
     {
       "id": "plugin_dynamic_load",
-      "description": "Agent loads an external community plugin for specialized OCR",
-      "intent": "Check active plugins and dynamically load @weavetab/plugin-ocr",
+      "description": "Agent uses tools registered by an installed Weavetab plugin",
+      "intent": "Use plugin-provided tools that are automatically loaded at server startup",
       "expectedDomain": "plugins",
       "expectedGuide": "plugin-runtime.md",
       "expectedTools": [
+        "browser_snapshot"
+      ],
+      "bannedTools": [
+        "browser_ask",
         "list_plugins",
         "load_plugin"
       ],
-      "bannedTools": [
-        "browser_ask"
-      ],
-      "assertion": "Must query list_plugins and load verified plugin with load_plugin"
+      "assertion": "Must NOT call list_plugins or load_plugin — plugin tools are available directly in the tool list"
     },
     {
       "id": "github_repository_triage",

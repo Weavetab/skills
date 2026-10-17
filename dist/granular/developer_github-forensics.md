@@ -9,7 +9,7 @@ triggers:
   - "inspect repo"
 tools:
   - "browser_github"
-weavetab: ">=2.5.0-beta.4"
+weavetab: ">=2.5.0-beta.5"
 ---
 
 # GitHub Forensics & Repository Architecture Inspection

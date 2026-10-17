@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## loop-breaker

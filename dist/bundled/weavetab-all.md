@@ -1,4 +1,4 @@
-# Weavetab Complete Enterprise Agent Suite (v2.5.0-beta.4)
+# Weavetab Complete Enterprise Agent Suite (v2.5.0-beta.5)
 
 
 
@@ -8,7 +8,7 @@
 
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## dom-strategy
@@ -515,7 +515,7 @@ The auto-heal routine re-establishes CDP protocol sessions, reconnects event lis
 
 # Weavetab Domain Profile: DESKTOP
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## desktop-targeting
@@ -697,7 +697,7 @@ Once launched with `--remote-debugging-port`, `browser_detect` immediately refle
 
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## selector-memory-system
@@ -846,7 +846,7 @@ Or pass `dry_run: true` to inspect the compiled macro steps before running them:
   "success": true,
   "steps_completed": 0,
   "compiled_steps": [
-    { "tool": "browser_go", "args": { "url": "https://analytics.example.com" } },
+    { "tool": "browser_navigate", "args": { "url": "https://analytics.example.com" } },
     { "tool": "browser_fill", "args": { "ref": "w:12", "value": "metrics" } },
     { "tool": "click_and_wait", "args": { "ref": "w:15" } }
   ],
@@ -1062,7 +1062,7 @@ Total agent turns for a known site: **3 tool calls** vs. potentially 12+ with fu
 
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## loop-breaker
@@ -1284,7 +1284,7 @@ If an action returns `ERROR: STALE_ELEMENT_REFERENCE` because all 4 recovery tie
 
 # Weavetab Domain Profile: SECURITY
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## rbac-and-policies
@@ -1377,7 +1377,7 @@ When `browser_type_secret` is invoked:
 
 # Weavetab Domain Profile: PLUGINS
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## hooks-and-overrides
@@ -1408,51 +1408,56 @@ When plugins are active, tool return payloads may include an optional `_pluginMe
 
 ## plugin-runtime
 
-# Plugin Runtime: Dynamic Extension Loading
+# Plugin Runtime: Weavetab Plugin Architecture
 
-Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. Agents can query loaded extensions and dynamically load community or official plugins into the live MCP runtime without restarting the server.
+Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. All installed plugins are loaded automatically at server startup — their tools appear directly in the MCP tool list alongside built-in tools. Agents never need to discover or activate plugins manually.
 
 ---
 
-## 1. Inspecting Active Plugins (`list_plugins`)
+## 1. How Plugin Tools Appear
 
-Discover all installed plugins, their versions, and the tools or hooks they expose:
+Plugin tools are first-class MCP tools. If `@weavetab/plugin-recaptcha-solver` is installed, `captcha_solve_token` appears in the tool list immediately on startup — no discovery step needed.
 
-```json
-{}
-```
+There are **no** `list_plugins` or `load_plugin` tools. Managing plugins is a CLI operation:
 
-### Response Example:
-```json
-{
-  "plugins": [
-    {
-      "name": "@weavetab/plugin-recaptcha-solver",
-      "version": "1.2.0",
-      "status": "active",
-      "toolsProvided": ["captcha_solve_token"],
-      "hooks": ["beforeToolCall"]
-    }
-  ]
-}
+```bash
+# Install a plugin (restart required)
+weavetab plugin add @weavetab/plugin-youtube
+
+# Remove a plugin
+weavetab plugin rm @weavetab/plugin-youtube
+
+# List installed plugins
+weavetab plugin list
 ```
 
 ---
 
-## 2. Dynamic Runtime Loading (`load_plugin`)
+## 2. Plugin Permission Model
 
-Load a verified plugin package into the active runtime session:
+Every plugin declares what it can do in `weavetab.json`. The runtime enforces this at load time:
 
-```json
-{
-  "name": "@weavetab/plugin-datadog-tracer"
-}
-```
+| Permission | What it gates |
+|---|---|
+| `tools.add: true` | Plugin can register new MCP tools |
+| `tools.override: ["browser_navigate"]` | Plugin can wrap/replace that built-in tool |
+| `tools.remove: ["browser_pdf"]` | Plugin can disable that built-in tool |
+| `hooks.onBeforeAction: true` | Plugin can intercept all tool calls before execution |
+| `hooks.onAfterAction: true` | Plugin can inspect/transform all tool results |
 
-### Plugin Verification Guarantees:
-- Plugins must implement the `@weavetab/sdk` standard interface.
-- Loaded tools become immediately callable by the agent in subsequent turns.
-- If an agent is in the `viewer` RBAC tier, `load_plugin` is rejected with `PERMISSION_DENIED`.
+Plugins that attempt to exceed their declared permissions are blocked with a stderr warning — they do not crash.
+
+---
+
+## 3. Trust Tiers
+
+| Tier | Badge | Condition |
+|---|---|---|
+| Official | `✚ [Official]` | `@weavetab/plugin-*` packages |
+| Verified | `✔ [Verified]` | Listed in the Weavetab verified registry |
+| Unverified | `⚠ [Unverified]` | Unknown community package |
+
+Unverified plugins are loaded but their permissions are logged visibly at startup for user review.
 
 
 # ====================================================
@@ -1461,7 +1466,7 @@ Load a verified plugin package into the active runtime session:
 
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## device-and-environment
@@ -1590,7 +1595,7 @@ Extract cryptographic handshake metadata, cipher suites, expiration dates, and m
 ```json
 {
   "action": "auditTls",
-  "url": "https://weavetab.pages.dev"
+  "url": "https://weavetab.dev"
 }
 ```
 
@@ -1690,7 +1695,7 @@ Always synchronize with deterministic browser conditions:
 
 # Weavetab Domain Profile: DOCUMENTS
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## canvas-and-visual-capture
@@ -1838,7 +1843,7 @@ Extract semantic paragraphs, document headings, tables, and lists:
 
 # Weavetab Domain Profile: DEVELOPER
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## github-forensics

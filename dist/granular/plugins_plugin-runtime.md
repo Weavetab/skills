@@ -2,59 +2,62 @@
 id: plugin-runtime
 domain: plugins
 triggers:
-  - "list plugins"
-  - "load plugin"
-  - "install plugin"
+  - "what plugins are installed"
   - "weavetab plugin"
   - "extend mcp"
-tools:
-  - "list_plugins"
-  - "load_plugin"
-weavetab: ">=2.5.0-beta.4"
+  - "plugin tools"
+  - "plugin permissions"
+tools: []
+weavetab: ">=2.5.0-beta.5"
 ---
 
-# Plugin Runtime: Dynamic Extension Loading
+# Plugin Runtime: Weavetab Plugin Architecture
 
-Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. Agents can query loaded extensions and dynamically load community or official plugins into the live MCP runtime without restarting the server.
+Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. All installed plugins are loaded automatically at server startup — their tools appear directly in the MCP tool list alongside built-in tools. Agents never need to discover or activate plugins manually.
 
 ---
 
-## 1. Inspecting Active Plugins (`list_plugins`)
+## 1. How Plugin Tools Appear
 
-Discover all installed plugins, their versions, and the tools or hooks they expose:
+Plugin tools are first-class MCP tools. If `@weavetab/plugin-recaptcha-solver` is installed, `captcha_solve_token` appears in the tool list immediately on startup — no discovery step needed.
 
-```json
-{}
-```
+There are **no** `list_plugins` or `load_plugin` tools. Managing plugins is a CLI operation:
 
-### Response Example:
-```json
-{
-  "plugins": [
-    {
-      "name": "@weavetab/plugin-recaptcha-solver",
-      "version": "1.2.0",
-      "status": "active",
-      "toolsProvided": ["captcha_solve_token"],
-      "hooks": ["beforeToolCall"]
-    }
-  ]
-}
+```bash
+# Install a plugin (restart required)
+weavetab plugin add @weavetab/plugin-youtube
+
+# Remove a plugin
+weavetab plugin rm @weavetab/plugin-youtube
+
+# List installed plugins
+weavetab plugin list
 ```
 
 ---
 
-## 2. Dynamic Runtime Loading (`load_plugin`)
+## 2. Plugin Permission Model
 
-Load a verified plugin package into the active runtime session:
+Every plugin declares what it can do in `weavetab.json`. The runtime enforces this at load time:
 
-```json
-{
-  "name": "@weavetab/plugin-datadog-tracer"
-}
-```
+| Permission | What it gates |
+|---|---|
+| `tools.add: true` | Plugin can register new MCP tools |
+| `tools.override: ["browser_navigate"]` | Plugin can wrap/replace that built-in tool |
+| `tools.remove: ["browser_pdf"]` | Plugin can disable that built-in tool |
+| `hooks.onBeforeAction: true` | Plugin can intercept all tool calls before execution |
+| `hooks.onAfterAction: true` | Plugin can inspect/transform all tool results |
 
-### Plugin Verification Guarantees:
-- Plugins must implement the `@weavetab/sdk` standard interface.
-- Loaded tools become immediately callable by the agent in subsequent turns.
-- If an agent is in the `viewer` RBAC tier, `load_plugin` is rejected with `PERMISSION_DENIED`.
+Plugins that attempt to exceed their declared permissions are blocked with a stderr warning — they do not crash.
+
+---
+
+## 3. Trust Tiers
+
+| Tier | Badge | Condition |
+|---|---|---|
+| Official | `✚ [Official]` | `@weavetab/plugin-*` packages |
+| Verified | `✔ [Verified]` | Listed in the Weavetab verified registry |
+| Unverified | `⚠ [Unverified]` | Unknown community package |
+
+Unverified plugins are loaded but their permissions are logged visibly at startup for user review.

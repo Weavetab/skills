@@ -10,7 +10,7 @@ triggers:
   - "network waterfall"
 tools:
   - "browser_network_intercept"
-weavetab: ">=2.5.0-beta.4"
+weavetab: ">=2.5.0-beta.5"
 ---
 
 # Network Interception, Mocking & TLS Forensics
@@ -61,7 +61,7 @@ Extract cryptographic handshake metadata, cipher suites, expiration dates, and m
 ```json
 {
   "action": "auditTls",
-  "url": "https://weavetab.pages.dev"
+  "url": "https://weavetab.dev"
 }
 ```
 

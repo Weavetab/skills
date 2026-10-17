@@ -7,9 +7,8 @@ triggers:
   - "after tool call"
   - "telemetry interception"
   - "sdk hooks"
-tools:
-  - "list_plugins"
-weavetab: ">=2.5.0-beta.4"
+tools: []
+weavetab: ">=2.5.0-beta.5"
 ---
 
 # Plugin Hooks & Lifecycle Overrides

@@ -15,7 +15,7 @@ tools:
   - "browser_detect"
   - "browser_tabs"
   - "browser_navigate"
-weavetab: ">=2.5.0-beta.4"
+weavetab: ">=2.5.0-beta.5"
 ---
 
 # Desktop App Targeting & Multi-Window Routing

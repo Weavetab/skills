@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## device-and-environment
@@ -129,7 +129,7 @@ Extract cryptographic handshake metadata, cipher suites, expiration dates, and m
 ```json
 {
   "action": "auditTls",
-  "url": "https://weavetab.pages.dev"
+  "url": "https://weavetab.dev"
 }
 ```
 

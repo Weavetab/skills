@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.5.0-beta.4
+Generated for @weavetab/skills v2.5.0-beta.5
 
 
 ## selector-memory-system
@@ -149,7 +149,7 @@ Or pass `dry_run: true` to inspect the compiled macro steps before running them:
   "success": true,
   "steps_completed": 0,
   "compiled_steps": [
-    { "tool": "browser_go", "args": { "url": "https://analytics.example.com" } },
+    { "tool": "browser_navigate", "args": { "url": "https://analytics.example.com" } },
     { "tool": "browser_fill", "args": { "ref": "w:12", "value": "metrics" } },
     { "tool": "click_and_wait", "args": { "ref": "w:15" } }
   ],

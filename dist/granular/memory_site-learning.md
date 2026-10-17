@@ -14,7 +14,7 @@ triggers:
 tools:
   - "browser_pattern_learn"
   - "browser_burst"
-weavetab: ">=2.5.0-beta.4"
+weavetab: ">=2.5.0-beta.5"
 ---
 
 # Site Learning — Autonomous Workflow Memory

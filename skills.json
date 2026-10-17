@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0-beta.4",
+  "version": "2.5.0-beta.5",
   "domains": [
     "browser",
     "desktop",
@@ -11,7 +11,7 @@
     "documents",
     "developer"
   ],
-  "officialToolsCount": 44,
+  "officialToolsCount": 42,
   "skillsCount": 22,
   "skills": [
     {
@@ -32,7 +32,7 @@
         "browser_snapshot",
         "browser_eval"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "browser/dom-strategy.md"
     },
     {
@@ -50,7 +50,7 @@
         "browser_fill",
         "browser_select"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "browser/form-automation.md"
     },
     {
@@ -76,7 +76,7 @@
         "browser_highlight",
         "browser_clipboard"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "browser/interaction-pipeline.md"
     },
     {
@@ -94,7 +94,7 @@
       "tools": [
         "browser_tabs"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "browser/tab-and-window.md"
     },
     {
@@ -116,7 +116,7 @@
         "browser_tabs",
         "browser_navigate"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "desktop/desktop-targeting.md"
     },
     {
@@ -133,7 +133,7 @@
       "tools": [
         "browser_detect"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "desktop/electron-discovery.md"
     },
     {
@@ -155,7 +155,7 @@
         "browser_fill",
         "browser_pattern_learn"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "memory/selector-memory-system.md"
     },
     {
@@ -174,7 +174,7 @@
         "browser_automation",
         "browser_thoughts"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "memory/session-trail.md"
     },
     {
@@ -195,7 +195,7 @@
         "browser_pattern_learn",
         "browser_burst"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "memory/site-learning.md"
     },
     {
@@ -214,7 +214,7 @@
         "browser_console",
         "browser_captcha"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "resilience/loop-breaker.md"
     },
     {
@@ -232,7 +232,7 @@
         "browser_cookies",
         "browser_storage"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "resilience/session-time-travel.md"
     },
     {
@@ -250,7 +250,7 @@
         "browser_map",
         "browser_click"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "resilience/stale-ref-recovery.md"
     },
     {
@@ -268,7 +268,7 @@
         "browser_scrape",
         "browser_map"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "security/rbac-and-policies.md"
     },
     {
@@ -284,7 +284,7 @@
       "tools": [
         "browser_type_secret"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "security/secret-containment-protocol.md"
     },
     {
@@ -297,27 +297,22 @@
         "telemetry interception",
         "sdk hooks"
       ],
-      "tools": [
-        "list_plugins"
-      ],
-      "weavetab": ">=2.5.0-beta.4",
+      "tools": [],
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "plugins/hooks-and-overrides.md"
     },
     {
       "id": "plugin-runtime",
       "domain": "plugins",
       "triggers": [
-        "list plugins",
-        "load plugin",
-        "install plugin",
+        "what plugins are installed",
         "weavetab plugin",
-        "extend mcp"
+        "extend mcp",
+        "plugin tools",
+        "plugin permissions"
       ],
-      "tools": [
-        "list_plugins",
-        "load_plugin"
-      ],
-      "weavetab": ">=2.5.0-beta.4",
+      "tools": [],
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "plugins/plugin-runtime.md"
     },
     {
@@ -334,7 +329,7 @@
       "tools": [
         "browser_emulate"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "network-and-perf/device-and-environment.md"
     },
     {
@@ -351,7 +346,7 @@
       "tools": [
         "browser_network_intercept"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "network-and-perf/network-intercept-and-mock.md"
     },
     {
@@ -370,7 +365,7 @@
         "browser_performance",
         "browser_wait"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "network-and-perf/performance-and-vitals.md"
     },
     {
@@ -392,7 +387,7 @@
         "browser_map",
         "browser_click"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "documents/canvas-and-visual-capture.md"
     },
     {
@@ -409,7 +404,7 @@
       "tools": [
         "browser_office"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "documents/office-document-ingestion.md"
     },
     {
@@ -425,7 +420,7 @@
       "tools": [
         "browser_github"
       ],
-      "weavetab": ">=2.5.0-beta.4",
+      "weavetab": ">=2.5.0-beta.5",
       "filePath": "developer/github-forensics.md"
     }
   ]

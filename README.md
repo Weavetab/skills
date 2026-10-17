@@ -4,9 +4,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/Weavetab/skills.svg?style=social)](https://github.com/Weavetab/skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Enterprise domain-driven agent intelligence for `@weavetab/mcp` (v2.5.0-beta.4). Drop-in operational guides, failure recovery heuristics, and protocol rules for **Antigravity**, **Cursor**, **Cline**, **Windsurf**, and **OpenClaw**.
+Enterprise domain-driven agent intelligence for `@weavetab/mcp` (v2.5.0-beta.5). Drop-in operational guides, failure recovery heuristics, and protocol rules for **Antigravity**, **Cursor**, **Cline**, **Windsurf**, and **OpenClaw**.
 
-- **Website:** [weavetab.pages.dev](https://weavetab.pages.dev)
+- **Website:** [weavetab.dev](https://weavetab.dev)
 - **Core MCP Server:** [`@weavetab/mcp`](https://www.npmjs.com/package/@weavetab/mcp)
 - **Plugin SDK:** [`@weavetab/sdk`](https://www.npmjs.com/package/@weavetab/sdk)
 
@@ -20,20 +20,20 @@ Agents classify their immediate intent in one turn and jump directly to the targ
 
 ```
 @weavetab/skills/
-├── ROUTER.md                   # Universal Intent Decision Matrix (Step-0)
-├── browser/                    # Web & Chromium DOM Navigation Engine
-├── desktop/                    # Native Desktop & Electron Application Automation
-├── memory/                     # Cross-Session Adaptive Selector Learning & History
-├── resilience/                 # Time-Travel Checkpoints, Stale Refs, Loops & Captchas
-├── security/                   # Zero-Leak Secret Containment & RBAC Guardrails
-├── plugins/                    # Dynamic Extension Loading, Hooks & Custom Tools
-├── network-and-perf/           # TLS Forensics, Interception, Core Web Vitals & Emulation
-├── documents/                  # Word, Excel, CSV, PDF & Canvas Ingestion
-├── developer/                  # GitHub Local Clone & API Repository Forensics
-├── evals/                      # Executable Agent Evaluation & Benchmark Harness
-├── dist/                       # Compiled targets (granular + bundled domain profiles)
-├── bin/cli.js                  # Interactive Multi-Agent Installer
-└── src/api.js                  # Programmatic Framework Generator & Adapter Engine
+â”œâ”€â”€ ROUTER.md                   # Universal Intent Decision Matrix (Step-0)
+â”œâ”€â”€ browser/                    # Web & Chromium DOM Navigation Engine
+â”œâ”€â”€ desktop/                    # Native Desktop & Electron Application Automation
+â”œâ”€â”€ memory/                     # Cross-Session Adaptive Selector Learning & History
+â”œâ”€â”€ resilience/                 # Time-Travel Checkpoints, Stale Refs, Loops & Captchas
+â”œâ”€â”€ security/                   # Zero-Leak Secret Containment & RBAC Guardrails
+â”œâ”€â”€ plugins/                    # Dynamic Extension Loading, Hooks & Custom Tools
+â”œâ”€â”€ network-and-perf/           # TLS Forensics, Interception, Core Web Vitals & Emulation
+â”œâ”€â”€ documents/                  # Word, Excel, CSV, PDF & Canvas Ingestion
+â”œâ”€â”€ developer/                  # GitHub Local Clone & API Repository Forensics
+â”œâ”€â”€ evals/                      # Executable Agent Evaluation & Benchmark Harness
+â”œâ”€â”€ dist/                       # Compiled targets (granular + bundled domain profiles)
+â”œâ”€â”€ bin/cli.js                  # Interactive Multi-Agent Installer
+â””â”€â”€ src/api.js                  # Programmatic Framework Generator & Adapter Engine
 ```
 
 ---

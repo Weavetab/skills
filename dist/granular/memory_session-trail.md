@@ -12,7 +12,7 @@ tools:
   - "browser_recording"
   - "browser_automation"
   - "browser_thoughts"
-weavetab: ">=2.5.0-beta.4"
+weavetab: ">=2.5.0-beta.5"
 ---
 
 # Session Trails & Deterministic Macro Compilation
@@ -49,7 +49,7 @@ Or pass `dry_run: true` to inspect the compiled macro steps before running them:
   "success": true,
   "steps_completed": 0,
   "compiled_steps": [
-    { "tool": "browser_go", "args": { "url": "https://analytics.example.com" } },
+    { "tool": "browser_navigate", "args": { "url": "https://analytics.example.com" } },
     { "tool": "browser_fill", "args": { "ref": "w:12", "value": "metrics" } },
     { "tool": "click_and_wait", "args": { "ref": "w:15" } }
   ],
