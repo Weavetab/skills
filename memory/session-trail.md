@@ -12,7 +12,7 @@ tools:
   - "browser_recording"
   - "browser_automation"
   - "browser_thoughts"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Session Trails & Deterministic Macro Compilation

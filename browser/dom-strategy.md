@@ -14,7 +14,7 @@ tools:
   - "browser_scrape"
   - "browser_snapshot"
   - "browser_eval"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # DOM Strategy & Token Conservation Engine

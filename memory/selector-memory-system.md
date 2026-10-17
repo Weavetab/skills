@@ -15,7 +15,7 @@ tools:
   - "browser_click"
   - "browser_fill"
   - "browser_pattern_learn"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Two-Tier Memory System
