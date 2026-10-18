@@ -31,7 +31,7 @@ weavetab: ">=2.5.0"
 ## Rules & Guidelines
 
 - **Weavetab Focused:** Skills must be specifically designed for **Weavetab MCP** and utilize its native toolset.
-- **Version Requirement:** Skills must require **Weavetab MCP v2.5.0+**.
+- **Version Requirement:** Skills must require **Weavetab MCP v2.5.1+**.
 - **Single Responsibility:** Keep skill files focused on a single task pattern or workflow.
 - **No Emojis:** We maintain a professional standard in skill documentation to ensure strict parsing by AI agents.
 

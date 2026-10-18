@@ -13,7 +13,7 @@ const OFFICIAL_TOOLS = new Set([
   "browser_screenshot", "browser_viewport", "browser_clipboard", "browser_inspect",
   "browser_extract_design", "browser_automation", "browser_recording",
   "browser_detect", "browser_performance",
-  "browser_github", "browser_office", "browser_emulate",
+  "browser_office", "browser_emulate",
   "browser_checkpoint", "browser_pattern_learn"
 ]);
 

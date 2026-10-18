@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.0-beta.5
+Generated for @weavetab/skills v2.5.1
 
 
 ## dom-strategy
@@ -48,23 +48,25 @@ Use `browser_find` when you already know the label, text snippet, placeholder, o
 
 ```json
 {
-  "query": "Sign In",
-  "matchType": "contains",
-  "visibleOnly": true
+  "query": "Sign In"
 }
 ```
+
+Set `"all": true` to return every match (with `"limit"` capping the count, default 10) instead of only the first.
 
 ### Tier 2: Token-Optimized DOM Walk (`browser_map` with `lite: true`)
 Use `browser_map` when you must understand the interactive structure of the page.
 - **Rule**: ALWAYS pass `"lite": true` unless you strictly need deeply nested non-interactive DOM trees.
 - **Efficiency**: Strips decorative wrappers, SVG paths, hidden containers, and scripts. Reduces payload by **85% to 95%**.
-- **Viewport Filtering**: Set `"includeOffscreen": false` to only inspect elements currently visible in the active viewport.
+- **Scope & filter**: Narrow a dense page with `"scope": "main"` (or `navigation`, `sidebar`, `form`, `modal`, `utility`) and `"query": "<substring>"` to filter by label/role.
+- **Delta mode**: Set `"delta": true` on repeated maps to receive only what changed since the last call (up to 97% token savings).
+- **Pruning**: Set `"prune": true` to drop hidden, non-interactive subtrees and collapse SVG icons in this snapshot.
 
 ```json
 {
   "lite": true,
-  "includeOffscreen": false,
-  "maxDepth": 6
+  "scope": "main",
+  "delta": true
 }
 ```
 
@@ -136,17 +138,19 @@ Submitting complex web forms one field at a time wastes agent turns and increase
     },
     {
       "ref": "w:19",
-      "value": true
+      "value": "true"
     }
   ]
 }
 ```
 
 ### Supported Field Value Types:
-- **Text / Search / Email / Tel**: Provide a `string`.
-- **Checkbox**: Provide a `boolean` (`true` to check, `false` to uncheck).
-- **Radio Buttons**: Provide `true` on the matching option ref.
-- **ContentEditable**: Provide a `string` (automatically handles inner text formatting).
+Every `value` is a **string**.
+- **Text / Search / Email / Tel**: The literal text to type.
+- **Checkbox / ARIA switch**: A truthy string (`"true"`, `"yes"`, `"checked"`, `"1"`, or `"on"`) checks it; anything else unchecks it.
+- **Radio Buttons**: Set the matching option's ref to a truthy string to select it.
+- **Select**: The option `value` or visible text to choose.
+- **ContentEditable**: The text content to set (inner text formatting handled automatically).
 
 ---
 
@@ -157,19 +161,14 @@ Standard `<select>` elements and custom dropdowns often fail under simple click-
 ```json
 {
   "ref": "w:31",
-  "values": ["enterprise_tier"]
+  "value": "enterprise_tier"
 }
 ```
+
+`value` is a **single string** (required) and matches either the option's `value` or its visible text, trimmed. For a custom ARIA/React dropdown it opens the popover, scans `[role="option"]`/`[role="menuitem"]` candidates, and clicks the best match.
 
 ### Multi-Select Support:
-For `<select multiple>` elements, pass an array of option values:
-
-```json
-{
-  "ref": "w:35",
-  "values": ["us-east-1", "eu-central-1"]
-}
-```
+`browser_select` selects one option per call. For a `<select multiple>` element, call it once per option you want selected.
 
 ---
 
@@ -192,20 +191,23 @@ Weavetab executes browser interactions via direct Chrome DevTools Protocol (CDP)
 
 ## 1. Clicking Elements (`browser_click`)
 
-Execute deterministic clicks on DOM elements using volatile handles (`ref`), CSS selectors, or exact coordinates.
+Execute deterministic clicks on DOM elements using volatile handles (`ref`/`id`), CSS selectors, labels, marks, or coordinates.
 
 ```json
 {
-  "ref": "w:23",
-  "clickCount": 1,
-  "button": "left"
+  "ref": "w:23"
 }
 ```
 
-### Advanced Modifiers:
-- **Double Click**: Set `"clickCount": 2` for inline editing or selecting text blocks.
-- **Context Menu**: Set `"button": "right"` to trigger native context menus.
-- **Modifier Keys**: Pass `"modifiers": ["Control"]` or `["Meta"]` for multi-selection or opening links in background tabs.
+### Targeting & Options:
+- **By ref**: pass `id` (or its alias `ref`) from `browser_map`.
+- **By selector / label**: pass `selector` (alias `target`) or `label` (visible text or aria-label).
+- **By visual mark**: pass `mark: N` from `browser_map({ visual: "auto" })` for canvas/WebGL pages.
+- **By coordinates**: pass `x`/`y`, or a raw `backendNodeId`.
+- **`intent`**: an optional semantic description (e.g. `"submit login form"`) — Weavetab checks learned memory first and clicks a high-confidence selector without DOM resolution.
+- **`include_map`**: set `true` to return a refreshed page map with the result.
+
+> `browser_click` always dispatches a left-button single click. To double-click or right-click, use `browser_pointer` (`double_click`) or open the native context menu another way.
 
 ---
 
@@ -217,14 +219,18 @@ Simulate natural keystrokes into input fields, textareas, and `contenteditable` 
 {
   "ref": "w:18",
   "text": "Enterprise Search Query",
-  "clear": true,
-  "delay": 20
+  "clearFirst": true
 }
 ```
 
+Useful options:
+- **`clearFirst`**: wipe existing field content before typing.
+- **`paste`**: instant paste mode via clipboard, auto-enabled for text longer than 8 chars.
+- If `id`/`selector`/`label` is omitted, text is typed into the currently focused element.
+
 > [!CAUTION]
 > **Secret Boundary Enforcement**:
-> NEVER use `browser_type` for passwords, API tokens, or payment card data. Always route sensitive credentials through [`security/secret-containment-protocol.md`](file:///c:/Users/fy2ne/Music/Weavetab/skills/security/secret-containment-protocol.md) via `browser_type_secret`.
+> NEVER use `browser_type` for passwords, API tokens, or payment card data. Always route sensitive credentials through [`security/secret-containment-protocol.md`](../security/secret-containment-protocol.md) via `browser_type_secret`.
 
 ---
 
@@ -232,26 +238,42 @@ Simulate natural keystrokes into input fields, textareas, and `contenteditable` 
 
 Handle complex drag-and-drop interactions, canvas sketching, hover-activated navigation flyouts, and custom sliders.
 
-### Hover / Mouse Move:
+Actions: `hover`, `click`, `double_click`, `drag_and_drop`, `hover_chain`.
+
+### Hover:
 ```json
 {
-  "action": "move",
-  "x": 450,
-  "y": 180
+  "action": "hover",
+  "ref": "w:12",
+  "waitForChild": ".submenu",
+  "holdMs": 200
+}
+```
+
+### Double Click:
+```json
+{
+  "action": "double_click",
+  "ref": "w:30"
 }
 ```
 
 ### Drag & Drop Pipeline:
+A single `drag_and_drop` action drives the whole drag — supply the source (`ref`/`selector`/`x`/`y`) and destination (`end_ref`/`end_selector`/`end_x`/`end_y`):
 ```json
-// Step 1: Move to origin & press mouse
-{ "action": "move", "x": 200, "y": 300 }
-{ "action": "down", "button": "left" }
+{
+  "action": "drag_and_drop",
+  "ref": "w:20",
+  "end_ref": "w:35"
+}
+```
 
-// Step 2: Smooth trajectory to destination
-{ "action": "move", "x": 600, "y": 300 }
-
-// Step 3: Release
-{ "action": "up", "button": "left" }
+### Multi-Level Flyout Menus (`hover_chain`):
+Hover each element in order and click the last one (e.g. Photoshop/Figma-style menus):
+```json
+{
+  "hover_chain": ["File", "Export As", "PNG"]
+}
 ```
 
 ---
@@ -267,9 +289,11 @@ Trigger keyboard shortcuts, navigation keys, and dialog dismissals.
 ```
 
 ### High-Frequency Key Combos:
-- **Select All & Delete**: Send `"key": "a"`, `"modifiers": ["Control"]` (or `["Meta"]` on macOS), followed by `"key": "Backspace"`.
+- **Select All & Delete**: Send `"key": "a"` with `"modifiers": ["Ctrl"]` (or `["Meta"]` on macOS), followed by `"key": "Backspace"`.
 - **Dismiss Overlays**: Send `"key": "Escape"`.
 - **Form Tab Navigation**: Send `"key": "Tab"`.
+
+Valid modifiers are `Alt`, `Ctrl`, `Meta`, and `Shift`.
 
 ---
 
@@ -279,15 +303,15 @@ Native operating system file picker dialogs block autonomous agent execution bec
 
 ```json
 {
-  "ref": "w:41",
-  "files": [
-    "C:/Users/fy2ne/Documents/contract.pdf",
-    "C:/Users/fy2ne/Documents/financial_report.xlsx"
+  "nodeId": 4821,
+  "filePaths": [
+    "C:/Users/me/Documents/contract.pdf",
+    "C:/Users/me/Documents/financial_report.xlsx"
   ]
 }
 ```
 
-- **Targeting**: Supply the volatile handle `ref` or CSS selector for the `<input type="file">`.
+- **Targeting**: Supply the CDP `nodeId` (backendNodeId) of the `<input type="file">` element — obtain it from `browser_map`, `browser_inspect`, or `browser_find` output.
 - **Hidden Inputs**: `browser_upload` automatically handles `display: none` file inputs commonly used in custom drag-and-drop upload widgets.
 
 ---
@@ -299,7 +323,7 @@ Scroll the entire page viewport or scroll specific scrollable containers:
 ```json
 {
   "direction": "down",
-  "amount": 500
+  "distance": 500
 }
 ```
 
@@ -308,7 +332,7 @@ Or scroll a specific element container:
 {
   "ref": "w:12",
   "direction": "down",
-  "amount": 300
+  "distance": 300
 }
 ```
 
@@ -334,12 +358,13 @@ Execute multiple sequential micro-actions in a single CDP roundtrip without wait
 ```json
 {
   "steps": [
-    { "tool": "browser_fill", "ref": "w:10", "value": "search query" },
+    { "tool": "browser_type", "ref": "w:10", "text": "search query" },
     { "tool": "click_and_wait", "ref": "w:15" }
   ]
 }
 ```
-*(Accepts both `steps` and `actions`, with arguments either nested under `args` or specified flat on the step object).*
+
+Macro steps (`type_and_send`, `click_and_wait`, `navigate_and_read`, `scroll_and_read`, `fill_form`) collapse common two-step patterns into one entry. *(Accepts both `steps` and `actions`, with arguments either nested under `args` or specified flat on the step object.)*
 
 ---
 

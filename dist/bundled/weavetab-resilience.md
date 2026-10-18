@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.5.0-beta.5
+Generated for @weavetab/skills v2.5.1
 
 
 ## loop-breaker
@@ -44,17 +44,22 @@ Invoke `browser_captcha` to analyze and manage the challenge:
 ### Response Example:
 ```json
 {
-  "detected": true,
-  "type": "turnstile",
-  "provider": "cloudflare",
-  "interactive": true,
-  "ref": "w:99"
+  "success": true,
+  "action": "detect",
+  "captcha_detected": true,
+  "captcha_type": "turnstile",
+  "interaction_type": "checkbox",
+  "difficulty": "easy",
+  "confidence": 0.97,
+  "human_needed": false,
+  "message": "CAPTCHA detected: turnstile (checkbox, 97% confidence)",
+  "next_action": "Call browser_captcha({ action: \"solve\" }) to attempt automated solving."
 }
 ```
 
 ### Action Strategy:
-1. If the challenge is interactive and requires human intervention (e.g. image classification), inform the user cleanly or request human bypass.
-2. If the challenge is a simple checkbox Turnstile widget, pass `"action": "solve"` or click the detected widget ref with `browser_click`.
+1. If `human_needed` is `true` (e.g. image classification), inform the user cleanly or request human bypass — do not guess coordinates.
+2. Otherwise pass `"action": "solve"` to attempt an automated solve (slider drag, hold, checkbox, or invisible challenges). Use `"action": "status"` to check progress and `"action": "wait_for_user"` to pause for human input.
 
 
 ## session-time-travel
@@ -140,77 +145,100 @@ Inspect, set, or delete individual browser session cookies without restoring an 
 ```json
 {
   "action": "get",
-  "urls": ["https://example.com"]
+  "url": "https://example.com"
 }
 ```
 
-Or inject an authentication cookie:
+Or inject an authentication cookie (one cookie per call):
+
 ```json
 {
   "action": "set",
-  "cookies": [
-    {
-      "name": "session_token",
-      "value": "xyz123",
-      "domain": "example.com",
-      "httpOnly": true,
-      "secure": true
-    }
-  ]
+  "name": "session_token",
+  "value": "xyz123",
+  "domain": "example.com",
+  "path": "/",
+  "httpOnly": true,
+  "secure": true,
+  "sameSite": "Lax"
 }
 ```
+
+Delete a cookie by name (and optionally domain/path):
+
+```json
+{
+  "action": "delete",
+  "name": "session_token",
+  "domain": "example.com"
+}
+```
+
+Accepted fields: `name`, `value`, `domain`, `path`, `expires` (Unix seconds), `httpOnly`, `secure`, `sameSite` (`Strict`/`Lax`/`None`), and `url` (for `get`).
 
 ---
 
 ## 5. Web Storage Inspection & Injection (`browser_storage`)
 
-Query or clear `localStorage` and `sessionStorage` keys:
+Query or clear `localStorage` and `sessionStorage` keys. Choose the store with `scope`:
 
 ```json
 {
-  "storageType": "localStorage",
+  "scope": "local",
   "action": "get",
   "key": "authToken"
 }
 ```
+
+- **`scope`**: `"local"` or `"session"`.
+- **`action`**: `get`, `set`, `remove`, `list` (all keys + values), or `clear` (the whole scope).
+- **`key`** is required for `get`, `set`, and `remove`; **`value`** is required for `set`.
 
 
 ## stale-ref-recovery
 
 # Stale Ref Recovery & SPA Hydration Resilience
 
-In modern Single Page Applications (built with React, Next.js, Vue, Nuxt, Svelte), DOM nodes are frequently destroyed and recreated during client-side hydration or reactive state updates. This often causes `STALE_ELEMENT_REFERENCE` or `NODE_DETACHED` errors when an agent attempts an action.
+In modern Single Page Applications (built with React, Next.js, Vue, Nuxt, Svelte), DOM nodes are frequently destroyed and recreated during client-side hydration or reactive state updates. This can invalidate a volatile `w:NN` handle between reads and actions.
 
 ---
 
-## 1. The 4-Tier Auto-Recovery Chain
+## 1. The Multi-Tier Auto-Recovery Heuristic
 
-When a tool receives a stale or missing `ref`, Weavetab does not immediately fail. It activates an internal 4-tier recovery chain:
+When a tool receives a detached or invalidated `ref`, Weavetab attempts to re-resolve it instead of failing immediately. The recovery runs a sub-5ms heuristic over these strategies (in order) and re-stamps `data-wt-id="NN"` onto the live node:
 
 ```
-  [Action on w:14 Fails / Stale]
-                │
-                ▼
-  [Tier 1: Stored Selector] ──▶ Re-queries cached stable selector (data-testid, id)
-                │ (if not found)
-                ▼
-  [Tier 2: Exact Label Match] ──▶ Queries element with identical visible text & tag
-                │ (if not found)
-                ▼
-  [Tier 3: Semantic Role Match] ──▶ Queries nearest sibling with matching ARIA role
-                │ (if not found)
-                ▼
-  [Tier 4: Fuzzy Match] ──▶ Re-anchors to highest-confidence visual candidate
+  [Action on w:14 fails / handle detached]
+                 │
+                 ▼
+  [1. Connected node + fingerprint check]
+                 │ (if not found)
+                 ▼
+  [2. Stored CSS selector]  (data-testid, id, class)
+                 │ (if not found)
+                 ▼
+  [3. Exact label / aria-label match]
+                 │ (if not found)
+                 ▼
+  [4. Placeholder / name attribute match]
+                 │ (if not found)
+                 ▼
+  [5. Fuzzy substring match]  (when label length >= 3)
 ```
 
-If the recovery chain succeeds, the action executes seamlessly and the return payload notifies the agent that the handle was refreshed.
+The successful strategy is reported back to the agent (`stored_selector`, `exact_label`, `placeholder_or_name`, `fuzzy_label`). If every strategy misses, the tool returns a hard failure.
 
 ---
 
 ## 2. Agent Reactive Behavior
 
-If an action returns `ERROR: STALE_ELEMENT_REFERENCE` because all 4 recovery tiers were exhausted:
+If an action fails because all recovery strategies were exhausted, the tool returns one of:
 
-1. **Do NOT Repeat the Identical Call**: Retrying the exact same stale `ref` (`w:14`) will fail again.
-2. **Execute a Fast Targeted Lookup**: Run `browser_find` with the text of the button or input field.
-3. **Execute the Action on the New Handle**: Use the updated handle returned by `browser_find`.
+- `error_code: "ELEMENT_NOT_FOUND"` — the ref was in the cached map but no longer exists in the DOM.
+- `error_code: "FINGERPRINT_MISMATCH"` — an element exists but its tag/role fingerprint no longer matches; the DOM was likely rebuilt.
+
+Either way:
+
+1. **Do NOT Repeat the Identical Call**: retrying the exact same stale `ref` (`w:14`) will fail again.
+2. **Execute a Fast Targeted Lookup**: run `browser_find` with the text of the button or input, or refresh handles with `browser_map`.
+3. **Execute the Action on the New Handle**: use the updated ref returned by `browser_find`/`browser_map`.

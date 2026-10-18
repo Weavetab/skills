@@ -43,7 +43,7 @@ Pass `"app": "<application_name>"` to target the Electron application.
 {
   "app": "discord",
   "ref": "w:88",
-  "text": "Deployment v2.5.0-beta.3 completed successfully."
+  "text": "Deployment v2.5.1 completed successfully."
 }
 ```
 

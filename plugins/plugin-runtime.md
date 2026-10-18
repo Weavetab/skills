@@ -19,9 +19,9 @@ Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. 
 
 ## 1. How Plugin Tools Appear
 
-Plugin tools are first-class MCP tools. If `@weavetab/plugin-recaptcha-solver` is installed, `captcha_solve_token` appears in the tool list immediately on startup — no discovery step needed.
+Plugin tools are first-class MCP tools. If `@weavetab/plugin-recaptcha-solver` is installed, `captcha_solve_token` appears in the tool list immediately on startup — alongside built-ins such as `browser_snapshot` — with no discovery step needed.
 
-There are **no** `list_plugins` or `load_plugin` tools. Managing plugins is a CLI operation:
+There is no MCP tool for discovering or activating plugins. Managing plugins is a CLI operation:
 
 ```bash
 # Install a plugin (restart required)

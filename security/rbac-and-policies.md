@@ -18,30 +18,33 @@ weavetab: ">=2.5.0"
 
 Weavetab allows developers to run untrusted or lower-privilege subagents within strict security boundaries to prevent accidental destructive operations or data leaks.
 
----
-
-## 1. The 4 Security Tiers
-
-| Tier | Name | Allowed Tools & Capabilities | Intended Role |
-| :--- | :--- | :--- | :--- |
-| **0** | `admin` | Full tool access (all 48 tools), plugin loading, arbitrary script eval, cookies/storage write. | Primary Operator / Lead Agent. |
-| **1** | `operator` | Interactive tools (`browser_click`, `browser_fill`, `browser_upload`), but blocked from loading untrusted plugins. | Standard Automation Agent. |
-| **2** | `automation` | Pre-approved deterministic macros (`browser_automation`), scoped form filling, no arbitrary script execution. | Background Cron / Worker. |
-| **3** | `viewer` | Read-only inspection tools (`browser_map`, `browser_find`, `browser_scrape`, `browser_inspect`). All click, type, and storage tools are rejected with `PERMISSION_DENIED`. | Research Subagents / Scrapers. |
+Roles are configured per agent (in `config.json`). The server checks the role **before** launching a browser or resolving the target.
 
 ---
 
-## 2. Handling `PERMISSION_DENIED` Errors
+## 1. The 5 Security Roles
 
-If an agent attempts an action outside its allocated role tier:
-```json
-{
-  "error_code": "PERMISSION_DENIED",
-  "message": "Tool 'browser_click' is disabled under role 'viewer'. Only read operations are permitted."
-}
+| Role | Tool Access | Intended Use |
+| :--- | :--- | :--- |
+| `admin` | Full access (`*`). | Primary operator / lead agent. |
+| `operator` | Full access (`*`). | Standard automation agent. |
+| `automation` | Every tool except `browser_thoughts` — automation agents must be non-interactive. | Background cron / worker. |
+| `viewer` | Read-only set only: `browser_map`, `browser_find`, `browser_scrape`, `browser_console`, `browser_eval`, `browser_inspect`, `browser_extract_design`, `browser_snapshot`, `browser_screenshot`, `browser_pdf`, `browser_cookies`, `browser_tabs`, `browser_wait`, `browser_pattern_learn`. | Research subagents / scrapers. |
+| `system` | `browser_thoughts`, `browser_detect`, `browser_performance`, `browser_checkpoint`, `browser_pattern_learn`. | Internal/system operations. |
+
+Any other role value is treated as fully allowed.
+
+---
+
+## 2. Handling Permission Denials
+
+There is no JSON `error_code` for RBAC. A denied call fails with `isError: true` and a plain-text message prefixed with `[!]`:
+
+```
+[!] Role 'viewer' does not have permission to use 'browser_click'. Viewer role only permits read-only tools (map/find/scrape/console/eval/inspect/snapshot/pdf/cookies).
 ```
 
 ### Protocol:
-1. Do not retry the denied tool.
-2. Delegate the interactive action to the parent agent or primary operator.
+1. Do not retry the denied tool — the role will not change mid-session.
+2. Delegate the interactive action to the parent agent or a higher-privilege operator.
 3. Limit your output to findings gathered via read-only tools (`browser_scrape`, `browser_map`, `browser_inspect`).

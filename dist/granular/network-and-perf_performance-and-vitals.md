@@ -12,7 +12,7 @@ triggers:
 tools:
   - "browser_performance"
   - "browser_wait"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Performance Forensics & Core Web Vitals
@@ -27,7 +27,7 @@ Retrieve Google Core Web Vitals, memory consumption, and frame rendering bottlen
 
 ```json
 {
-  "metrics": ["vitals", "memory", "navigationTiming"]
+  "metrics": ["vitals", "memory", "navigation"]
 }
 ```
 
@@ -38,15 +38,18 @@ Retrieve Google Core Web Vitals, memory consumption, and frame rendering bottlen
     "fcp": 320,
     "lcp": 780,
     "cls": 0.012,
-    "fid": 8,
-    "inp": 45
+    "inp": 45,
+    "ttfb": 12
   },
   "memory": {
-    "jsHeapUsedSizeMb": 42.1,
-    "jsHeapTotalSizeMb": 68.4
+    "usedJSHeapSize": 44154880,
+    "totalJSHeapSize": 71729152,
+    "jsHeapSizeLimit": 4294705152
   }
 }
 ```
+
+Valid `metrics` sections: `"vitals"`, `"memory"`, `"navigation"`, `"resources"`, `"raw"`. Omit `metrics` to return all sections. Heap sizes are in **bytes**. The `"resources"` section populates `slowest_resources` (top 10 by duration).
 
 ---
 
@@ -60,7 +63,7 @@ Always synchronize with deterministic browser conditions:
 ### Wait for Network Idle:
 ```json
 {
-  "condition": "network_idle",
+  "for": "network",
   "timeout": 10000
 }
 ```
@@ -68,8 +71,7 @@ Always synchronize with deterministic browser conditions:
 ### Wait for DOM Mutation Stability:
 ```json
 {
-  "condition": "dom_stable",
-  "duration": 500,
+  "for": "stable",
   "timeout": 10000
 }
 ```
@@ -77,8 +79,8 @@ Always synchronize with deterministic browser conditions:
 ### Wait for a Specific Element to Appear:
 ```json
 {
-  "condition": "element_visible",
-  "selector": "[data-testid=\"checkout-complete\"]",
+  "for": "element",
+  "value": "[data-testid=\"checkout-complete\"]",
   "timeout": 15000
 }
 ```

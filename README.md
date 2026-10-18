@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/Weavetab/skills.svg?style=social)](https://github.com/Weavetab/skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Enterprise domain-driven agent intelligence for `@weavetab/mcp` (v2.5.0). Drop-in operational guides, failure recovery heuristics, and protocol rules for **Antigravity**, **Cursor**, **Cline**, **Windsurf**, and **OpenClaw**.
+Enterprise domain-driven agent intelligence for `@weavetab/mcp` (v2.5.1). Drop-in operational guides, failure recovery heuristics, and protocol rules for **Antigravity**, **Cursor**, **Cline**, **Windsurf**, and **OpenClaw**.
 
 - **Website:** [weavetab.dev](https://weavetab.dev)
 - **Core MCP Server:** [`@weavetab/mcp`](https://www.npmjs.com/package/@weavetab/mcp)
@@ -20,27 +20,27 @@ Agents classify their immediate intent in one turn and jump directly to the targ
 
 ```
 @weavetab/skills/
-â”œâ”€â”€ ROUTER.md                   # Universal Intent Decision Matrix (Step-0)
-â”œâ”€â”€ browser/                    # Web & Chromium DOM Navigation Engine
-â”œâ”€â”€ desktop/                    # Native Desktop & Electron Application Automation
-â”œâ”€â”€ memory/                     # Cross-Session Adaptive Selector Learning & History
-â”œâ”€â”€ resilience/                 # Time-Travel Checkpoints, Stale Refs, Loops & Captchas
-â”œâ”€â”€ security/                   # Zero-Leak Secret Containment & RBAC Guardrails
-â”œâ”€â”€ plugins/                    # Dynamic Extension Loading, Hooks & Custom Tools
-â”œâ”€â”€ network-and-perf/           # TLS Forensics, Interception, Core Web Vitals & Emulation
-â”œâ”€â”€ documents/                  # Word, Excel, CSV, PDF & Canvas Ingestion
-â”œâ”€â”€ developer/                  # GitHub Local Clone & API Repository Forensics
-â”œâ”€â”€ evals/                      # Executable Agent Evaluation & Benchmark Harness
-â”œâ”€â”€ dist/                       # Compiled targets (granular + bundled domain profiles)
-â”œâ”€â”€ bin/cli.js                  # Interactive Multi-Agent Installer
-â””â”€â”€ src/api.js                  # Programmatic Framework Generator & Adapter Engine
+|-- ROUTER.md                   # Universal Intent Decision Matrix (Step-0)
+|-- browser/                    # Web & Chromium DOM Navigation Engine
+|-- desktop/                    # Native Desktop & Electron Application Automation
+|-- memory/                     # Cross-Session Adaptive Selector Learning & History
+|-- resilience/                 # Time-Travel Checkpoints, Stale Refs, Loops & Captchas
+|-- security/                   # Zero-Leak Secret Containment & RBAC Guardrails
+|-- plugins/                    # Dynamic Extension Loading, Hooks & Custom Tools
+|-- network-and-perf/           # TLS Telemetry, Interception, Core Web Vitals & Emulation
+|-- documents/                  # Word, Excel, CSV, PDF & Canvas Ingestion
+|-- developer/                  # GitHub API Repository Forensics
+|-- evals/                      # Executable Agent Evaluation & Benchmark Harness
+|-- dist/                       # Compiled targets (granular + bundled domain profiles)
+|-- bin/cli.js                  # Interactive Multi-Agent Installer
+`-- src/api.js                  # Programmatic Framework Generator & Adapter Engine
 ```
 
 ---
 
-## 2. The 9 Operational Domains & 44-Tool Matrix
+## 2. The 9 Operational Domains & 41-Tool Matrix
 
-Every single one of the **44 official tools** in `@weavetab/mcp` is documented with verified parameters and runtime patterns:
+Every single one of the **41 official tools** in `@weavetab/mcp` is documented with verified parameters and runtime patterns:
 
 | Domain | Primary Tools | Operational Capabilities |
 | :--- | :--- | :--- |
@@ -49,10 +49,10 @@ Every single one of the **44 official tools** in `@weavetab/mcp` is documented w
 | **`memory/`** | `browser_pattern_learn`, `browser_thoughts`, `browser_automation`, `browser_recording` | Cross-session origin selector decay, compiling manual interaction trails into deterministic macros via `browser_burst`. |
 | **`resilience/`**| `browser_checkpoint`, `browser_cookies`, `browser_storage`, `browser_captcha` | Time-travel state snapshots (`save`, `restore`) for instant rollbacks, 4-tier SPA stale ref healing, loop breaker (`browser_map`, `browser_wait`). |
 | **`security/`** | `browser_type_secret`, RBAC tiers | Hardware-grade zero-bleed guarantee (passwords masked in HUD, CDP logs, and conversation transcripts). |
-| **`plugins/`**  | `list_plugins`, `load_plugin` | Runtime discovery and dynamic loading of verified npm community plugins into the active MCP session. |
-| **`network-and-perf/`** | `browser_network_intercept`, `browser_performance`, `browser_wait`, `browser_emulate` | API mocking, TLS certificate chain audits, Core Web Vitals (LCP/CLS), device presets & 3G throttling. |
+| **`plugins/`**  | CLI plugin management (`weavetab plugins`) | Runtime discovery and dynamic loading of verified npm community plugins via the CLI. Plugin lifecycle is not an MCP tool surface. |
+| **`network-and-perf/`** | `browser_network_intercept`, `browser_performance`, `browser_wait`, `browser_emulate` | API mocking, TLS/SSL certificate metadata & timing telemetry, Core Web Vitals (LCP/CLS), device presets & 3G throttling. |
 | **`documents/`**| `browser_office`, `browser_pdf`, `browser_canvas`, `browser_screenshot`, `browser_viewport`, `browser_extract_design` | Ingesting Excel spreadsheets, Word `.docx`, and CSVs into structured JSON; full-page screenshots and canvas inspection. |
-| **`developer/`**| `browser_github` | Sub-millisecond local repo inspection, PR diffs, and issue triage without burning browser turns. |
+| **`developer/`**| *(plugin: `github`)* | GitHub REST/raw API inspection, PR diffs, and issue triage via `@weavetab/plugin-github` — no browser turns burned. |
 
 ---
 
@@ -97,7 +97,7 @@ const webSkills = getSkillsByDomain('browser');
 
 ## 5. Automated Benchmark & Evaluation Suite (`evals/`)
 
-Run the automated evaluation harness to verify that all 48 tools are covered and that skill guidance strictly passes test scenarios without legacy hallucinations:
+Run the automated evaluation harness to verify that all 41 tools are covered and that skill guidance strictly passes test scenarios without legacy hallucinations:
 
 ```bash
 npm test

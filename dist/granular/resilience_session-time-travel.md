@@ -11,7 +11,7 @@ tools:
   - "browser_checkpoint"
   - "browser_cookies"
   - "browser_storage"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Session Time-Travel & Instant State Rollback
@@ -95,37 +95,52 @@ Inspect, set, or delete individual browser session cookies without restoring an 
 ```json
 {
   "action": "get",
-  "urls": ["https://example.com"]
+  "url": "https://example.com"
 }
 ```
 
-Or inject an authentication cookie:
+Or inject an authentication cookie (one cookie per call):
+
 ```json
 {
   "action": "set",
-  "cookies": [
-    {
-      "name": "session_token",
-      "value": "xyz123",
-      "domain": "example.com",
-      "httpOnly": true,
-      "secure": true
-    }
-  ]
+  "name": "session_token",
+  "value": "xyz123",
+  "domain": "example.com",
+  "path": "/",
+  "httpOnly": true,
+  "secure": true,
+  "sameSite": "Lax"
 }
 ```
+
+Delete a cookie by name (and optionally domain/path):
+
+```json
+{
+  "action": "delete",
+  "name": "session_token",
+  "domain": "example.com"
+}
+```
+
+Accepted fields: `name`, `value`, `domain`, `path`, `expires` (Unix seconds), `httpOnly`, `secure`, `sameSite` (`Strict`/`Lax`/`None`), and `url` (for `get`).
 
 ---
 
 ## 5. Web Storage Inspection & Injection (`browser_storage`)
 
-Query or clear `localStorage` and `sessionStorage` keys:
+Query or clear `localStorage` and `sessionStorage` keys. Choose the store with `scope`:
 
 ```json
 {
-  "storageType": "localStorage",
+  "scope": "local",
   "action": "get",
   "key": "authToken"
 }
 ```
+
+- **`scope`**: `"local"` or `"session"`.
+- **`action`**: `get`, `set`, `remove`, `list` (all keys + values), or `clear` (the whole scope).
+- **`key`** is required for `get`, `set`, and `remove`; **`value`** is required for `set`.
 

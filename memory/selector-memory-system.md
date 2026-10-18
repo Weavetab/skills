@@ -122,6 +122,6 @@ On future visits, the quirk is present in the profile so you can dismiss banners
 |---|---|---|
 | Tier 1 selectors | `~/.weavetab-system/memory/<hostname>.json` | Engine (auto) |
 | Tier 2 site profiles | `~/.weavetab-system/memory/sites/<origin>.json` | Engine via `browser_pattern_learn` |
-| Knowledge hints | `~/.weavetab-system/knowledge/<hostname>.md` | Engine (auto, 20-token notes) |
+| Knowledge hints | `~/.weavetab/knowledge/<hostname>.md` | Engine (auto, 20-token notes) |
 | User config | `~/.weavetab/config.json` | Human — never written by agents |
 

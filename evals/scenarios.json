@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0",
+  "version": "2.5.1",
   "scenarios": [
     {
       "id": "spa_stale_ref_recovery",
@@ -15,7 +15,7 @@
         "scrape_page",
         "browser_evaluate"
       ],
-      "assertion": "Must rely on 4-tier auto-recovery or targeted browser_find rather than repeating identical stale ref"
+      "assertion": "Must rely on multi-tier auto-recovery or targeted browser_find rather than repeating identical stale ref"
     },
     {
       "id": "secret_containment_verification",
@@ -145,7 +145,7 @@
       "bannedTools": [
         "click_element"
       ],
-      "assertion": "Must dispatch down, move, and up actions via browser_pointer"
+      "assertion": "Must use the drag_and_drop action via browser_pointer (not manual down/move/up)"
     },
     {
       "id": "tab_switch_and_close",
@@ -213,13 +213,13 @@
       "expectedDomain": "developer",
       "expectedGuide": "github-forensics.md",
       "expectedTools": [
-        "browser_github"
+        "github"
       ],
       "bannedTools": [
         "browser_navigate",
         "browser_map"
       ],
-      "assertion": "Must use native browser_github tool to save browser turns"
+      "assertion": "Must use the github plugin tool to save browser turns"
     },
     {
       "id": "loop_breaker_reset",

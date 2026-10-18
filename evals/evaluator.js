@@ -16,7 +16,7 @@ const OFFICIAL_TOOLS = new Set([
   "browser_screenshot", "browser_viewport", "browser_clipboard", "browser_inspect",
   "browser_extract_design", "browser_automation", "browser_recording",
   "browser_detect", "browser_performance",
-  "browser_github", "browser_office", "browser_emulate",
+  "browser_office", "browser_emulate",
   "browser_checkpoint", "browser_pattern_learn"
 ]);
 
@@ -94,7 +94,7 @@ for (const scenario of scenariosData.scenarios) {
   passed++;
 }
 
-// Global Check: Verify all 48 tools appear across the entire skill base
+// Global Check: Verify all 41 tools appear across the entire skill base
 console.log("\n----------------------------------------------------");
 console.log("Auditing Global Tool Coverage Across All 9 Domains...");
 const coveredTools = new Set();

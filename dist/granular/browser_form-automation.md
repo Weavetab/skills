@@ -11,7 +11,7 @@ triggers:
 tools:
   - "browser_fill"
   - "browser_select"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Form Automation: Atomic Multi-Field Execution
@@ -41,17 +41,19 @@ Submitting complex web forms one field at a time wastes agent turns and increase
     },
     {
       "ref": "w:19",
-      "value": true
+      "value": "true"
     }
   ]
 }
 ```
 
 ### Supported Field Value Types:
-- **Text / Search / Email / Tel**: Provide a `string`.
-- **Checkbox**: Provide a `boolean` (`true` to check, `false` to uncheck).
-- **Radio Buttons**: Provide `true` on the matching option ref.
-- **ContentEditable**: Provide a `string` (automatically handles inner text formatting).
+Every `value` is a **string**.
+- **Text / Search / Email / Tel**: The literal text to type.
+- **Checkbox / ARIA switch**: A truthy string (`"true"`, `"yes"`, `"checked"`, `"1"`, or `"on"`) checks it; anything else unchecks it.
+- **Radio Buttons**: Set the matching option's ref to a truthy string to select it.
+- **Select**: The option `value` or visible text to choose.
+- **ContentEditable**: The text content to set (inner text formatting handled automatically).
 
 ---
 
@@ -62,19 +64,14 @@ Standard `<select>` elements and custom dropdowns often fail under simple click-
 ```json
 {
   "ref": "w:31",
-  "values": ["enterprise_tier"]
+  "value": "enterprise_tier"
 }
 ```
+
+`value` is a **single string** (required) and matches either the option's `value` or its visible text, trimmed. For a custom ARIA/React dropdown it opens the popover, scans `[role="option"]`/`[role="menuitem"]` candidates, and clicks the best match.
 
 ### Multi-Select Support:
-For `<select multiple>` elements, pass an array of option values:
-
-```json
-{
-  "ref": "w:35",
-  "values": ["us-east-1", "eu-central-1"]
-}
-```
+`browser_select` selects one option per call. For a `<select multiple>` element, call it once per option you want selected.
 
 ---
 

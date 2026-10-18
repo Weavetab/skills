@@ -20,15 +20,18 @@ AI agent transcripts, LLM providers, and tool logs represent massive attack surf
 
 ## 1. Entering Credentials with `browser_type_secret`
 
-Whenever an agent inputs passwords, two-factor backup codes, credit card numbers, or proprietary API keys, you MUST use `browser_type_secret`:
+Whenever an agent inputs passwords, two-factor backup codes, credit card numbers, or proprietary API keys, you MUST use `browser_type_secret`.
+
+`browser_type_secret` never accepts a plaintext secret. It reads the value from an **environment variable** on the host running the MCP server, so the secret never reaches the agent transcript. Set the variable first (e.g. `export PORTAL_PASSWORD="…"`), then reference it by key:
 
 ```json
 {
   "ref": "w:12",
-  "secret": "MySuperSecretPassword!2026",
-  "clear": true
+  "envKey": "PORTAL_PASSWORD"
 }
 ```
+
+Accepted targeting parameters: `id` (alias `ref`) or `target` (CSS selector). `envKey` is **required**.
 
 ---
 

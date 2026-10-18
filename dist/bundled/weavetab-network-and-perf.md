@@ -1,44 +1,54 @@
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.0-beta.5
+Generated for @weavetab/skills v2.5.1
 
 
 ## device-and-environment
 
 # Device Emulation & Environment Simulation
 
-Auditing mobile responsive layouts, testing geographic restrictions, and simulating degraded network conditions can all be accomplished with `browser_emulate`.
+Auditing mobile responsive layouts, testing geographic restrictions, and simulating degraded network conditions are split across two tools: `browser_viewport` owns device geometry, locale, timezone, and color-scheme emulation; `browser_emulate` owns network throttling and CPU slowdown.
 
 ---
 
-## 1. Device Presets & Viewport Simulation
+## 1. Device Presets & Viewport Simulation (`browser_viewport`)
 
-Switch from desktop to realistic mobile hardware profiles:
+List the available hardware presets, then apply one:
+
+```json
+{ "action": "list" }
+```
 
 ```json
 {
-  "device": "iPhone 15 Pro",
-  "orientation": "portrait"
+  "action": "preset",
+  "devicePreset": "iPhone 15 Pro"
 }
 ```
 
-Or configure custom screen geometries:
+Or configure custom screen geometry directly with `action: "set"`:
 
 ```json
 {
-  "viewport": {
-    "width": 393,
-    "height": 852,
-    "deviceScaleFactor": 3,
-    "isMobile": true,
-    "hasTouch": true
-  }
+  "action": "set",
+  "width": 393,
+  "height": 852,
+  "deviceScaleFactor": 3,
+  "mobile": true,
+  "hasTouch": true,
+  "screenOrientation": "portrait"
 }
+```
+
+Clear all viewport and emulation overrides back to the host defaults:
+
+```json
+{ "action": "clear" }
 ```
 
 ---
 
-## 2. Network Throttling Simulation
+## 2. Network & CPU Throttling (`browser_emulate`)
 
 Verify how web applications degrade under poor connectivity:
 
@@ -46,108 +56,123 @@ Verify how web applications degrade under poor connectivity:
 {
   "network": {
     "offline": false,
-    "downloadThroughput": 1024 * 500, // 500 kb/s (Slow 3G)
-    "uploadThroughput": 1024 * 250,
-    "latency": 400 // ms
-  }
+    "downloadThroughput": 512000,
+    "uploadThroughput": 256000,
+    "latency": 400
+  },
+  "cpuThrottlingRate": 4
 }
+```
+
+Use a named profile for common cases (`"slow3g"`, `"fast3g"`, `"4g"`, `"offline"`, `"online"`):
+
+```json
+{ "network": "slow3g" }
 ```
 
 ---
 
-## 3. Geolocation & Timezone Overrides
+## 3. Geolocation, Timezone, Locale & Color Scheme (`browser_viewport`)
 
 Bypass localized IP redirects or verify localized content rendering:
 
 ```json
 {
+  "action": "set",
   "geolocation": {
     "latitude": 37.7749,
     "longitude": -122.4194,
     "accuracy": 100
   },
   "timezoneId": "America/Los_Angeles",
-  "locale": "en-US"
-}
-```
-
-To reset all overrides back to default host system parameters:
-```json
-{
-  "reset": true
+  "locale": "en-US",
+  "colorScheme": "dark"
 }
 ```
 
 
 ## network-intercept-and-mock
 
-# Network Interception, Mocking & TLS Forensics
+# Network Interception, Mocking & Telemetry
 
-Autonomous testing and debugging often require simulating backend error states (e.g. 500 Internal Server Error, 429 Rate Limit), stubbing third-party analytics, or verifying TLS/SSL certificates.
+Autonomous testing and debugging often require simulating backend error states (e.g. 500 Internal Server Error, 429 Rate Limit), stubbing third-party analytics, or inspecting real request timing and TLS metadata.
 
-`browser_network_intercept` provides fine-grained CDP request and response modification.
+`browser_network_intercept` exposes four actions: `enable`, `disable`, `get_telemetry`, and `clear_telemetry`.
 
 ---
 
-## 1. Mocking API Responses
+## 1. Mocking API Responses (`enable`)
 
-Intercept outgoing HTTP requests matching a URL pattern and return custom mock data:
+`enable` requires a `pattern` (URL glob). Every matching response is fulfilled with your mock:
 
 ```json
 {
+  "action": "enable",
   "pattern": "*/api/v1/user/profile",
-  "response": {
-    "status": 200,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "body": "{\"id\": \"usr_test\", \"role\": \"admin\", \"credits\": 9999}"
-  }
+  "mockStatus": 200,
+  "mockBody": "{\"id\": \"usr_test\", \"role\": \"admin\", \"credits\": 9999}"
+}
+```
+
+- **`pattern`** — URL glob, e.g. `*api/users*`. `*` and `?` are treated as wildcards.
+- **`mockStatus`** — HTTP status to return (default `200`). Use `500`/`429`/`404` to simulate failures.
+- **`mockBody`** — response body string (default `{}`). Pass JSON as a string.
+
+Mocks are served from the extension when present, otherwise via CDP's Fetch domain (fallback mode).
+
+---
+
+## 2. Stopping Interception (`disable`)
+
+Return the browser to live traffic when a test completes:
+
+```json
+{
+  "action": "disable"
 }
 ```
 
 ---
 
-## 2. Blocking Unnecessary Traffic & Trackers
+## 3. Network Telemetry (`get_telemetry`)
 
-Accelerate page loads and eliminate token bloat by aborting non-essential requests:
+`get_telemetry` starts a background capture (if not already running) and returns the recorded requests — including per-request protocol timing phases, TLS/SSL certificate details when the connection exposes them, and failure reasons:
 
 ```json
 {
-  "pattern": "*google-analytics.com*",
-  "action": "abort",
-  "errorReason": "BlockedByClient"
+  "action": "get_telemetry",
+  "pattern": "*api/*"
 }
 ```
+
+An optional `pattern` filters the returned requests by URL. The response includes:
+
+```json
+{
+  "success": true,
+  "count": 12,
+  "requests": [
+    {
+      "url": "https://weavetab.dev/api/v1/session",
+      "timing": { "dnsMs": 1.4, "tcpMs": 3.2, "sslMs": 4.1, "ttfbMs": 12.8 }
+    }
+  ],
+  "navigationOccurred": false,
+  "errors": []
+}
+```
+
+> Certificates and timing fields are surfaced only when the underlying connection exposes them; treat missing fields as "not reported", not "absent".
 
 ---
 
-## 3. TLS / SSL Forensics & Timing Waterfalls
+## 4. Clearing the Buffer (`clear_telemetry`)
 
-Extract cryptographic handshake metadata, cipher suites, expiration dates, and microsecond network waterfalls (DNS lookup, TCP connect, SSL handshake, TTFB):
+Reset the capture buffer between scenarios without tearing down the session:
 
 ```json
 {
-  "action": "auditTls",
-  "url": "https://weavetab.dev"
-}
-```
-
-### Response Example:
-```json
-{
-  "security": {
-    "protocol": "TLS 1.3",
-    "cipher": "AES_128_GCM",
-    "issuer": "Let's Encrypt",
-    "validTo": "2026-11-15T00:00:00.000Z"
-  },
-  "waterfall": {
-    "dnsMs": 1.4,
-    "tcpMs": 3.2,
-    "sslMs": 4.1,
-    "ttfbMs": 12.8
-  }
+  "action": "clear_telemetry"
 }
 ```
 
@@ -166,7 +191,7 @@ Retrieve Google Core Web Vitals, memory consumption, and frame rendering bottlen
 
 ```json
 {
-  "metrics": ["vitals", "memory", "navigationTiming"]
+  "metrics": ["vitals", "memory", "navigation"]
 }
 ```
 
@@ -177,15 +202,18 @@ Retrieve Google Core Web Vitals, memory consumption, and frame rendering bottlen
     "fcp": 320,
     "lcp": 780,
     "cls": 0.012,
-    "fid": 8,
-    "inp": 45
+    "inp": 45,
+    "ttfb": 12
   },
   "memory": {
-    "jsHeapUsedSizeMb": 42.1,
-    "jsHeapTotalSizeMb": 68.4
+    "usedJSHeapSize": 44154880,
+    "totalJSHeapSize": 71729152,
+    "jsHeapSizeLimit": 4294705152
   }
 }
 ```
+
+Valid `metrics` sections: `"vitals"`, `"memory"`, `"navigation"`, `"resources"`, `"raw"`. Omit `metrics` to return all sections. Heap sizes are in **bytes**. The `"resources"` section populates `slowest_resources` (top 10 by duration).
 
 ---
 
@@ -199,7 +227,7 @@ Always synchronize with deterministic browser conditions:
 ### Wait for Network Idle:
 ```json
 {
-  "condition": "network_idle",
+  "for": "network",
   "timeout": 10000
 }
 ```
@@ -207,8 +235,7 @@ Always synchronize with deterministic browser conditions:
 ### Wait for DOM Mutation Stability:
 ```json
 {
-  "condition": "dom_stable",
-  "duration": 500,
+  "for": "stable",
   "timeout": 10000
 }
 ```
@@ -216,8 +243,8 @@ Always synchronize with deterministic browser conditions:
 ### Wait for a Specific Element to Appear:
 ```json
 {
-  "condition": "element_visible",
-  "selector": "[data-testid=\"checkout-complete\"]",
+  "for": "element",
+  "value": "[data-testid=\"checkout-complete\"]",
   "timeout": 15000
 }
 ```

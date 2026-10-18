@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0",
+  "version": "2.5.1",
   "domains": [
     "browser",
     "desktop",
@@ -11,7 +11,7 @@
     "documents",
     "developer"
   ],
-  "officialToolsCount": 42,
+  "officialToolsCount": 41,
   "skillsCount": 22,
   "skills": [
     {
@@ -327,6 +327,7 @@
         "responsive testing"
       ],
       "tools": [
+        "browser_viewport",
         "browser_emulate"
       ],
       "weavetab": ">=2.5.0",
@@ -417,9 +418,7 @@
         "github issues",
         "inspect repo"
       ],
-      "tools": [
-        "browser_github"
-      ],
+      "tools": [],
       "weavetab": ">=2.5.0",
       "filePath": "developer/github-forensics.md"
     }

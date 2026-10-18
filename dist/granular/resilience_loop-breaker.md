@@ -12,7 +12,7 @@ tools:
   - "browser_map"
   - "browser_console"
   - "browser_captcha"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Loop Breaker & CAPTCHA Escalation Protocol
@@ -54,14 +54,19 @@ Invoke `browser_captcha` to analyze and manage the challenge:
 ### Response Example:
 ```json
 {
-  "detected": true,
-  "type": "turnstile",
-  "provider": "cloudflare",
-  "interactive": true,
-  "ref": "w:99"
+  "success": true,
+  "action": "detect",
+  "captcha_detected": true,
+  "captcha_type": "turnstile",
+  "interaction_type": "checkbox",
+  "difficulty": "easy",
+  "confidence": 0.97,
+  "human_needed": false,
+  "message": "CAPTCHA detected: turnstile (checkbox, 97% confidence)",
+  "next_action": "Call browser_captcha({ action: \"solve\" }) to attempt automated solving."
 }
 ```
 
 ### Action Strategy:
-1. If the challenge is interactive and requires human intervention (e.g. image classification), inform the user cleanly or request human bypass.
-2. If the challenge is a simple checkbox Turnstile widget, pass `"action": "solve"` or click the detected widget ref with `browser_click`.
+1. If `human_needed` is `true` (e.g. image classification), inform the user cleanly or request human bypass — do not guess coordinates.
+2. Otherwise pass `"action": "solve"` to attempt an automated solve (slider drag, hold, checkbox, or invisible challenges). Use `"action": "status"` to check progress and `"action": "wait_for_user"` to pause for human input.

@@ -60,23 +60,25 @@ Use `browser_find` when you already know the label, text snippet, placeholder, o
 
 ```json
 {
-  "query": "Sign In",
-  "matchType": "contains",
-  "visibleOnly": true
+  "query": "Sign In"
 }
 ```
+
+Set `"all": true` to return every match (with `"limit"` capping the count, default 10) instead of only the first.
 
 ### Tier 2: Token-Optimized DOM Walk (`browser_map` with `lite: true`)
 Use `browser_map` when you must understand the interactive structure of the page.
 - **Rule**: ALWAYS pass `"lite": true` unless you strictly need deeply nested non-interactive DOM trees.
 - **Efficiency**: Strips decorative wrappers, SVG paths, hidden containers, and scripts. Reduces payload by **85% to 95%**.
-- **Viewport Filtering**: Set `"includeOffscreen": false` to only inspect elements currently visible in the active viewport.
+- **Scope & filter**: Narrow a dense page with `"scope": "main"` (or `navigation`, `sidebar`, `form`, `modal`, `utility`) and `"query": "<substring>"` to filter by label/role.
+- **Delta mode**: Set `"delta": true` on repeated maps to receive only what changed since the last call (up to 97% token savings).
+- **Pruning**: Set `"prune": true` to drop hidden, non-interactive subtrees and collapse SVG icons in this snapshot.
 
 ```json
 {
   "lite": true,
-  "includeOffscreen": false,
-  "maxDepth": 6
+  "scope": "main",
+  "delta": true
 }
 ```
 

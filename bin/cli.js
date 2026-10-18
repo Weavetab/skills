@@ -13,7 +13,7 @@ const G  = '\x1b[32m'; // green
 const R  = '\x1b[31m'; // red
 const X  = '\x1b[0m';  // reset
 
-const line = `${B}${'â”'.repeat(58)}${X}`;
+const line = `${B}${'━'.repeat(58)}${X}`;
 
 function normalizeFramework(fw) {
   if (!fw) return null;
@@ -74,9 +74,9 @@ Options:
   console.log(`${DM}  Enterprise Domain-Driven Agent Intelligence${X}`);
   console.log(line);
   console.log('');
-  console.log(`${CB}  âœ¦ 44 Official MCP Tools Mapped${X}`);
-  console.log(`${CB}  âœ¦ Universal Step-0 ROUTER.md Decision Matrix${X}`);
-  console.log(`${CB}  âœ¦ Multi-Agent Adapters (Antigravity, Cursor, Cline, Windsurf)${X}`);
+  console.log(`${CB}  ✦ 41 Official MCP Tools Mapped${X}`);
+  console.log(`${CB}  ✦ Universal Step-0 ROUTER.md Decision Matrix${X}`);
+  console.log(`${CB}  ✦ Multi-Agent Adapters (Antigravity, Cursor, Cline, Windsurf)${X}`);
   console.log('');
 
   if (!skipConfirm && !cliFramework) {
@@ -96,7 +96,7 @@ Options:
 
   console.log('');
 
-  // Step 1 â€” Select Domain Folders
+  // Step 1 — Select Domain Folders
   let selectedDomains = ALL_DOMAINS;
   if (cliScope) {
     selectedDomains = mapScope(cliScope);
@@ -105,47 +105,47 @@ Options:
       message: 'Select Domain Folders to Install (all selected by default, press Space to unselect)',
       choices: [
         {
-          name: 'browser (/browser) â€” Core DOM interaction, navigation, wait, tabs, input',
+          name: 'browser (/browser) — Core DOM interaction, navigation, wait, tabs, input',
           value: 'browser',
           checked: true
         },
         {
-          name: 'desktop (/desktop) â€” Desktop & Electron apps, Slack, Discord, VS Code',
+          name: 'desktop (/desktop) — Desktop & Electron apps, Slack, Discord, VS Code',
           value: 'desktop',
           checked: true
         },
         {
-          name: 'memory (/memory) â€” Site profiles, selector memory, session trails',
+          name: 'memory (/memory) — Site profiles, selector memory, session trails',
           value: 'memory',
           checked: true
         },
         {
-          name: 'resilience (/resilience) â€” Loop breaker, checkpoints, anti-captcha, recovery',
+          name: 'resilience (/resilience) — Loop breaker, checkpoints, anti-captcha, recovery',
           value: 'resilience',
           checked: true
         },
         {
-          name: 'security (/security) â€” Permission boundaries, domain filters, secret injection',
+          name: 'security (/security) — Permission boundaries, domain filters, secret injection',
           value: 'security',
           checked: true
         },
         {
-          name: 'plugins (/plugins) â€” Plugin management, discovery, dynamic tool loading',
+          name: 'plugins (/plugins) — Plugin management, discovery, dynamic tool loading',
           value: 'plugins',
           checked: true
         },
         {
-          name: 'network-and-perf (/network-and-perf) â€” HAR, network intercept, cookies, performance',
+          name: 'network-and-perf (/network-and-perf) — HAR, network intercept, cookies, performance',
           value: 'network-and-perf',
           checked: true
         },
         {
-          name: 'documents (/documents) â€” Office documents, Word, Excel, PowerPoint, PDF',
+          name: 'documents (/documents) — Office documents, Word, Excel, PowerPoint, PDF',
           value: 'documents',
           checked: true
         },
         {
-          name: 'developer (/developer) â€” GitHub forensics, issue/PR inspection',
+          name: 'developer (/developer) — GitHub forensics, issue/PR inspection',
           value: 'developer',
           checked: true
         }
@@ -160,7 +160,7 @@ Options:
 
   console.log('');
 
-  // Step 2 â€” Select AI Agent Ecosystem
+  // Step 2 — Select AI Agent Ecosystem
   let targetFramework = cliFramework;
   if (!targetFramework) {
     targetFramework = await select({
@@ -217,7 +217,7 @@ Options:
 
     console.log('');
     console.log(line);
-    console.log(`${G}  âœ” Success!${X}  ${result}`);
+    console.log(`${G}  ✔ Success!${X}  ${result}`);
     console.log(`${CB}  Step-0 ROUTER.md matrix ready for your AI agent.${X}`);
     console.log(line);
     console.log('');

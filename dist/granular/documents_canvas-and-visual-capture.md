@@ -15,7 +15,7 @@ tools:
   - "browser_extract_design"
   - "browser_map"
   - "browser_click"
-weavetab: ">=2.5.0-beta.5"
+weavetab: ">=2.5.0"
 ---
 
 # Visual Capture, Canvas Forensics & Design Extraction
@@ -35,29 +35,34 @@ Capture full page layouts, the visible viewport, or specific element bounding bo
 }
 ```
 
-Or target a specific element ref:
+Or crop to a specific element by CSS selector, or to a pixel rectangle with `clip`:
 ```json
 {
-  "ref": "w:55",
+  "selector": "#pricing-table",
   "format": "jpeg",
   "quality": 80
 }
 ```
 
+Options: `format` (`png` default, or `jpeg`), `quality` (JPEG only), `fullPage`, `selector`, and `clip` (`{x, y, width, height}`).
+
 ---
 
 ## 2. PDF Document Generation (`browser_pdf`)
 
-Render the current page into a print-ready PDF document with print CSS styles applied:
+Render the current page into a print-ready PDF file:
 
 ```json
 {
+  "filename": "report.pdf",
   "landscape": false,
-  "printBackground": true,
-  "paperWidth": 8.5,
-  "paperHeight": 11
+  "scale": 1.0,
+  "pageRanges": "1-5",
+  "margin": { "top": 0.4, "bottom": 0.4, "left": 0.4, "right": 0.4 }
 }
 ```
+
+Options: `filename` (defaults to `capture_<timestamp>.pdf`), `landscape`, `scale` (default 1.0), `pageRanges` (e.g. `"1-5"`, empty for all), and `margin` — either a single number in inches or a `{top,bottom,left,right}` object (default 0.4).
 
 ---
 
@@ -80,11 +85,20 @@ Then interact directly by mark number without guessing pixel coordinates:
 ```
 
 ### B. Direct Canvas Pixel Export (`browser_canvas`)
-To extract the raw image data or draw programmatic gesture paths:
+To export the raw canvas as an image, or simulate a drag/gesture path across it:
 ```json
 {
   "ref": "w:19",
-  "action": "toDataURL"
+  "action": "get_image"
+}
+```
+
+For drawing or selecting a region, pass `"action": "draw"` with a `points` array of `{x, y}` positions (relative to the canvas):
+```json
+{
+  "action": "draw",
+  "selector": "canvas#chart",
+  "points": [ { "x": 40, "y": 10 }, { "x": 200, "y": 120 } ]
 }
 ```
 
