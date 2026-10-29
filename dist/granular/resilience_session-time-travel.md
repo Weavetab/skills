@@ -52,7 +52,7 @@ If a downstream step errors out, times out, or hits an invalid state, roll back 
   "name": "pre_checkout_authenticated"
 }
 ```
-*Latency: ~15ms*. The page navigates back to the checkpoint URL with cookies and storage atomically injected.
+The page navigates back to the checkpoint URL with cookies and storage atomically injected.
 
 ### C. Listing Checkpoints (`list`)
 Inspect all active checkpoints for the current page target:

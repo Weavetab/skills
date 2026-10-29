@@ -144,8 +144,8 @@ Native operating system file picker dialogs block autonomous agent execution bec
 {
   "nodeId": 4821,
   "filePaths": [
-    "C:/Users/me/Documents/contract.pdf",
-    "C:/Users/me/Documents/financial_report.xlsx"
+    "./documents/contract.pdf",
+    "./documents/financial_report.xlsx"
   ]
 }
 ```

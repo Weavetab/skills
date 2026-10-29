@@ -55,7 +55,7 @@ Always select the narrowest tool that satisfies your immediate objective:
 
 ### Tier 1: Targeted Keyword Jump (`browser_find`)
 Use `browser_find` when you already know the label, text snippet, placeholder, or aria-label of the target element.
-- **Latency**: Sub-5ms CDP search.
+- **Execution**: Leaf-optimized TreeWalker DOM query.
 - **Token Cost**: ~50–100 tokens (returns only matching candidate nodes).
 
 ```json

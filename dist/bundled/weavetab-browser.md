@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## dom-strategy
@@ -43,7 +43,7 @@ Always select the narrowest tool that satisfies your immediate objective:
 
 ### Tier 1: Targeted Keyword Jump (`browser_find`)
 Use `browser_find` when you already know the label, text snippet, placeholder, or aria-label of the target element.
-- **Latency**: Sub-5ms CDP search.
+- **Execution**: Leaf-optimized TreeWalker DOM query.
 - **Token Cost**: ~50–100 tokens (returns only matching candidate nodes).
 
 ```json
@@ -305,8 +305,8 @@ Native operating system file picker dialogs block autonomous agent execution bec
 {
   "nodeId": 4821,
   "filePaths": [
-    "C:/Users/me/Documents/contract.pdf",
-    "C:/Users/me/Documents/financial_report.xlsx"
+    "./documents/contract.pdf",
+    "./documents/financial_report.xlsx"
   ]
 }
 ```

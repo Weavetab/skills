@@ -44,13 +44,13 @@ Call `browser_detect` with empty parameters `{}`:
     {
       "name": "discord",
       "status": "running_no_debug",
-      "configuredPath": "C:\\Users\\username\\AppData\\Local\\Discord\\app-1.0.9256\\Discord.exe"
+      "configuredPath": "%LOCALAPPDATA%\\Discord\\app-<version>\\Discord.exe"
     },
     {
       "name": "slack",
       "status": "connected",
       "port": 9222,
-      "configuredPath": "C:\\Users\\username\\AppData\\Local\\slack\\app-4.38.125\\slack.exe",
+      "configuredPath": "%LOCALAPPDATA%\\slack\\app-<version>\\slack.exe",
       "activeTabs": [
         {
           "id": "PAGE_1",
@@ -62,7 +62,7 @@ Call `browser_detect` with empty parameters `{}`:
     {
       "name": "vscode",
       "status": "offline",
-      "configuredPath": "C:\\Users\\username\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+      "configuredPath": "%LOCALAPPDATA%\\Programs\\Microsoft VS Code\\Code.exe"
     }
   ],
   "toolCoverage": {

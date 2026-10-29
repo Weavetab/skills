@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: DOCUMENTS
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## canvas-and-visual-capture

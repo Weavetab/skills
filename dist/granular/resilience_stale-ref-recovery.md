@@ -22,7 +22,7 @@ In modern Single Page Applications (built with React, Next.js, Vue, Nuxt, Svelte
 
 ## 1. The Multi-Tier Auto-Recovery Heuristic
 
-When a tool receives a detached or invalidated `ref`, Weavetab attempts to re-resolve it instead of failing immediately. The recovery runs a sub-5ms heuristic over these strategies (in order) and re-stamps `data-wt-id="NN"` onto the live node:
+When a tool receives a detached or invalidated `ref`, Weavetab attempts to re-resolve it instead of failing immediately. The recovery runs an in-memory heuristic over these strategies (in order) and re-stamps `data-wt-id="NN"` onto the live node:
 
 ```
   [Action on w:14 fails / handle detached]

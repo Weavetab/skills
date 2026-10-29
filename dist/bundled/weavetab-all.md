@@ -1,4 +1,4 @@
-# Weavetab Complete Enterprise Agent Suite (v2.5.1)
+# Weavetab Complete Enterprise Agent Suite (v2.5.2)
 
 
 
@@ -8,7 +8,7 @@
 
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## dom-strategy
@@ -51,7 +51,7 @@ Always select the narrowest tool that satisfies your immediate objective:
 
 ### Tier 1: Targeted Keyword Jump (`browser_find`)
 Use `browser_find` when you already know the label, text snippet, placeholder, or aria-label of the target element.
-- **Latency**: Sub-5ms CDP search.
+- **Execution**: Leaf-optimized TreeWalker DOM query.
 - **Token Cost**: ~50–100 tokens (returns only matching candidate nodes).
 
 ```json
@@ -313,8 +313,8 @@ Native operating system file picker dialogs block autonomous agent execution bec
 {
   "nodeId": 4821,
   "filePaths": [
-    "C:/Users/me/Documents/contract.pdf",
-    "C:/Users/me/Documents/financial_report.xlsx"
+    "./documents/contract.pdf",
+    "./documents/financial_report.xlsx"
   ]
 }
 ```
@@ -540,7 +540,7 @@ The auto-heal routine re-establishes CDP protocol sessions, reconnects event lis
 
 # Weavetab Domain Profile: DESKTOP
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## desktop-targeting
@@ -570,7 +570,7 @@ Pass `"app": "<application_name>"` to target the Electron application.
 {
   "app": "discord",
   "ref": "w:88",
-  "text": "Deployment v2.5.1 completed successfully."
+  "text": "Deployment v2.5.2 completed successfully."
 }
 ```
 
@@ -645,13 +645,13 @@ Call `browser_detect` with empty parameters `{}`:
     {
       "name": "discord",
       "status": "running_no_debug",
-      "configuredPath": "C:\\Users\\username\\AppData\\Local\\Discord\\app-1.0.9256\\Discord.exe"
+      "configuredPath": "%LOCALAPPDATA%\\Discord\\app-<version>\\Discord.exe"
     },
     {
       "name": "slack",
       "status": "connected",
       "port": 9222,
-      "configuredPath": "C:\\Users\\username\\AppData\\Local\\slack\\app-4.38.125\\slack.exe",
+      "configuredPath": "%LOCALAPPDATA%\\slack\\app-<version>\\slack.exe",
       "activeTabs": [
         {
           "id": "PAGE_1",
@@ -663,7 +663,7 @@ Call `browser_detect` with empty parameters `{}`:
     {
       "name": "vscode",
       "status": "offline",
-      "configuredPath": "C:\\Users\\username\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+      "configuredPath": "%LOCALAPPDATA%\\Programs\\Microsoft VS Code\\Code.exe"
     }
   ],
   "toolCoverage": {
@@ -722,7 +722,7 @@ Once launched with `--remote-debugging-port`, `browser_detect` immediately refle
 
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## selector-memory-system
@@ -1113,7 +1113,7 @@ Total agent turns for a known site: **3 tool calls** vs. potentially 12+ with fu
 
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## loop-breaker
@@ -1215,7 +1215,7 @@ If a downstream step errors out, times out, or hits an invalid state, roll back 
   "name": "pre_checkout_authenticated"
 }
 ```
-*Latency: ~15ms*. The page navigates back to the checkpoint URL with cookies and storage atomically injected.
+The page navigates back to the checkpoint URL with cookies and storage atomically injected.
 
 ### C. Listing Checkpoints (`list`)
 Inspect all active checkpoints for the current page target:
@@ -1318,7 +1318,7 @@ In modern Single Page Applications (built with React, Next.js, Vue, Nuxt, Svelte
 
 ## 1. The Multi-Tier Auto-Recovery Heuristic
 
-When a tool receives a detached or invalidated `ref`, Weavetab attempts to re-resolve it instead of failing immediately. The recovery runs a sub-5ms heuristic over these strategies (in order) and re-stamps `data-wt-id="NN"` onto the live node:
+When a tool receives a detached or invalidated `ref`, Weavetab attempts to re-resolve it instead of failing immediately. The recovery runs an in-memory heuristic over these strategies (in order) and re-stamps `data-wt-id="NN"` onto the live node:
 
 ```
   [Action on w:14 fails / handle detached]
@@ -1363,7 +1363,7 @@ Either way:
 
 # Weavetab Domain Profile: SECURITY
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## rbac-and-policies
@@ -1462,7 +1462,7 @@ When `browser_type_secret` is invoked:
 
 # Weavetab Domain Profile: PLUGINS
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## hooks-and-overrides
@@ -1556,7 +1556,7 @@ Unverified plugins are loaded but their permissions are logged visibly at startu
 
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## device-and-environment
@@ -1812,7 +1812,7 @@ Always synchronize with deterministic browser conditions:
 
 # Weavetab Domain Profile: DOCUMENTS
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## canvas-and-visual-capture
@@ -2002,7 +2002,7 @@ Word and PDF extraction return text in `content` (truncated by `max_chars`). PDF
 
 # Weavetab Domain Profile: DEVELOPER
 
-Generated for @weavetab/skills v2.5.1
+Generated for @weavetab/skills v2.5.2
 
 
 ## github-forensics

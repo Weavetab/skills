@@ -1,5 +1,5 @@
 {
-  "version": "2.5.1",
+  "version": "2.5.2",
   "scenarios": [
     {
       "id": "spa_stale_ref_recovery",
