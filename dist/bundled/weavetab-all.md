@@ -1,4 +1,4 @@
-# Weavetab Complete Enterprise Agent Suite (v2.5.2)
+# Weavetab Complete Enterprise Agent Suite (v2.6.0)
 
 
 
@@ -8,7 +8,7 @@
 
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## dom-strategy
@@ -142,7 +142,7 @@ Submitting complex web forms one field at a time wastes agent turns and increase
     },
     {
       "ref": "w:16",
-      "value": "contact@weavetab.com"
+      "value": "contact@weavetab.dev"
     },
     {
       "ref": "w:19",
@@ -540,7 +540,7 @@ The auto-heal routine re-establishes CDP protocol sessions, reconnects event lis
 
 # Weavetab Domain Profile: DESKTOP
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## desktop-targeting
@@ -570,7 +570,7 @@ Pass `"app": "<application_name>"` to target the Electron application.
 {
   "app": "discord",
   "ref": "w:88",
-  "text": "Deployment v2.5.2 completed successfully."
+  "text": "Deployment v2.6.0 completed successfully."
 }
 ```
 
@@ -722,7 +722,7 @@ Once launched with `--remote-debugging-port`, `browser_detect` immediately refle
 
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## selector-memory-system
@@ -1113,7 +1113,7 @@ Total agent turns for a known site: **3 tool calls** vs. potentially 12+ with fu
 
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## loop-breaker
@@ -1363,7 +1363,7 @@ Either way:
 
 # Weavetab Domain Profile: SECURITY
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## rbac-and-policies
@@ -1462,7 +1462,7 @@ When `browser_type_secret` is invoked:
 
 # Weavetab Domain Profile: PLUGINS
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## hooks-and-overrides
@@ -1556,7 +1556,7 @@ Unverified plugins are loaded but their permissions are logged visibly at startu
 
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## device-and-environment
@@ -1812,7 +1812,7 @@ Always synchronize with deterministic browser conditions:
 
 # Weavetab Domain Profile: DOCUMENTS
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## canvas-and-visual-capture
@@ -2002,7 +2002,7 @@ Word and PDF extraction return text in `content` (truncated by `max_chars`). PDF
 
 # Weavetab Domain Profile: DEVELOPER
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## github-forensics

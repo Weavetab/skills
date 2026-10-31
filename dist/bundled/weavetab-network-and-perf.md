@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## device-and-environment

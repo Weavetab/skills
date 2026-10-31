@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## selector-memory-system

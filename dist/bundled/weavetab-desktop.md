@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: DESKTOP
 
-Generated for @weavetab/skills v2.5.2
+Generated for @weavetab/skills v2.6.0
 
 
 ## desktop-targeting
@@ -30,7 +30,7 @@ Pass `"app": "<application_name>"` to target the Electron application.
 {
   "app": "discord",
   "ref": "w:88",
-  "text": "Deployment v2.5.2 completed successfully."
+  "text": "Deployment v2.6.0 completed successfully."
 }
 ```
 
