@@ -3,7 +3,6 @@ name: Skill Request
 about: Request a new skill to be added to the library
 title: "[SKILL] "
 labels: enhancement
-assignees: fy2ne
 ---
 
 **What task pattern should this skill cover?**

@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: DEVELOPER
 
-Generated for @weavetab/skills v2.6.0
+Generated for @weavetab/skills v2.6.2
 
 
 ## github-forensics

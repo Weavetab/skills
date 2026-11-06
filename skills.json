@@ -1,5 +1,5 @@
 {
-  "version": "2.6.0",
+  "version": "2.6.2",
   "domains": [
     "browser",
     "desktop",
@@ -307,12 +307,17 @@
       "triggers": [
         "what plugins are installed",
         "weavetab plugin",
+        "weavetab plugin use",
         "extend mcp",
         "plugin tools",
+        "plugin commands",
+        "plugin utilities",
         "plugin permissions"
       ],
-      "tools": [],
-      "weavetab": ">=2.5.0",
+      "tools": [
+        "browser_snapshot"
+      ],
+      "weavetab": ">=2.6.2",
       "filePath": "plugins/plugin-runtime.md"
     },
     {

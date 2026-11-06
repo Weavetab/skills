@@ -1,6 +1,6 @@
 # Weavetab Domain Profile: SECURITY
 
-Generated for @weavetab/skills v2.6.0
+Generated for @weavetab/skills v2.6.2
 
 
 ## rbac-and-policies
