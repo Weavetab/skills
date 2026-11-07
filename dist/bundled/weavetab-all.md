@@ -1,4 +1,4 @@
-# Weavetab Complete Enterprise Agent Suite (v2.6.2)
+# Weavetab Complete Enterprise Agent Suite (v2.6.3)
 
 
 
@@ -8,7 +8,7 @@
 
 # Weavetab Domain Profile: BROWSER
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## dom-strategy
@@ -540,7 +540,7 @@ The auto-heal routine re-establishes CDP protocol sessions, reconnects event lis
 
 # Weavetab Domain Profile: DESKTOP
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## desktop-targeting
@@ -570,7 +570,7 @@ Pass `"app": "<application_name>"` to target the Electron application.
 {
   "app": "discord",
   "ref": "w:88",
-  "text": "Deployment v2.6.2 completed successfully."
+  "text": "Deployment v2.6.3 completed successfully."
 }
 ```
 
@@ -722,7 +722,7 @@ Once launched with `--remote-debugging-port`, `browser_detect` immediately refle
 
 # Weavetab Domain Profile: MEMORY
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## selector-memory-system
@@ -1113,7 +1113,7 @@ Total agent turns for a known site: **3 tool calls** vs. potentially 12+ with fu
 
 # Weavetab Domain Profile: RESILIENCE
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## loop-breaker
@@ -1363,7 +1363,7 @@ Either way:
 
 # Weavetab Domain Profile: SECURITY
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## rbac-and-policies
@@ -1462,7 +1462,7 @@ When `browser_type_secret` is invoked:
 
 # Weavetab Domain Profile: PLUGINS
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## hooks-and-overrides
@@ -1500,34 +1500,34 @@ The `PluginHooks` interface exposes three primary interceptors (with backwards-c
 
 # Plugin Runtime: Weavetab Plugin Architecture
 
-Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. Installed plugins can expose four distinct surfaces:
+Weavetab features an extensible plugin architecture powered by `@weavetab/sdk`. Installed plugins can expose:
 1. **MCP Tools (`tools`)** — callable directly as MCP tools alongside core tools like `browser_snapshot`.
 2. **CLI Commands (`commands`)** — callable from the terminal via `weavetab plugin use <pkg> <command> [--flags]`.
-3. **Utilities (`prompts` & `resources`)** — `/` **Prompts** (reusable prompt templates) and `@` **Resources** (live context URIs).
-4. **AI Agent Playbook (`AGENTS.md`)** — a mandatory, strictly bounded (`<= 80` lines, `<= 3200` chars) guide teaching AI agents how to use the plugin's tools, CLI commands, and utilities without bloating context.
+3. **Prompts (`prompts`) & Resources (`resources`)** — `/` **Prompts** (reusable prompt templates) and `@` **Resources** (live context URIs).
+4. **Agent Instructions (`instructions`)** — a strictly bounded (`<= 80` lines, `<= 3,200` chars) field in `weavetab.json` teaching AI agents how to use the plugin's tools, CLI commands, prompts, and resources without bloating context.
 
 ---
 
-## 1. Discovering & Using Plugins (MCP & CLI)
+## 1. Discovering, Running & Updating Plugins (MCP & CLI)
 
-Connected AI agents can inspect all installed plugins, their tools, CLI commands, utilities, and `AGENTS.md` playbooks at any time. When coordinating custom plugin actions with page state, use `browser_snapshot` to capture or verify DOM nodes before and after plugin execution:
+Connected AI agents can inspect all installed plugins, their tools, CLI commands, prompts, resources, and operational instructions at any time. When coordinating custom plugin actions with page state, use `browser_snapshot` to capture or verify DOM nodes before and after plugin execution:
 
 - **MCP Resources**:
-  - Read `weavetab://plugins` for a JSON catalog of all installed plugins (tools, commands, `/prompts`, `@resources`, and `agentsResourceUri`).
-  - Read `weavetab://plugins/<slug>/agents` to read a plugin's bounded `AGENTS.md` playbook.
-- **CLI Execution (`weavetab plugin use`)**:
+  - Read `weavetab://plugins` for a JSON catalog of all installed plugins (tools, commands, `/prompts`, and `@resources`).
+  - Read `weavetab://plugins/<name>/instructions` to read a plugin's bounded operational instructions.
+- **CLI Execution (`weavetab plugin`)**:
   ```bash
-  # Inspect a plugin's commands, tools, utilities, and AGENTS.md
+  # Inspect a plugin's commands, tools, prompts, and resources
   weavetab plugin use github
 
   # Run a plugin CLI command
   weavetab plugin use github repo-summary --repo Weavetab/Weavetab
 
-  # Run a plugin MCP tool from the terminal (supports --json '{...}' or --flag value)
-  weavetab plugin use auth profiles
+  # Read operational instructions and CLI flag schemas for an installed plugin
+  weavetab plugin use github instructions
 
-  # Read AGENTS.md playbook for one or all installed plugins
-  weavetab plugin agents github
+  # Interactively upgrade an installed plugin to a newer published version
+  weavetab plugin update github
   ```
 
 ---
@@ -1542,8 +1542,8 @@ Every plugin declares what it can do in `weavetab.json`. The runtime enforces th
 | `tools.override: ["browser_navigate"]` | Plugin can wrap/replace that built-in tool |
 | `tools.remove: ["browser_pdf"]` | Plugin can disable that built-in tool |
 | `commands.add: true` | Plugin can register CLI commands (`defineCommand` / `weavetab plugin use`) |
-| `prompts.add: true` | Plugin can register `/` Prompt utilities (`definePrompt`) |
-| `resources.add: true` | Plugin can register `@` Resource utilities (`defineResource`) |
+| `prompts.add: true` | Plugin can register `/` Prompts (`definePrompt`) |
+| `resources.add: true` | Plugin can register `@` Resources (`defineResource`) |
 | `hooks.onBeforeAction: true` | Plugin can intercept all tool calls before execution |
 | `hooks.onAfterAction: true` | Plugin can inspect/transform all tool results |
 
@@ -1551,14 +1551,13 @@ Plugins that attempt to register tools, CLI commands, prompts, or resources with
 
 ---
 
-## 3. Strict `AGENTS.md` Budget Enforcement
+## 3. Strict `instructions` Budget Enforcement
 
-To prevent third-party plugins from exploding an AI agent's context window, `@weavetab/sdk` enforces hard limits on `AGENTS.md` during `weavetab build`, `weavetab validate`, `weavetab preflight`, `weavetab doctor`, and `weavetab publish`:
+To prevent third-party plugins from exploding an AI agent's context window, `@weavetab/sdk` enforces hard limits on `instructions` in `weavetab.json` during `weavetab build`, `weavetab validate`, `weavetab preflight`, `weavetab doctor`, and `weavetab publish`:
 - **Maximum Lines**: `80` lines
 - **Maximum Characters**: `3,200` characters (`~800` tokens)
-- **Minimum Content**: `40` characters, must include a markdown heading (`#`)
 
-Any plugin exceeding these limits is rejected before it can be built or published to npm, and the MCP runtime also clamps `AGENTS.md` at load time as defense-in-depth.
+Any plugin exceeding these limits is rejected before it can be built or published to npm, and the MCP runtime also clamps `instructions` at load time as defense-in-depth.
 
 ---
 
@@ -1577,7 +1576,7 @@ Any plugin exceeding these limits is rejected before it can be built or publishe
 
 # Weavetab Domain Profile: NETWORK-AND-PERF
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## device-and-environment
@@ -1833,7 +1832,7 @@ Always synchronize with deterministic browser conditions:
 
 # Weavetab Domain Profile: DOCUMENTS
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## canvas-and-visual-capture
@@ -2023,7 +2022,7 @@ Word and PDF extraction return text in `content` (truncated by `max_chars`). PDF
 
 # Weavetab Domain Profile: DEVELOPER
 
-Generated for @weavetab/skills v2.6.2
+Generated for @weavetab/skills v2.6.3
 
 
 ## github-forensics

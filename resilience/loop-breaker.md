@@ -12,7 +12,7 @@ tools:
   - "browser_map"
   - "browser_console"
   - "browser_captcha"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Loop Breaker & CAPTCHA Escalation Protocol

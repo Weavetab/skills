@@ -11,7 +11,7 @@ triggers:
 tools:
   - "browser_fill"
   - "browser_select"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Form Automation: Atomic Multi-Field Execution

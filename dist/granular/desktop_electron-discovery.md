@@ -10,7 +10,7 @@ triggers:
   - "electron automation"
 tools:
   - "browser_detect"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Electron Discovery & Environment Handshake

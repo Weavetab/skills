@@ -30,7 +30,7 @@ Transparency matters. Please select the primary AI assistant or agent workflow u
 ## Sizing & Code Health Checklist
 
 - [ ] **Line-budget**: Total additions are under **+500 lines** of skill code (excluding generated `skills.json`).
-- [ ] **Compatibility**: Frontmatter specifies `weavetab: ">=2.6.2"`.
+- [ ] **Compatibility**: Frontmatter specifies `weavetab: ">=2.6.3"`.
 - [ ] **Single concern**: Adds or updates one specific skill pattern.
 - [ ] **Build verified**: Ran `npm run build` and `skills.json` is cleanly regenerated.
 - [ ] **Anti-AI slop**: No generic fluff, no redundant instructions, clean focused directives.

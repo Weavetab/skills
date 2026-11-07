@@ -11,7 +11,7 @@ tools:
   - "browser_find"
   - "browser_map"
   - "browser_click"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Stale Ref Recovery & SPA Hydration Resilience

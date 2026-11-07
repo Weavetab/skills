@@ -3,7 +3,7 @@ id: multi-tab-management
 tier: general
 triggers: []
 tools: []
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 # Multi-Tab Management Pattern
 

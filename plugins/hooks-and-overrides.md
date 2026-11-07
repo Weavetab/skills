@@ -8,7 +8,7 @@ triggers:
   - "telemetry interception"
   - "sdk hooks"
 tools: []
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Plugin Hooks & Lifecycle Overrides

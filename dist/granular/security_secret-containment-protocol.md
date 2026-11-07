@@ -9,7 +9,7 @@ triggers:
   - "secret containment"
 tools:
   - "browser_type_secret"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Secret Containment Protocol & Zero-Bleed Execution
