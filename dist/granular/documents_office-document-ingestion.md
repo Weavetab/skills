@@ -10,7 +10,7 @@ triggers:
   - "parse table"
 tools:
   - "browser_office"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Office Document Ingestion: Word, Excel, PDF & CSV Parsing

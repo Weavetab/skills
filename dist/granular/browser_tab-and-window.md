@@ -11,7 +11,7 @@ triggers:
   - "desktop app tabs"
 tools:
   - "browser_tabs"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Tab & Window Lifecycle Management

@@ -15,7 +15,7 @@ tools:
   - "browser_extract_design"
   - "browser_map"
   - "browser_click"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Visual Capture, Canvas Forensics & Design Extraction

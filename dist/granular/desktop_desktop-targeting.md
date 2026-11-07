@@ -15,7 +15,7 @@ tools:
   - "browser_detect"
   - "browser_tabs"
   - "browser_navigate"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Desktop App Targeting & Multi-Window Routing
@@ -43,7 +43,7 @@ Pass `"app": "<application_name>"` to target the Electron application.
 {
   "app": "discord",
   "ref": "w:88",
-  "text": "Deployment v2.6.2 completed successfully."
+  "text": "Deployment v2.6.3 completed successfully."
 }
 ```
 

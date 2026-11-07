@@ -7,7 +7,7 @@ triggers:
   - "check pull request"
   - "github issues"
   - "inspect repo"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # GitHub Forensics & Repository Architecture Inspection

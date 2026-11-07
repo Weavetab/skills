@@ -11,7 +11,7 @@ triggers:
 tools:
   - "browser_viewport"
   - "browser_emulate"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Device Emulation & Environment Simulation

@@ -3,7 +3,7 @@ id: captcha-evasion
 tier: general
 triggers: []
 tools: []
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 # CAPTCHA Evasion & Handling
 

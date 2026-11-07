@@ -1,6 +1,6 @@
 {
   "name": "@weavetab/skills",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "Domain-driven operational skills and execution playbooks for Weavetab MCP.",
   "author": {
     "name": "Weavetab",
@@ -51,7 +51,7 @@
     "agentic"
   ],
   "peerDependencies": {
-    "@weavetab/mcp": "2.6.2"
+    "@weavetab/mcp": "2.6.3"
   },
   "peerDependenciesMeta": {
     "@weavetab/mcp": {

@@ -11,7 +11,7 @@ tools:
   - "browser_checkpoint"
   - "browser_cookies"
   - "browser_storage"
-weavetab: ">=2.5.0"
+weavetab: ">=2.6.3"
 ---
 
 # Session Time-Travel & Instant State Rollback

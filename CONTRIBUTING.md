@@ -1,6 +1,6 @@
 # Contributing to Weavetab MCP Skills
 
-> **Version:** 2.6.2 | **Package:** `@weavetab/skills` | **Last Updated:** August 2026
+> **Version:** 2.6.3 | **Package:** `@weavetab/skills` | **Last Updated:** August 2026
 
 Thank you for your interest in contributing! This repository relies on community contributions to build the most powerful, autonomous AI skills possible.
 
@@ -44,7 +44,7 @@ id: your-skill-name
 tier: general
 triggers: [keyword1, keyword2]
 tools: [browser_navigate, browser_click]
-weavetab: ">=2.6.2"
+weavetab: ">=2.6.3"
 ---
 ```
 
@@ -78,7 +78,7 @@ We welcome skills crafted with AI coding agents (Antigravity, Claude Code, Curso
 ## Rules & Guidelines
 
 - **Weavetab Focused:** Skills must be specifically designed for **Weavetab MCP** and use its native toolset.
-- **Version Requirement:** Skills must require **Weavetab MCP v2.6.2+**.
+- **Version Requirement:** Skills must require **Weavetab MCP v2.6.3+**.
 - **Single Responsibility:** Keep skill files focused on a single task pattern or workflow.
 - **No Emojis:** We maintain a professional standard in skill documentation to ensure strict parsing by AI agents.
 
